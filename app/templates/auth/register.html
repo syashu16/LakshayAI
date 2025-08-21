@@ -1,0 +1,365 @@
+{% extends "base.html" %}
+
+{% block title %}Register - LakshyaAI{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/auth.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="auth-container">
+    <div class="auth-wrapper">
+        <div class="auth-card">
+            <div class="auth-header">
+                <div class="logo-section">
+                    <i class="fas fa-user-plus text-4xl text-blue-600 mb-4"></i>
+                    <h1 class="text-3xl font-bold text-gray-900 mb-2">Join LakshyaAI</h1>
+                    <p class="text-gray-600">Start your AI-powered career journey</p>
+                </div>
+            </div>
+
+            <div class="auth-form active">
+                <form method="POST" action="{{ url_for('auth.register') }}" class="space-y-4" id="register-form">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="first-name" class="form-label">
+                                <i class="fas fa-user mr-2"></i>First Name
+                            </label>
+                            <input type="text" id="first-name" name="first_name" class="form-input"
+                                placeholder="First name" value="{{ request.form.first_name }}" required>
+                            <div class="input-feedback"></div>
+                        </div>
+                        <div class="form-group">
+                            <label for="last-name" class="form-label">
+                                <i class="fas fa-user mr-2"></i>Last Name
+                            </label>
+                            <input type="text" id="last-name" name="last_name" class="form-input"
+                                placeholder="Last name" value="{{ request.form.last_name }}" required>
+                            <div class="input-feedback"></div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email" class="form-label">
+                            <i class="fas fa-envelope mr-2"></i>Email Address
+                        </label>
+                        <input type="email" id="email" name="email" class="form-input" placeholder="Enter your email"
+                            value="{{ request.form.email }}" required>
+                        <div class="input-feedback"></div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="username" class="form-label">
+                            <i class="fas fa-at mr-2"></i>Username
+                        </label>
+                        <input type="text" id="username" name="username" class="form-input"
+                            placeholder="Choose a username" value="{{ request.form.username }}" required>
+                        <div class="input-feedback"></div>
+                        <div class="form-hint">
+                            <i class="fas fa-info-circle mr-1"></i>
+                            Username must be 3-20 characters, letters and numbers only
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="password" class="form-label">
+                            <i class="fas fa-lock mr-2"></i>Password
+                        </label>
+                        <div class="password-input">
+                            <input type="password" id="password" name="password" class="form-input"
+                                placeholder="Create a password" required>
+                            <button type="button" class="password-toggle" onclick="togglePassword('password')">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                        </div>
+                        <div class="password-strength">
+                            <div class="strength-bar">
+                                <div class="strength-fill"></div>
+                            </div>
+                            <div class="strength-text">Password strength</div>
+                        </div>
+                        <div class="password-requirements">
+                            <div class="requirement" id="length-req">
+                                <i class="fas fa-times text-red-500"></i>
+                                At least 8 characters
+                            </div>
+                            <div class="requirement" id="uppercase-req">
+                                <i class="fas fa-times text-red-500"></i>
+                                One uppercase letter
+                            </div>
+                            <div class="requirement" id="lowercase-req">
+                                <i class="fas fa-times text-red-500"></i>
+                                One lowercase letter
+                            </div>
+                            <div class="requirement" id="number-req">
+                                <i class="fas fa-times text-red-500"></i>
+                                One number
+                            </div>
+                        </div>
+                        <div class="input-feedback"></div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="confirm-password" class="form-label">
+                            <i class="fas fa-lock mr-2"></i>Confirm Password
+                        </label>
+                        <div class="password-input">
+                            <input type="password" id="confirm-password" name="confirm_password" class="form-input"
+                                placeholder="Confirm your password" required>
+                            <button type="button" class="password-toggle" onclick="togglePassword('confirm-password')">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                        </div>
+                        <div class="input-feedback"></div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="career-level" class="form-label">
+                            <i class="fas fa-briefcase mr-2"></i>Career Level
+                        </label>
+                        <select id="career-level" name="career_level" class="form-input">
+                            <option value="">Select your career level</option>
+                            <option value="student" {{ 'selected' if request.form.career_level=='student' }}>Student
+                            </option>
+                            <option value="entry-level" {{ 'selected' if request.form.career_level=='entry-level' }}>
+                                Entry Level (0-2 years)</option>
+                            <option value="mid-level" {{ 'selected' if request.form.career_level=='mid-level' }}>Mid
+                                Level (3-7 years)</option>
+                            <option value="senior-level" {{ 'selected' if request.form.career_level=='senior-level' }}>
+                                Senior Level (8+ years)</option>
+                            <option value="executive" {{ 'selected' if request.form.career_level=='executive' }}>
+                                Executive</option>
+                        </select>
+                        <div class="input-feedback"></div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="checkbox-container">
+                            <input type="checkbox" name="terms_accepted" required>
+                            <span class="checkmark"></span>
+                            I agree to the <a href="{{ url_for('pages.terms') }}" target="_blank">Terms of Service</a>
+                            and <a href="{{ url_for('pages.privacy') }}" target="_blank">Privacy Policy</a>
+                        </label>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="checkbox-container">
+                            <input type="checkbox" name="newsletter" {{ 'checked' if request.form.newsletter }}>
+                            <span class="checkmark"></span>
+                            Subscribe to career tips and updates
+                        </label>
+                    </div>
+
+                    <button type="submit" class="btn-primary" id="register-btn">
+                        <i class="fas fa-user-plus mr-2"></i>
+                        Create Account
+                    </button>
+                </form>
+
+                <div class="social-login">
+                    <div class="divider">
+                        <span>Or sign up with</span>
+                    </div>
+                    <div class="social-buttons">
+                        <button class="social-btn google" onclick="signupWithGoogle()">
+                            <i class="fab fa-google mr-2"></i>Google
+                        </button>
+                        <button class="social-btn linkedin" onclick="signupWithLinkedIn()">
+                            <i class="fab fa-linkedin mr-2"></i>LinkedIn
+                        </button>
+                        <button class="social-btn github" onclick="signupWithGitHub()">
+                            <i class="fab fa-github mr-2"></i>GitHub
+                        </button>
+                    </div>
+                </div>
+
+                <div class="auth-links">
+                    <p>Already have an account?
+                        <a href="{{ url_for('auth.login') }}" class="login-link">Sign in here</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="auth-benefits">
+            <h3 class="text-xl font-semibold mb-4">What You'll Get</h3>
+            <div class="benefit-list">
+                <div class="benefit-item">
+                    <i class="fas fa-robot text-blue-600"></i>
+                    <div>
+                        <h4>AI Career Coach</h4>
+                        <p>24/7 personalized career guidance and advice</p>
+                    </div>
+                </div>
+                <div class="benefit-item">
+                    <i class="fas fa-file-alt text-green-600"></i>
+                    <div>
+                        <h4>Resume Analysis</h4>
+                        <p>AI-powered resume optimization and feedback</p>
+                    </div>
+                </div>
+                <div class="benefit-item">
+                    <i class="fas fa-search text-purple-600"></i>
+                    <div>
+                        <h4>Smart Job Matching</h4>
+                        <p>Find opportunities that match your skills perfectly</p>
+                    </div>
+                </div>
+                <div class="benefit-item">
+                    <i class="fas fa-chart-bar text-orange-600"></i>
+                    <div>
+                        <h4>Career Analytics</h4>
+                        <p>Track progress and get insights on your career path</p>
+                    </div>
+                </div>
+                <div class="benefit-item">
+                    <i class="fas fa-graduation-cap text-red-600"></i>
+                    <div>
+                        <h4>Skill Development</h4>
+                        <p>Identify gaps and get learning recommendations</p>
+                    </div>
+                </div>
+                <div class="benefit-item">
+                    <i class="fas fa-users text-teal-600"></i>
+                    <div>
+                        <h4>Community Support</h4>
+                        <p>Connect with like-minded professionals</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Flash Messages -->
+{% with messages = get_flashed_messages(with_categories=true) %}
+{% if messages %}
+<div id="flash-messages">
+    {% for category, message in messages %}
+    <div class="alert alert-{{ category }}">
+        <span>{{ message }}</span>
+        <button onclick="this.parentElement.remove()">
+            <i class="fas fa-times"></i>
+        </button>
+    </div>
+    {% endfor %}
+</div>
+{% endif %}
+{% endwith %}
+{% endblock %}
+
+{% block extra_js %}
+<script src="{{ url_for('static', filename='js/auth.js') }}"></script>
+<script>
+    // Initialize registration form enhancements
+    document.addEventListener('DOMContentLoaded', function () {
+        const form = document.getElementById('register-form');
+        const passwordInput = document.getElementById('password');
+        const confirmPasswordInput = document.getElementById('confirm-password');
+
+        // Password strength validation
+        passwordInput.addEventListener('input', function () {
+            validatePasswordStrength(this.value);
+        });
+
+        // Password confirmation validation
+        confirmPasswordInput.addEventListener('input', function () {
+            validatePasswordConfirmation();
+        });
+
+        // Form submission
+        form.addEventListener('submit', function (e) {
+            if (!validateForm()) {
+                e.preventDefault();
+            }
+        });
+    });
+
+    function validatePasswordStrength(password) {
+        const requirements = {
+            'length-req': password.length >= 8,
+            'uppercase-req': /[A-Z]/.test(password),
+            'lowercase-req': /[a-z]/.test(password),
+            'number-req': /\d/.test(password)
+        };
+
+        let score = 0;
+        for (const [id, met] of Object.entries(requirements)) {
+            const element = document.getElementById(id);
+            const icon = element.querySelector('i');
+
+            if (met) {
+                icon.className = 'fas fa-check text-green-500';
+                element.classList.add('met');
+                score++;
+            } else {
+                icon.className = 'fas fa-times text-red-500';
+                element.classList.remove('met');
+            }
+        }
+
+        // Update strength bar
+        const strengthFill = document.querySelector('.strength-fill');
+        const strengthText = document.querySelector('.strength-text');
+
+        const percentage = (score / 4) * 100;
+        strengthFill.style.width = percentage + '%';
+
+        if (score === 0) {
+            strengthFill.className = 'strength-fill';
+            strengthText.textContent = 'Password strength';
+        } else if (score === 1) {
+            strengthFill.className = 'strength-fill weak';
+            strengthText.textContent = 'Weak';
+        } else if (score === 2) {
+            strengthFill.className = 'strength-fill fair';
+            strengthText.textContent = 'Fair';
+        } else if (score === 3) {
+            strengthFill.className = 'strength-fill good';
+            strengthText.textContent = 'Good';
+        } else {
+            strengthFill.className = 'strength-fill strong';
+            strengthText.textContent = 'Strong';
+        }
+
+        return score === 4;
+    }
+
+    function validatePasswordConfirmation() {
+        const password = document.getElementById('password').value;
+        const confirmPassword = document.getElementById('confirm-password').value;
+        const feedback = document.querySelector('#confirm-password + .input-feedback');
+
+        if (confirmPassword && password !== confirmPassword) {
+            feedback.textContent = 'Passwords do not match';
+            feedback.className = 'input-feedback error';
+            return false;
+        } else {
+            feedback.textContent = '';
+            feedback.className = 'input-feedback';
+            return true;
+        }
+    }
+
+    function validateForm() {
+        const password = document.getElementById('password').value;
+        const isPasswordStrong = validatePasswordStrength(password);
+        const isPasswordConfirmed = validatePasswordConfirmation();
+
+        return isPasswordStrong && isPasswordConfirmed;
+    }
+
+    // Social login functions
+    function signupWithGoogle() {
+        window.location.href = '/auth/google';
+    }
+
+    function signupWithLinkedIn() {
+        window.location.href = '/auth/linkedin';
+    }
+
+    function signupWithGitHub() {
+        window.location.href = '/auth/github';
+    }
+</script>
+{% endblock %}

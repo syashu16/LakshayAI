@@ -1,0 +1,706 @@
+{% extends "base.html" %}
+
+{% block title %}Profile - LakshyaAI{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/dashboard.css') }}">
+<style>
+    .profile-container {
+        max-width: 1000px;
+        margin: 0 auto;
+        padding: 2rem;
+    }
+
+    .profile-header {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        border-radius: 1rem;
+        padding: 2rem;
+        color: white;
+        margin-bottom: 2rem;
+    }
+
+    .profile-avatar {
+        width: 120px;
+        height: 120px;
+        border-radius: 50%;
+        border: 4px solid white;
+        object-fit: cover;
+        cursor: pointer;
+    }
+
+    .profile-info h1 {
+        font-size: 2rem;
+        font-weight: 700;
+        margin-bottom: 0.5rem;
+    }
+
+    .profile-subtitle {
+        opacity: 0.9;
+        font-size: 1.1rem;
+    }
+
+    .profile-stats {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+        gap: 1.5rem;
+        margin-top: 2rem;
+    }
+
+    .stat-item {
+        text-align: center;
+    }
+
+    .stat-value {
+        font-size: 2rem;
+        font-weight: 700;
+    }
+
+    .stat-label {
+        opacity: 0.8;
+        font-size: 0.875rem;
+    }
+
+    .profile-content {
+        display: grid;
+        grid-template-columns: 1fr 300px;
+        gap: 2rem;
+    }
+
+    .profile-main {
+        space-y: 2rem;
+    }
+
+    .profile-sidebar {
+        space-y: 1.5rem;
+    }
+
+    .section-card {
+        background: white;
+        border-radius: 1rem;
+        padding: 1.5rem;
+        box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+        border: 1px solid #e5e7eb;
+    }
+
+    .section-header {
+        display: flex;
+        justify-content: between;
+        align-items: center;
+        margin-bottom: 1.5rem;
+    }
+
+    .section-title {
+        font-size: 1.25rem;
+        font-weight: 600;
+        color: #111827;
+    }
+
+    .edit-btn {
+        padding: 0.5rem 1rem;
+        background: #f3f4f6;
+        color: #374151;
+        border: 1px solid #d1d5db;
+        border-radius: 0.375rem;
+        font-size: 0.875rem;
+        cursor: pointer;
+        transition: all 0.2s;
+    }
+
+    .edit-btn:hover {
+        background: #e5e7eb;
+    }
+
+    .form-group {
+        margin-bottom: 1.5rem;
+    }
+
+    .form-label {
+        display: block;
+        font-weight: 500;
+        color: #374151;
+        margin-bottom: 0.5rem;
+    }
+
+    .form-input {
+        width: 100%;
+        padding: 0.75rem;
+        border: 1px solid #d1d5db;
+        border-radius: 0.5rem;
+        transition: border-color 0.2s;
+    }
+
+    .form-input:focus {
+        outline: none;
+        border-color: #3b82f6;
+        box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+    }
+
+    .form-textarea {
+        min-height: 100px;
+        resize: vertical;
+    }
+
+    .skill-list {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+    }
+
+    .skill-tag {
+        padding: 0.5rem 1rem;
+        background: #eff6ff;
+        color: #1d4ed8;
+        border-radius: 9999px;
+        font-size: 0.875rem;
+        border: 1px solid #dbeafe;
+    }
+
+    .experience-item {
+        border-left: 3px solid #3b82f6;
+        padding-left: 1rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .experience-title {
+        font-weight: 600;
+        color: #111827;
+    }
+
+    .experience-company {
+        color: #3b82f6;
+        font-weight: 500;
+    }
+
+    .experience-period {
+        color: #6b7280;
+        font-size: 0.875rem;
+        margin: 0.25rem 0;
+    }
+
+    .experience-description {
+        color: #4b5563;
+        line-height: 1.6;
+    }
+
+    .education-item {
+        margin-bottom: 1rem;
+    }
+
+    .education-degree {
+        font-weight: 600;
+        color: #111827;
+    }
+
+    .education-school {
+        color: #3b82f6;
+    }
+
+    .education-year {
+        color: #6b7280;
+        font-size: 0.875rem;
+    }
+
+    .progress-bar {
+        background: #f3f4f6;
+        border-radius: 9999px;
+        height: 8px;
+        overflow: hidden;
+    }
+
+    .progress-fill {
+        background: linear-gradient(90deg, #3b82f6, #1d4ed8);
+        height: 100%;
+        transition: width 0.3s ease;
+    }
+
+    .completion-item {
+        display: flex;
+        justify-content: between;
+        align-items: center;
+        padding: 0.75rem 0;
+        border-bottom: 1px solid #f3f4f6;
+    }
+
+    .completion-item:last-child {
+        border-bottom: none;
+    }
+
+    .quick-actions {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 1rem;
+    }
+
+    .action-card {
+        display: block;
+        padding: 1rem;
+        background: #f8fafc;
+        border: 1px solid #e2e8f0;
+        border-radius: 0.75rem;
+        text-decoration: none;
+        color: #374151;
+        transition: all 0.2s;
+    }
+
+    .action-card:hover {
+        background: #f1f5f9;
+        border-color: #cbd5e1;
+        transform: translateY(-1px);
+    }
+
+    .action-icon {
+        width: 40px;
+        height: 40px;
+        border-radius: 0.5rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 0.75rem;
+    }
+
+    .action-title {
+        font-weight: 600;
+        margin-bottom: 0.25rem;
+    }
+
+    .action-description {
+        font-size: 0.875rem;
+        color: #6b7280;
+    }
+
+    @media (max-width: 768px) {
+        .profile-content {
+            grid-template-columns: 1fr;
+        }
+
+        .profile-stats {
+            grid-template-columns: repeat(2, 1fr);
+        }
+
+        .quick-actions {
+            grid-template-columns: 1fr;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="profile-container">
+    <!-- Profile Header -->
+    <div class="profile-header">
+        <div class="flex items-center space-x-6">
+            <div class="profile-avatar-container">
+                <img src="{{ current_user.profile_picture or '/static/images/default-avatar.png' }}"
+                    alt="Profile Picture" class="profile-avatar"
+                    onclick="document.getElementById('avatar-upload').click()">
+                <input type="file" id="avatar-upload" accept="image/*" style="display: none;">
+            </div>
+
+            <div class="profile-info flex-1">
+                <h1>{{ current_user.first_name }} {{ current_user.last_name }}</h1>
+                <p class="profile-subtitle">{{ current_user.job_title or 'Professional' }}</p>
+                <p class="mt-2 opacity-90">{{ current_user.bio or 'Career-focused professional leveraging AI for growth'
+                    }}</p>
+
+                <div class="profile-stats">
+                    <div class="stat-item">
+                        <div class="stat-value">{{ current_user.profile_completion or 0 }}%</div>
+                        <div class="stat-label">Profile Complete</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">{{ current_user.applications_count or 0 }}</div>
+                        <div class="stat-label">Applications</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">{{ current_user.skills_count or 0 }}</div>
+                        <div class="stat-label">Skills</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">{{ current_user.connections_count or 0 }}</div>
+                        <div class="stat-label">Connections</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="profile-content">
+        <!-- Main Content -->
+        <div class="profile-main">
+            <!-- Personal Information -->
+            <div class="section-card">
+                <div class="section-header">
+                    <h2 class="section-title">Personal Information</h2>
+                    <button class="edit-btn" onclick="toggleEdit('personal-info')">
+                        <i class="fas fa-edit mr-1"></i>Edit
+                    </button>
+                </div>
+
+                <div id="personal-info-view">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label class="form-label">Full Name</label>
+                            <p class="text-gray-900">{{ current_user.first_name }} {{ current_user.last_name }}</p>
+                        </div>
+                        <div>
+                            <label class="form-label">Email</label>
+                            <p class="text-gray-900">{{ current_user.email }}</p>
+                        </div>
+                        <div>
+                            <label class="form-label">Phone</label>
+                            <p class="text-gray-900">{{ current_user.phone or 'Not provided' }}</p>
+                        </div>
+                        <div>
+                            <label class="form-label">Location</label>
+                            <p class="text-gray-900">{{ current_user.location or 'Not provided' }}</p>
+                        </div>
+                        <div class="md:col-span-2">
+                            <label class="form-label">Bio</label>
+                            <p class="text-gray-900">{{ current_user.bio or 'No bio provided' }}</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="personal-info-edit" style="display: none;">
+                    <form id="personal-info-form">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div class="form-group">
+                                <label class="form-label">First Name</label>
+                                <input type="text" class="form-input" name="first_name"
+                                    value="{{ current_user.first_name }}">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Last Name</label>
+                                <input type="text" class="form-input" name="last_name"
+                                    value="{{ current_user.last_name }}">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Phone</label>
+                                <input type="tel" class="form-input" name="phone"
+                                    value="{{ current_user.phone or '' }}">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Location</label>
+                                <input type="text" class="form-input" name="location"
+                                    value="{{ current_user.location or '' }}">
+                            </div>
+                            <div class="form-group md:col-span-2">
+                                <label class="form-label">Bio</label>
+                                <textarea class="form-input form-textarea"
+                                    name="bio">{{ current_user.bio or '' }}</textarea>
+                            </div>
+                        </div>
+                        <div class="flex gap-2 mt-4">
+                            <button type="submit" class="btn btn-primary">Save Changes</button>
+                            <button type="button" onclick="cancelEdit('personal-info')"
+                                class="btn btn-secondary">Cancel</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Professional Experience -->
+            <div class="section-card">
+                <div class="section-header">
+                    <h2 class="section-title">Professional Experience</h2>
+                    <button class="edit-btn" onclick="toggleEdit('experience')">
+                        <i class="fas fa-plus mr-1"></i>Add Experience
+                    </button>
+                </div>
+
+                <div id="experience-list">
+                    {% if current_user.experience %}
+                    {% for exp in current_user.experience %}
+                    <div class="experience-item">
+                        <div class="experience-title">{{ exp.title }}</div>
+                        <div class="experience-company">{{ exp.company }}</div>
+                        <div class="experience-period">{{ exp.start_date }} - {{ exp.end_date or 'Present' }}</div>
+                        <div class="experience-description">{{ exp.description }}</div>
+                    </div>
+                    {% endfor %}
+                    {% else %}
+                    <p class="text-gray-500">No experience added yet. Click "Add Experience" to get started.</p>
+                    {% endif %}
+                </div>
+            </div>
+
+            <!-- Education -->
+            <div class="section-card">
+                <div class="section-header">
+                    <h2 class="section-title">Education</h2>
+                    <button class="edit-btn" onclick="toggleEdit('education')">
+                        <i class="fas fa-plus mr-1"></i>Add Education
+                    </button>
+                </div>
+
+                <div id="education-list">
+                    {% if current_user.education %}
+                    {% for edu in current_user.education %}
+                    <div class="education-item">
+                        <div class="education-degree">{{ edu.degree }}</div>
+                        <div class="education-school">{{ edu.school }}</div>
+                        <div class="education-year">{{ edu.year }}</div>
+                    </div>
+                    {% endfor %}
+                    {% else %}
+                    <p class="text-gray-500">No education added yet. Click "Add Education" to get started.</p>
+                    {% endif %}
+                </div>
+            </div>
+
+            <!-- Skills -->
+            <div class="section-card">
+                <div class="section-header">
+                    <h2 class="section-title">Skills</h2>
+                    <button class="edit-btn" onclick="toggleEdit('skills')">
+                        <i class="fas fa-edit mr-1"></i>Edit Skills
+                    </button>
+                </div>
+
+                <div class="skill-list">
+                    {% if current_user.skills %}
+                    {% for skill in current_user.skills %}
+                    <span class="skill-tag">{{ skill.name }}</span>
+                    {% endfor %}
+                    {% else %}
+                    <p class="text-gray-500">No skills added yet. Click "Edit Skills" to add your expertise.</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+        <!-- Sidebar -->
+        <div class="profile-sidebar">
+            <!-- Profile Completion -->
+            <div class="section-card">
+                <h3 class="section-title mb-4">Profile Completion</h3>
+                <div class="mb-4">
+                    <div class="flex justify-between text-sm mb-1">
+                        <span>Overall Progress</span>
+                        <span>{{ current_user.profile_completion or 0 }}%</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: {{ current_user.profile_completion or 0 }}%"></div>
+                    </div>
+                </div>
+
+                <div class="space-y-2">
+                    <div class="completion-item">
+                        <span class="text-sm">Basic Info</span>
+                        <i class="fas fa-check text-green-500"></i>
+                    </div>
+                    <div class="completion-item">
+                        <span class="text-sm">Profile Picture</span>
+                        <i
+                            class="fas fa-{{ 'check text-green-500' if current_user.profile_picture else 'times text-gray-400' }}"></i>
+                    </div>
+                    <div class="completion-item">
+                        <span class="text-sm">Experience</span>
+                        <i
+                            class="fas fa-{{ 'check text-green-500' if current_user.experience else 'times text-gray-400' }}"></i>
+                    </div>
+                    <div class="completion-item">
+                        <span class="text-sm">Skills</span>
+                        <i
+                            class="fas fa-{{ 'check text-green-500' if current_user.skills else 'times text-gray-400' }}"></i>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quick Actions -->
+            <div class="section-card">
+                <h3 class="section-title mb-4">Quick Actions</h3>
+                <div class="space-y-3">
+                    <a href="{{ url_for('resume.upload') }}" class="action-card">
+                        <div class="action-icon bg-blue-100">
+                            <i class="fas fa-upload text-blue-600"></i>
+                        </div>
+                        <div class="action-title">Upload Resume</div>
+                        <div class="action-description">Get AI analysis and optimization</div>
+                    </a>
+
+                    <a href="{{ url_for('jobs.search') }}" class="action-card">
+                        <div class="action-icon bg-green-100">
+                            <i class="fas fa-search text-green-600"></i>
+                        </div>
+                        <div class="action-title">Find Jobs</div>
+                        <div class="action-description">Search matching opportunities</div>
+                    </a>
+
+                    <a href="{{ url_for('chat.ai_coach') }}" class="action-card">
+                        <div class="action-icon bg-purple-100">
+                            <i class="fas fa-robot text-purple-600"></i>
+                        </div>
+                        <div class="action-title">AI Coach</div>
+                        <div class="action-description">Get career guidance</div>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Account Settings -->
+            <div class="section-card">
+                <h3 class="section-title mb-4">Account Settings</h3>
+                <div class="space-y-2">
+                    <a href="#" class="block text-sm text-gray-600 hover:text-gray-900">Privacy Settings</a>
+                    <a href="#" class="block text-sm text-gray-600 hover:text-gray-900">Notification Preferences</a>
+                    <a href="#" class="block text-sm text-gray-600 hover:text-gray-900">Change Password</a>
+                    <a href="#" class="block text-sm text-gray-600 hover:text-gray-900">Download Data</a>
+                    <a href="{{ url_for('auth.logout') }}"
+                        class="block text-sm text-red-600 hover:text-red-800">Logout</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    // Profile management functionality
+    document.addEventListener('DOMContentLoaded', function () {
+        initializeProfileForms();
+        setupAvatarUpload();
+    });
+
+    function initializeProfileForms() {
+        // Handle personal info form submission
+        const personalInfoForm = document.getElementById('personal-info-form');
+        if (personalInfoForm) {
+            personalInfoForm.addEventListener('submit', async function (e) {
+                e.preventDefault();
+                await savePersonalInfo(new FormData(this));
+            });
+        }
+    }
+
+    function setupAvatarUpload() {
+        const avatarUpload = document.getElementById('avatar-upload');
+        if (avatarUpload) {
+            avatarUpload.addEventListener('change', function (e) {
+                if (e.target.files && e.target.files[0]) {
+                    uploadAvatar(e.target.files[0]);
+                }
+            });
+        }
+    }
+
+    function toggleEdit(section) {
+        const viewElement = document.getElementById(`${section}-view`);
+        const editElement = document.getElementById(`${section}-edit`);
+
+        if (viewElement && editElement) {
+            const isEditing = editElement.style.display !== 'none';
+
+            if (isEditing) {
+                viewElement.style.display = 'block';
+                editElement.style.display = 'none';
+            } else {
+                viewElement.style.display = 'none';
+                editElement.style.display = 'block';
+            }
+        }
+    }
+
+    function cancelEdit(section) {
+        const viewElement = document.getElementById(`${section}-view`);
+        const editElement = document.getElementById(`${section}-edit`);
+
+        if (viewElement && editElement) {
+            viewElement.style.display = 'block';
+            editElement.style.display = 'none';
+        }
+    }
+
+    async function savePersonalInfo(formData) {
+        try {
+            const response = await fetch('/api/profile/personal-info', {
+                method: 'POST',
+                body: formData
+            });
+
+            const result = await response.json();
+
+            if (result.success) {
+                showNotification('Personal information updated successfully!', 'success');
+                cancelEdit('personal-info');
+                // Refresh the page to show updated data
+                setTimeout(() => window.location.reload(), 1000);
+            } else {
+                showNotification(result.error || 'Failed to update information', 'error');
+            }
+        } catch (error) {
+            console.error('Error saving personal info:', error);
+            showNotification('Failed to save changes. Please try again.', 'error');
+        }
+    }
+
+    async function uploadAvatar(file) {
+        const formData = new FormData();
+        formData.append('avatar', file);
+
+        try {
+            // Show loading state
+            const avatar = document.querySelector('.profile-avatar');
+            const originalSrc = avatar.src;
+            avatar.style.opacity = '0.5';
+
+            const response = await fetch('/api/profile/avatar', {
+                method: 'POST',
+                body: formData
+            });
+
+            const result = await response.json();
+
+            if (result.success) {
+                avatar.src = result.avatar_url;
+                showNotification('Profile picture updated successfully!', 'success');
+            } else {
+                avatar.src = originalSrc;
+                showNotification(result.error || 'Failed to upload avatar', 'error');
+            }
+
+            avatar.style.opacity = '1';
+
+        } catch (error) {
+            console.error('Error uploading avatar:', error);
+            showNotification('Failed to upload picture. Please try again.', 'error');
+            avatar.style.opacity = '1';
+        }
+    }
+
+    function showNotification(message, type = 'info') {
+        const notification = document.createElement('div');
+        notification.className = `fixed top-4 right-4 z-50 p-4 rounded-lg text-white max-w-sm transform translate-x-full transition-transform duration-300 ${type === 'success' ? 'bg-green-500' :
+                type === 'error' ? 'bg-red-500' :
+                    type === 'warning' ? 'bg-yellow-500' :
+                        'bg-blue-500'
+            }`;
+
+        notification.innerHTML = `
+        <div class="flex items-center justify-between">
+            <div class="flex items-center">
+                <i class="fas ${type === 'success' ? 'fa-check-circle' :
+                type === 'error' ? 'fa-exclamation-circle' :
+                    type === 'warning' ? 'fa-exclamation-triangle' :
+                        'fa-info-circle'
+            } mr-2"></i>
+                <span>${message}</span>
+            </div>
+            <button onclick="this.parentElement.parentElement.remove()" class="ml-2 text-white/80 hover:text-white">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+    `;
+
+        document.body.appendChild(notification);
+
+        setTimeout(() => notification.classList.remove('translate-x-full'), 100);
+        setTimeout(() => {
+            if (notification.parentNode) {
+                notification.classList.add('translate-x-full');
+                setTimeout(() => notification.remove(), 300);
+            }
+        }, 5000);
+    }
+</script>
+{% endblock %}

@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analytics Dashboard - LakshyaAI</title>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
+
+    <!-- Icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { 'inter': ['Inter', 'sans-serif'] },
+                    animation: {
+                        'float': 'float 6s ease-in-out infinite',
+                        'pulse-glow': 'pulse-glow 2s ease-in-out infinite alternate',
+                        'slide-up': 'slide-up 0.5s ease-out',
+                        'fade-in': 'fade-in 0.3s ease-out',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- Custom Styles -->
+    <style>
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: translateY(0px) rotate(0deg);
+            }
+
+            50% {
+                transform: translateY(-20px) rotate(180deg);
+            }
+        }
+
+        @keyframes pulse-glow {
+            0% {
+                box-shadow: 0 0 20px rgba(59, 130, 246, 0.4);
+            }
+
+            100% {
+                box-shadow: 0 0 40px rgba(139, 92, 246, 0.6);
+            }
+        }
+
+        @keyframes slide-up {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fade-in {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        .glass-card {
+            background: rgba(15, 23, 42, 0.6);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .gradient-border {
+            position: relative;
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(139, 92, 246, 0.1));
+        }
+
+        .gradient-border::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            padding: 1px;
+            background: linear-gradient(135deg, #3b82f6, #8b5cf6, #ec4899);
+            border-radius: inherit;
+            mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            mask-composite: exclude;
+        }
+
+        .floating-orb {
+            animation: float 8s ease-in-out infinite;
+        }
+
+        .chart-bar {
+            transition: all 0.3s ease;
+        }
+
+        .chart-bar:hover {
+            transform: scaleY(1.1);
+        }
+    </style>
+</head>
+
+<body class="font-inter bg-slate-950 text-white overflow-x-hidden">
+
+    <!-- Background -->
+    <div class="fixed inset-0 z-0">
+        <div class="absolute inset-0 bg-gradient-to-br from-slate-950 via-slate-900 to-slate-800"></div>
+        <div class="absolute inset-0 overflow-hidden pointer-events-none">
+            <div class="floating-orb absolute top-20 left-10 w-96 h-96 bg-blue-500/5 rounded-full blur-3xl"></div>
+            <div class="floating-orb absolute top-40 right-20 w-64 h-64 bg-purple-500/5 rounded-full blur-3xl"
+                style="animation-delay: 3s;"></div>
+            <div class="floating-orb absolute bottom-20 left-1/4 w-48 h-48 bg-pink-500/5 rounded-full blur-3xl"
+                style="animation-delay: 6s;"></div>
+        </div>
+    </div>
+
+    <!-- Header -->
+    <header class="relative z-50 glass-card border-b border-slate-800/50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <!-- Logo -->
+                <div class="flex items-center space-x-3">
+                    <div
+                        class="w-10 h-10 bg-gradient-to-br from-blue-500 to-purple-600 rounded-xl flex items-center justify-center shadow-lg">
+                        <i class="fas fa-rocket text-white text-lg"></i>
+                    </div>
+                    <div>
+                        <h1
+                            class="text-xl font-bold bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
+                            LakshyaAI</h1>
+                        <p class="text-xs text-slate-400">Analytics Dashboard</p>
+                    </div>
+                </div>
+
+                <!-- Back Button -->
+                <a href="/dashboard"
+                    class="flex items-center space-x-2 px-4 py-2 bg-slate-800/50 hover:bg-slate-700/50 rounded-xl transition-all group">
+                    <i class="fas fa-arrow-left text-blue-400 group-hover:-translate-x-1 transition-transform"></i>
+                    <span class="text-slate-300 group-hover:text-white">Back to Dashboard</span>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="relative z-10 pt-8 pb-20">
+        <!-- Hero Section -->
+        <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center mb-12">
+            <h1 class="text-5xl md:text-6xl font-bold mb-6">
+                <span class="bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent">
+                    <i class="fas fa-chart-line mr-4"></i>Analytics Dashboard
+                </span>
+            </h1>
+            <p class="text-xl text-slate-300 max-w-3xl mx-auto">
+                Get AI-powered insights into job markets, salary trends, and career opportunities
+            </p>
+        </section>
+
+        <!-- Analytics Cards -->
+        <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-12">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- Salary Insights -->
+                <div class="glass-card rounded-2xl p-6 hover:scale-105 transition-all cursor-pointer group"
+                    onclick="loadSalaryInsights()">
+                    <div
+                        class="w-16 h-16 bg-gradient-to-br from-green-500 to-green-600 rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform">
+                        <i class="fas fa-dollar-sign text-white text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2 text-center">Salary Insights</h3>
+                    <p class="text-slate-400 text-center">Get salary data for any role and location</p>
+                </div>
+
+                <!-- Trending Skills -->
+                <div class="glass-card rounded-2xl p-6 hover:scale-105 transition-all cursor-pointer group"
+                    onclick="loadTrendingSkills()">
+                    <div
+                        class="w-16 h-16 bg-gradient-to-br from-purple-500 to-purple-600 rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform">
+                        <i class="fas fa-trending-up text-white text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2 text-center">Trending Skills</h3>
+                    <p class="text-slate-400 text-center">Discover in-demand skills in the market</p>
+                </div>
+
+                <!-- Location Insights -->
+                <div class="glass-card rounded-2xl p-6 hover:scale-105 transition-all cursor-pointer group"
+                    onclick="loadLocationInsights()">
+                    <div
+                        class="w-16 h-16 bg-gradient-to-br from-blue-500 to-blue-600 rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform">
+                        <i class="fas fa-map-marker-alt text-white text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2 text-center">Location Insights</h3>
+                    <p class="text-slate-400 text-center">Compare job markets across cities</p>
+                </div>
+
+                <!-- Career Progression -->
+                <div class="glass-card rounded-2xl p-6 hover:scale-105 transition-all cursor-pointer group"
+                    onclick="loadCareerProgression()">
+                    <div
+                        class="w-16 h-16 bg-gradient-to-br from-orange-500 to-orange-600 rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform">
+                        <i class="fas fa-rocket text-white text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2 text-center">Career Path</h3>
+                    <p class="text-slate-400 text-center">Plan your career progression</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Search Controls -->
+        <section class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 mb-12">
+            <div class="glass-card rounded-2xl p-8">
+                <h2 class="text-2xl font-bold mb-6 text-center">Search Parameters</h2>
+                <form id="analyticsSearchForm">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label class="block text-sm font-medium text-slate-300 mb-2">Job Title</label>
+                            <input type="text" id="jobTitle" value="Software Developer"
+                                class="w-full px-4 py-3 bg-slate-800/50 border border-slate-700 rounded-xl text-white placeholder-slate-400 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all"
+                                placeholder="Enter job title">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-slate-300 mb-2">Location</label>
+                            <input type="text" id="location" value="London"
+                                class="w-full px-4 py-3 bg-slate-800/50 border border-slate-700 rounded-xl text-white placeholder-slate-400 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all"
+                                placeholder="Enter location">
+                        </div>
+                    </div>
+                    <div class="text-center mt-6">
+                        <button type="submit"
+                            class="px-8 py-3 bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600 text-white font-semibold rounded-xl transition-all transform hover:scale-105">
+                            <i class="fas fa-search mr-2"></i>Search Analytics
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </section>
+
+        <!-- Results Section -->
+        <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div id="resultsContainer" class="glass-card rounded-2xl p-8">
+                <h2 class="text-3xl font-bold mb-6 text-center">
+                    <i class="fas fa-chart-bar mr-3 text-blue-400"></i>Analytics Results
+                </h2>
+                <div id="resultsContent" class="text-center text-slate-400">
+                    <div class="py-16">
+                        <i class="fas fa-chart-line text-6xl text-slate-600 mb-6"></i>
+                        <p class="text-xl">Click on any analytics card above to view insights</p>
+                        <p class="text-slate-500 mt-2">Real-time data powered by Adzuna API</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Loading Overlay -->
+        <div id="loadingOverlay"
+            class="hidden fixed inset-0 z-50 bg-black/50 backdrop-blur-sm flex items-center justify-center">
+            <div class="glass-card rounded-2xl p-8 text-center max-w-sm mx-4">
+                <div
+                    class="animate-spin rounded-full h-12 w-12 border-4 border-blue-500 border-t-transparent mx-auto mb-4">
+                </div>
+                <h3 class="text-xl font-bold mb-2">Loading Analytics</h3>
+                <p class="text-slate-400">Fetching real-time data...</p>
+            </div>
+        </div>
+    </main>
+
+    <!-- JavaScript -->
+    <script src="/static/js/analytics-dashboard.js"></script>
+</body>
+
+</html>

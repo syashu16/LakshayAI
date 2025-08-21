@@ -1,0 +1,23 @@
+{
+  "category": {
+    "train_accuracy": 1.0,
+    "test_accuracy": 1.0,
+    "model_type": "RandomForest"
+  },
+  "match_score": {
+    "train_r2": 0.621281816694228,
+    "test_r2": 0.5674701241276705,
+    "mse": 0.003837322878062892,
+    "model_type": "GradientBoosting"
+  },
+  "experience": {
+    "train_accuracy": 0.983625,
+    "test_accuracy": 0.8505,
+    "model_type": "SVM"
+  },
+  "skill_domain": {
+    "train_accuracy": 0.229,
+    "test_accuracy": 0.1565,
+    "model_type": "LogisticRegression"
+  }
+}

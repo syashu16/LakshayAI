@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interview Preparation - LakshyaAI</title>
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/interview-preparation.css') }}">
+</head>
+<body class="font-inter bg-slate-950 text-white min-h-screen">
+    
+    <!-- Background Orbs -->
+    <div class="interview-bg">
+        <div class="orb1"></div>
+        <div class="orb2"></div>
+        <div class="orb3"></div>
+        <div class="orb4"></div>
+        <div class="orb5"></div>
+        <div class="orb6"></div>
+    </div>
+
+    <!-- Header -->
+    <header class="glass-card border-b border-slate-800/50 sticky top-0 z-40">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <!-- Logo & Title -->
+                <div class="flex items-center space-x-4">
+                    <a href="/dashboard" class="flex items-center space-x-3">
+                        <div class="w-10 h-10 bg-gradient-to-br from-emerald-500 to-cyan-600 rounded-xl flex items-center justify-center shadow-lg">
+                            <i class="fas fa-microphone text-white text-lg"></i>
+                        </div>
+                        <div>
+                            <h1 class="text-xl font-bold bg-gradient-to-r from-emerald-400 to-cyan-400 bg-clip-text text-transparent">Interview Preparation</h1>
+                            <p class="text-xs text-slate-400">Powered by LakshyaAI • User: syashu16</p>
+                        </div>
+                    </a>
+                    
+                    <!-- AI Status -->
+                    <div class="flex items-center space-x-2 px-3 py-1 bg-emerald-500/20 rounded-full border border-emerald-500/30">
+                        <div class="w-2 h-2 bg-emerald-400 rounded-full animate-pulse"></div>
+                        <span id="ai-status" class="text-emerald-400 text-sm font-semibold">AI Interviewer Ready</span>
+                    </div>
+                </div>
+
+                <!-- Header Actions -->
+                <div class="flex items-center space-x-4">
+                    <!-- Practice Sessions Counter -->
+                    <div class="flex items-center space-x-2 px-3 py-1 bg-cyan-500/20 rounded-full border border-cyan-500/30">
+                        <i class="fas fa-trophy text-cyan-400"></i>
+                        <span id="sessions-completed" class="text-cyan-400 text-sm font-semibold">5 Sessions</span>
+                    </div>
+                    
+                    <a href="/dashboard" class="flex items-center space-x-2 px-4 py-2 bg-slate-800/50 hover:bg-slate-700/50 rounded-xl transition-all">
+                        <i class="fas fa-arrow-left text-slate-400"></i>
+                        <span class="text-slate-300">Dashboard</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="relative z-10 max-w-7xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
+        
+        <!-- Page Title -->
+        <div class="text-center mb-8">
+            <h2 class="text-3xl font-bold bg-gradient-to-r from-emerald-400 to-cyan-400 bg-clip-text text-transparent mb-4">
+                AI-Powered Interview Preparation
+            </h2>
+            <p class="text-slate-300 max-w-2xl mx-auto">
+                Practice with our AI interviewer, get personalized feedback, and build confidence 
+                for your dream job interviews with realistic mock sessions.
+            </p>
+        </div>
+
+        <!-- Quick Start Section -->
+        <div class="glass-card rounded-3xl p-8 mb-8 shadow-xl">
+            <h3 class="text-2xl font-bold text-white mb-6">
+                <i class="fas fa-rocket mr-2 text-emerald-400"></i>Quick Start Interview Practice
+            </h3>
+            
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
+                <!-- Job Role Selection -->
+                <div>
+                    <label for="interview-role" class="block text-sm font-medium text-slate-300 mb-2">
+                        Target Job Role
+                    </label>
+                    <select id="interview-role" class="w-full px-4 py-3 bg-slate-800/50 border border-slate-700 rounded-xl focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 transition-all">
+                        <option value="">Select Role</option>
+                        <option value="full-stack-developer">Full Stack Developer</option>
+                        <option value="frontend-developer">Frontend Developer</option>
+                        <option value="backend-developer">Backend Developer</option>
+                        <option value="data-scientist">Data Scientist</option>
+                        <option value="product-manager">Product Manager</option>
+                        <option value="ui-ux-designer">UI/UX Designer</option>
+                        <option value="devops-engineer">DevOps Engineer</option>
+                        <option value="mobile-developer">Mobile Developer</option>
+                    </select>
+                </div>
+                
+                <!-- Experience Level -->
+                <div>
+                    <label for="experience-level" class="block text-sm font-medium text-slate-300 mb-2">
+                        Experience Level
+                    </label>
+                    <select id="experience-level" class="w-full px-4 py-3 bg-slate-800/50 border border-slate-700 rounded-xl focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 transition-all">
+                        <option value="entry">Entry Level (0-2 years)</option>
+                        <option value="mid" selected>Mid Level (2-5 years)</option>
+                        <option value="senior">Senior Level (5+ years)</option>
+                        <option value="lead">Lead Level (8+ years)</option>
+                    </select>
+                </div>
+                
+                <!-- Interview Type -->
+                <div>
+                    <label for="interview-type" class="block text-sm font-medium text-slate-300 mb-2">
+                        Interview Type
+                    </label>
+                    <select id="interview-type" class="w-full px-4 py-3 bg-slate-800/50 border border-slate-700 rounded-xl focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 transition-all">
+                        <option value="technical">Technical Interview</option>
+                        <option value="behavioral">Behavioral Interview</option>
+                        <option value="system-design">System Design</option>
+                        <option value="hr-round">HR Round</option>
+                        <option value="coding-challenge">Coding Challenge</option>
+                        <option value="mixed">Mixed Interview</option>
+                    </select>
+                </div>
+            </div>
+            
+            <!-- Company Context (Optional) -->
+            <div class="mb-6">
+                <label for="company-context" class="block text-sm font-medium text-slate-300 mb-2">
+                    Company/Context (Optional)
+                </label>
+                <input type="text" id="company-context" placeholder="e.g., Google, Startup, E-commerce, Fintech..." 
+                       class="w-full px-4 py-3 bg-slate-800/50 border border-slate-700 rounded-xl focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 transition-all">
+            </div>
+            
+            <!-- Start Interview Button -->
+            <div class="text-center">
+                <button id="start-interview-btn" class="px-8 py-4 bg-gradient-to-r from-emerald-500 to-cyan-600 rounded-xl font-bold text-white text-lg hover:shadow-lg transition-all group">
+                    <i class="fas fa-play mr-3 group-hover:animate-pulse"></i>
+                    Start AI Mock Interview
+                </button>
+            </div>
+        </div>
+
+        <!-- Interview Session (Hidden initially) -->
+        <div id="interview-session" class="hidden glass-card rounded-3xl p-8 shadow-xl mb-8">
+            <div class="flex items-center justify-between mb-6">
+                <div>
+                    <h3 class="text-xl font-bold text-white">Mock Interview in Progress</h3>
+                    <p class="text-slate-400">Question <span id="current-question-number">1</span> of <span id="total-questions">10</span></p>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <!-- Timer -->
+                    <div class="flex items-center space-x-2 px-3 py-1 bg-yellow-500/20 rounded-full border border-yellow-500/30">
+                        <i class="fas fa-clock text-yellow-400"></i>
+                        <span id="interview-timer" class="text-yellow-400 text-sm font-semibold">05:00</span>
+                    </div>
+                    <!-- End Interview -->
+                    <button id="end-interview-btn" class="px-4 py-2 bg-red-500/20 border border-red-500/30 rounded-xl text-red-400 hover:bg-red-500/30 transition-all">
+                        <i class="fas fa-stop mr-2"></i>End Interview
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Progress Bar -->
+            <div class="w-full bg-slate-800 rounded-full h-2 mb-6">
+                <div id="interview-progress" class="bg-gradient-to-r from-emerald-500 to-cyan-500 h-2 rounded-full transition-all duration-500" style="width: 10%"></div>
+            </div>
+            
+            <!-- AI Interviewer -->
+            <div class="bg-gradient-to-r from-emerald-500/10 to-cyan-500/10 border border-emerald-500/20 rounded-2xl p-6 mb-6">
+                <div class="flex items-start space-x-4">
+                    <div class="w-12 h-12 bg-gradient-to-br from-emerald-500 to-cyan-600 rounded-full flex items-center justify-center">
+                        <i class="fas fa-robot text-white"></i>
+                    </div>
+                    <div class="flex-1">
+                        <h4 class="font-semibold text-emerald-400 mb-2">AI Interviewer</h4>
+                        <p id="current-question" class="text-slate-200 leading-relaxed">
+                            Welcome! Let's start with an introduction. Can you tell me about yourself and your background in software development?
+                        </p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Answer Input -->
+            <div class="mb-6">
+                <label for="interview-answer" class="block text-sm font-medium text-slate-300 mb-2">
+                    Your Answer
+                </label>
+                <textarea id="interview-answer" rows="6" placeholder="Type your answer here... Take your time and be detailed."
+                          class="w-full px-4 py-3 bg-slate-800/50 border border-slate-700 rounded-xl focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 transition-all resize-none"></textarea>
+                <div class="flex justify-between items-center mt-2">
+                    <span id="answer-word-count" class="text-xs text-slate-500">0 words</span>
+                    <div class="flex space-x-2">
+                        <button id="voice-input-btn" class="px-3 py-1 bg-blue-500/20 border border-blue-500/30 rounded-lg text-blue-400 text-sm hover:bg-blue-500/30 transition-all">
+                            <i class="fas fa-microphone mr-1"></i>Voice Input
+                        </button>
+                        <button id="submit-answer-btn" class="px-4 py-2 bg-emerald-500/20 border border-emerald-500/30 rounded-lg text-emerald-400 hover:bg-emerald-500/30 transition-all">
+                            Submit Answer
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Quick Tips -->
+            <div class="bg-slate-800/30 rounded-2xl p-4">
+                <h5 class="font-semibold text-cyan-400 mb-2">💡 Quick Tips</h5>
+                <div id="interview-tips" class="text-slate-300 text-sm">
+                    • Structure your answer with specific examples<br>
+                    • Highlight your achievements and impact<br>
+                    • Keep it concise but comprehensive
+                </div>
+            </div>
+        </div>
+
+        <!-- Interview Results (Hidden initially) -->
+        <div id="interview-results" class="hidden space-y-6">
+            <div class="glass-card rounded-3xl p-8 shadow-xl">
+                <h3 class="text-2xl font-bold text-white mb-6">
+                    <i class="fas fa-chart-line mr-2 text-emerald-400"></i>Interview Performance Report
+                </h3>
+                
+                <!-- Overall Score -->
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+                    <div class="text-center">
+                        <div class="relative w-20 h-20 mx-auto mb-3">
+                            <svg class="w-20 h-20 transform -rotate-90" viewBox="0 0 100 100">
+                                <circle cx="50" cy="50" r="35" stroke="#1e293b" stroke-width="10" fill="none"></circle>
+                                <circle id="overall-score-circle" cx="50" cy="50" r="35" stroke="#10b981" stroke-width="10" fill="none" 
+                                        stroke-dasharray="219.9" stroke-dashoffset="66" stroke-linecap="round"></circle>
+                            </svg>
+                            <div class="absolute inset-0 flex items-center justify-center">
+                                <span id="overall-score" class="text-xl font-bold text-emerald-400">85%</span>
+                            </div>
+                        </div>
+                        <h4 class="font-semibold text-white">Overall Score</h4>
+                        <p class="text-slate-400 text-sm">Excellent Performance</p>
+                    </div>
+                    
+                    <div class="text-center">
+                        <div class="w-12 h-12 bg-blue-500/20 rounded-2xl flex items-center justify-center mx-auto mb-3">
+                            <i class="fas fa-comments text-2xl text-blue-400"></i>
+                        </div>
+                        <div id="communication-score" class="text-xl font-bold text-blue-400 mb-1">8.5/10</div>
+                        <h4 class="font-semibold text-white">Communication</h4>
+                        <p class="text-slate-400 text-sm">Clear & Structured</p>
+                    </div>
+                    
+                    <div class="text-center">
+                        <div class="w-12 h-12 bg-purple-500/20 rounded-2xl flex items-center justify-center mx-auto mb-3">
+                            <i class="fas fa-cogs text-2xl text-purple-400"></i>
+                        </div>
+                        <div id="technical-score" class="text-xl font-bold text-purple-400 mb-1">7.8/10</div>
+                        <h4 class="font-semibold text-white">Technical Skills</h4>
+                        <p class="text-slate-400 text-sm">Strong Foundation</p>
+                    </div>
+                    
+                    <div class="text-center">
+                        <div class="w-12 h-12 bg-yellow-500/20 rounded-2xl flex items-center justify-center mx-auto mb-3">
+                            <i class="fas fa-clock text-2xl text-yellow-400"></i>
+                        </div>
+                        <div id="time-management" class="text-xl font-bold text-yellow-400 mb-1">24 min</div>
+                        <h4 class="font-semibold text-white">Duration</h4>
+                        <p class="text-slate-400 text-sm">Well Paced</p>
+                    </div>
+                </div>
+                
+                <!-- AI Feedback -->
+                <div class="bg-gradient-to-r from-emerald-500/10 to-cyan-500/10 border border-emerald-500/20 rounded-2xl p-6">
+                    <h4 class="font-semibold text-emerald-400 mb-3 flex items-center">
+                        <i class="fas fa-robot mr-2"></i>AI Interviewer Feedback
+                    </h4>
+                    <p id="ai-feedback" class="text-slate-200 leading-relaxed mb-4">
+                        Great job! You demonstrated strong technical knowledge and communicated your ideas clearly. 
+                        Your examples were relevant and showed good problem-solving skills. Consider improving your 
+                        system design explanations with more detail on scalability considerations.
+                    </p>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="inline-block px-3 py-1 bg-green-500/20 border border-green-500/30 rounded-full text-green-400 text-sm">Strong Technical Knowledge</span>
+                        <span class="inline-block px-3 py-1 bg-blue-500/20 border border-blue-500/30 rounded-full text-blue-400 text-sm">Clear Communication</span>
+                        <span class="inline-block px-3 py-1 bg-yellow-500/20 border border-yellow-500/30 rounded-full text-yellow-400 text-sm">Needs: System Design Details</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Question-by-Question Analysis -->
+            <div class="glass-card rounded-3xl p-8 shadow-xl">
+                <h3 class="text-xl font-bold text-white mb-6">
+                    <i class="fas fa-list mr-2 text-cyan-400"></i>Question-by-Question Analysis
+                </h3>
+                <div id="question-analysis" class="space-y-4">
+                    <!-- Questions will be populated by JavaScript -->
+                </div>
+            </div>
+            
+            <!-- Action Items -->
+            <div class="glass-card rounded-3xl p-8 shadow-xl">
+                <h3 class="text-xl font-bold text-white mb-6">
+                    <i class="fas fa-tasks mr-2 text-orange-400"></i>Recommended Action Items
+                </h3>
+                <div id="action-items" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <!-- Action items will be populated by JavaScript -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Practice Categories -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+            
+            <!-- Technical Questions -->
+            <div class="practice-category-card" data-category="technical">
+                <div class="practice-icon technical">
+                    <i class="fas fa-code"></i>
+                </div>
+                <h3 class="text-lg font-bold text-white mb-2">Technical Questions</h3>
+                <p class="text-slate-400 text-sm mb-4">Practice coding problems, system design, and technical concepts</p>
+                <div class="flex justify-between items-center">
+                    <span class="text-emerald-400 font-semibold">450+ Questions</span>
+                    <i class="fas fa-arrow-right text-slate-400"></i>
+                </div>
+            </div>
+            
+            <!-- Behavioral Questions -->
+            <div class="practice-category-card" data-category="behavioral">
+                <div class="practice-icon behavioral">
+                    <i class="fas fa-users"></i>
+                </div>
+                <h3 class="text-lg font-bold text-white mb-2">Behavioral Questions</h3>
+                <p class="text-slate-400 text-sm mb-4">STAR method, leadership scenarios, and soft skills assessment</p>
+                <div class="flex justify-between items-center">
+                    <span class="text-blue-400 font-semibold">200+ Questions</span>
+                    <i class="fas fa-arrow-right text-slate-400"></i>
+                </div>
+            </div>
+            
+            <!-- System Design -->
+            <div class="practice-category-card" data-category="system-design">
+                <div class="practice-icon system-design">
+                    <i class="fas fa-sitemap"></i>
+                </div>
+                <h3 class="text-lg font-bold text-white mb-2">System Design</h3>
+                <p class="text-slate-400 text-sm mb-4">Scalability, architecture patterns, and design thinking</p>
+                <div class="flex justify-between items-center">
+                    <span class="text-purple-400 font-semibold">100+ Scenarios</span>
+                    <i class="fas fa-arrow-right text-slate-400"></i>
+                </div>
+            </div>
+            
+            <!-- HR Round -->
+            <div class="practice-category-card" data-category="hr-round">
+                <div class="practice-icon hr-round">
+                    <i class="fas fa-handshake"></i>
+                </div>
+                <h3 class="text-lg font-bold text-white mb-2">HR Round</h3>
+                <p class="text-slate-400 text-sm mb-4">Company culture, salary negotiation, and career goals</p>
+                <div class="flex justify-between items-center">
+                    <span class="text-pink-400 font-semibold">150+ Questions</span>
+                    <i class="fas fa-arrow-right text-slate-400"></i>
+                </div>
+            </div>
+            
+            <!-- Coding Challenges -->
+            <div class="practice-category-card" data-category="coding">
+                <div class="practice-icon coding">
+                    <i class="fas fa-terminal"></i>
+                </div>
+                <h3 class="text-lg font-bold text-white mb-2">Coding Challenges</h3>
+                <p class="text-slate-400 text-sm mb-4">Live coding, algorithms, and whiteboard programming</p>
+                <div class="flex justify-between items-center">
+                    <span class="text-green-400 font-semibold">300+ Problems</span>
+                    <i class="fas fa-arrow-right text-slate-400"></i>
+                </div>
+            </div>
+            
+            <!-- Industry Specific -->
+            <div class="practice-category-card" data-category="industry">
+                <div class="practice-icon industry">
+                    <i class="fas fa-building"></i>
+                </div>
+                <h3 class="text-lg font-bold text-white mb-2">Industry Specific</h3>
+                <p class="text-slate-400 text-sm mb-4">Fintech, Healthcare, E-commerce, and domain expertise</p>
+                <div class="flex justify-between items-center">
+                    <span class="text-orange-400 font-semibold">250+ Questions</span>
+                    <i class="fas fa-arrow-right text-slate-400"></i>
+                </div>
+            </div>
+        </div>
+
+        <!-- Recent Sessions -->
+        <div class="glass-card rounded-3xl p-8 shadow-xl mb-8">
+            <h3 class="text-xl font-bold text-white mb-6">
+                <i class="fas fa-history mr-2 text-slate-400"></i>Recent Practice Sessions
+            </h3>
+            <div id="recent-sessions" class="space-y-4">
+                <!-- Recent sessions will be populated by JavaScript -->
+            </div>
+        </div>
+
+        <!-- Interview Tips & Resources -->
+        <div class="glass-card rounded-3xl p-8 shadow-xl">
+            <h3 class="text-xl font-bold text-white mb-6">
+                <i class="fas fa-lightbulb mr-2 text-yellow-400"></i>Interview Success Tips
+            </h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div class="tip-card">
+                    <div class="tip-icon">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <h4 class="font-semibold text-white mb-2">Before the Interview</h4>
+                    <ul class="text-slate-400 text-sm space-y-1">
+                        <li>• Research the company thoroughly</li>
+                        <li>• Practice common questions</li>
+                        <li>• Prepare specific examples</li>
+                        <li>• Review your resume</li>
+                    </ul>
+                </div>
+                
+                <div class="tip-card">
+                    <div class="tip-icon">
+                        <i class="fas fa-comments"></i>
+                    </div>
+                    <h4 class="font-semibold text-white mb-2">During the Interview</h4>
+                    <ul class="text-slate-400 text-sm space-y-1">
+                        <li>• Listen carefully to questions</li>
+                        <li>• Use the STAR method</li>
+                        <li>• Ask thoughtful questions</li>
+                        <li>• Show enthusiasm</li>
+                    </ul>
+                </div>
+                
+                <div class="tip-card">
+                    <div class="tip-icon">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                    <h4 class="font-semibold text-white mb-2">After the Interview</h4>
+                    <ul class="text-slate-400 text-sm space-y-1">
+                        <li>• Send a thank-you email</li>
+                        <li>• Reflect on your performance</li>
+                        <li>• Follow up appropriately</li>
+                        <li>• Continue practicing</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Current Time Display -->
+        <div class="text-center mt-8">
+            <p class="text-slate-500 text-sm">
+                <i class="fas fa-clock mr-1"></i>
+                Last updated: <span class="text-emerald-400">2025-08-05 13:48:21 UTC</span>
+                • Interview Prep by <span class="text-cyan-400 font-semibold">LakshyaAI</span>
+            </p>
+        </div>
+    </main>
+
+    <!-- Custom JS -->
+    <script src="{{ url_for('static', filename='js/interview-preparation.js') }}"></script>
+</body>
+</html>

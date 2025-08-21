@@ -1,0 +1,674 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Privacy Policy - LakshyaAI</title>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
+
+    <!-- Icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { 'inter': ['Inter', 'sans-serif'] },
+                    animation: {
+                        'float': 'float 6s ease-in-out infinite',
+                        'pulse-glow': 'pulse-glow 2s ease-in-out infinite alternate',
+                        'slide-up': 'slide-up 0.5s ease-out',
+                        'fade-in': 'fade-in 0.3s ease-out',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- Custom Styles -->
+    <style>
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: translateY(0px) rotate(0deg);
+            }
+
+            50% {
+                transform: translateY(-20px) rotate(180deg);
+            }
+        }
+
+        @keyframes pulse-glow {
+            0% {
+                box-shadow: 0 0 20px rgba(59, 130, 246, 0.4);
+            }
+
+            100% {
+                box-shadow: 0 0 40px rgba(139, 92, 246, 0.6);
+            }
+        }
+
+        @keyframes slide-up {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fade-in {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        .glass-card {
+            background: rgba(15, 23, 42, 0.6);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .gradient-border {
+            position: relative;
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(139, 92, 246, 0.1));
+        }
+
+        .gradient-border::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            padding: 1px;
+            background: linear-gradient(135deg, #3b82f6, #8b5cf6, #ec4899);
+            border-radius: inherit;
+            mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            mask-composite: exclude;
+        }
+
+        .floating-orb {
+            animation: float 8s ease-in-out infinite;
+        }
+    </style>
+</head>
+
+<body class="font-inter bg-slate-950 text-white overflow-x-hidden">
+
+    <!-- Background -->
+    <div class="fixed inset-0 z-0">
+        <div class="absolute inset-0 bg-gradient-to-br from-slate-950 via-slate-900 to-slate-800"></div>
+        <div class="absolute inset-0 overflow-hidden pointer-events-none">
+            <div class="floating-orb absolute top-20 left-10 w-96 h-96 bg-blue-500/5 rounded-full blur-3xl"></div>
+            <div class="floating-orb absolute top-40 right-20 w-64 h-64 bg-purple-500/5 rounded-full blur-3xl"
+                style="animation-delay: 3s;"></div>
+            <div class="floating-orb absolute bottom-20 left-1/4 w-48 h-48 bg-pink-500/5 rounded-full blur-3xl"
+                style="animation-delay: 6s;"></div>
+        </div>
+    </div>
+
+    <!-- Header -->
+    <header class="relative z-50 glass-card border-b border-slate-800/50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <!-- Logo -->
+                <div class="flex items-center space-x-3">
+                    <div
+                        class="w-10 h-10 bg-gradient-to-br from-blue-500 to-purple-600 rounded-xl flex items-center justify-center shadow-lg">
+                        <i class="fas fa-rocket text-white text-lg"></i>
+                    </div>
+                    <div>
+                        <h1
+                            class="text-xl font-bold bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
+                            LakshyaAI</h1>
+                        <p class="text-xs text-slate-400">Your AI Career Partner</p>
+                    </div>
+                </div>
+
+                <!-- Navigation -->
+                <nav class="hidden md:flex items-center space-x-8">
+                    <a href="/" class="text-slate-300 hover:text-white transition-colors">Home</a>
+                    <a href="/features" class="text-slate-300 hover:text-white transition-colors">Features</a>
+                    <a href="/about" class="text-slate-300 hover:text-white transition-colors">About</a>
+                    <a href="/contact" class="text-slate-300 hover:text-white transition-colors">Contact</a>
+                    <a href="/privacy" class="text-blue-400 font-semibold">Privacy</a>
+                    <a href="/dashboard"
+                        class="px-4 py-2 bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-lg hover:shadow-lg transition-all">Dashboard</a>
+                </nav>
+
+                <!-- Mobile Menu Button -->
+                <button class="md:hidden p-2 rounded-lg bg-slate-800/50 hover:bg-slate-700/50 transition-all">
+                    <i class="fas fa-bars text-slate-300"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="relative z-10 pt-20 pb-20">
+
+        <!-- Hero Section -->
+        <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center mb-20">
+            <div class="mb-12">
+                <div
+                    class="w-20 h-20 bg-gradient-to-br from-green-500 to-blue-600 rounded-full flex items-center justify-center mx-auto mb-8">
+                    <i class="fas fa-shield-alt text-white text-3xl"></i>
+                </div>
+                <h1 class="text-5xl md:text-6xl font-bold mb-6">
+                    <span
+                        class="bg-gradient-to-r from-green-400 via-blue-400 to-purple-400 bg-clip-text text-transparent">
+                        Privacy Policy
+                    </span>
+                </h1>
+                <p class="text-xl text-slate-300 max-w-4xl mx-auto leading-relaxed">
+                    Your privacy is our priority. We're committed to protecting your personal information and being
+                    transparent about how we collect, use, and safeguard your data.
+                </p>
+                <div class="text-sm text-slate-400 mt-4">
+                    Last updated: January 15, 2025
+                </div>
+            </div>
+        </section>
+
+        <!-- Privacy Summary -->
+        <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-20">
+            <div class="glass-card rounded-3xl p-12 gradient-border text-center">
+                <h2 class="text-3xl font-bold mb-8">Privacy at a Glance</h2>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <div class="text-center">
+                        <div
+                            class="w-16 h-16 bg-gradient-to-br from-green-500 to-green-600 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-lock text-white text-2xl"></i>
+                        </div>
+                        <h3 class="text-xl font-bold mb-2">Data Security</h3>
+                        <p class="text-slate-400">Your data is encrypted and protected with industry-leading security
+                            measures.</p>
+                    </div>
+                    <div class="text-center">
+                        <div
+                            class="w-16 h-16 bg-gradient-to-br from-blue-500 to-blue-600 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-user-shield text-white text-2xl"></i>
+                        </div>
+                        <h3 class="text-xl font-bold mb-2">Your Control</h3>
+                        <p class="text-slate-400">You have full control over your data with options to view, edit, or
+                            delete at any time.</p>
+                    </div>
+                    <div class="text-center">
+                        <div
+                            class="w-16 h-16 bg-gradient-to-br from-purple-500 to-purple-600 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-eye-slash text-white text-2xl"></i>
+                        </div>
+                        <h3 class="text-xl font-bold mb-2">No Data Selling</h3>
+                        <p class="text-slate-400">We never sell your personal information to third parties. Your privacy
+                            is not for sale.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Detailed Privacy Information -->
+        <section class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
+
+            <!-- Information We Collect -->
+            <div class="glass-card rounded-2xl p-8">
+                <h2 class="text-3xl font-bold mb-6 flex items-center">
+                    <i class="fas fa-database text-blue-400 mr-3"></i>
+                    Information We Collect
+                </h2>
+                <div class="space-y-6 text-slate-300">
+                    <div>
+                        <h3 class="text-xl font-semibold text-white mb-3">Personal Information</h3>
+                        <ul class="list-disc list-inside space-y-2 ml-4">
+                            <li>Account information (name, email address, password)</li>
+                            <li>Profile details (professional experience, skills, career goals)</li>
+                            <li>Resume and CV content when uploaded</li>
+                            <li>Contact information for job applications</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-semibold text-white mb-3">Usage Information</h3>
+                        <ul class="list-disc list-inside space-y-2 ml-4">
+                            <li>Platform usage patterns and feature interactions</li>
+                            <li>Search queries and job preferences</li>
+                            <li>AI chat conversations and coaching sessions</li>
+                            <li>Performance analytics and user engagement metrics</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-semibold text-white mb-3">Technical Information</h3>
+                        <ul class="list-disc list-inside space-y-2 ml-4">
+                            <li>IP address and device information</li>
+                            <li>Browser type and operating system</li>
+                            <li>Session duration and page views</li>
+                            <li>Cookies and similar tracking technologies</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- How We Use Your Information -->
+            <div class="glass-card rounded-2xl p-8">
+                <h2 class="text-3xl font-bold mb-6 flex items-center">
+                    <i class="fas fa-cogs text-purple-400 mr-3"></i>
+                    How We Use Your Information
+                </h2>
+                <div class="space-y-4 text-slate-300">
+                    <div class="flex items-start space-x-3">
+                        <div class="w-6 h-6 bg-green-500 rounded-full flex items-center justify-center mt-1">
+                            <i class="fas fa-check text-white text-xs"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-lg font-semibold text-white">AI-Powered Career Services</h3>
+                            <p>To provide personalized job recommendations, resume analysis, career coaching, and skill
+                                gap identification.</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start space-x-3">
+                        <div class="w-6 h-6 bg-green-500 rounded-full flex items-center justify-center mt-1">
+                            <i class="fas fa-check text-white text-xs"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-lg font-semibold text-white">Platform Improvement</h3>
+                            <p>To enhance our AI models, improve user experience, and develop new features based on
+                                usage patterns.</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start space-x-3">
+                        <div class="w-6 h-6 bg-green-500 rounded-full flex items-center justify-center mt-1">
+                            <i class="fas fa-check text-white text-xs"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-lg font-semibold text-white">Communication</h3>
+                            <p>To send important updates, security notifications, and relevant career opportunities
+                                (with your consent).</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start space-x-3">
+                        <div class="w-6 h-6 bg-green-500 rounded-full flex items-center justify-center mt-1">
+                            <i class="fas fa-check text-white text-xs"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-lg font-semibold text-white">Security & Compliance</h3>
+                            <p>To protect against fraud, ensure platform security, and comply with legal obligations.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Data Sharing -->
+            <div class="glass-card rounded-2xl p-8">
+                <h2 class="text-3xl font-bold mb-6 flex items-center">
+                    <i class="fas fa-share-alt text-orange-400 mr-3"></i>
+                    Data Sharing & Third Parties
+                </h2>
+                <div class="space-y-6 text-slate-300">
+                    <div>
+                        <h3 class="text-xl font-semibold text-white mb-3">We DO NOT Sell Your Data</h3>
+                        <p class="text-lg">LakshyaAI never sells, rents, or trades your personal information to third
+                            parties for their marketing purposes.</p>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-semibold text-white mb-3">Limited Sharing Scenarios</h3>
+                        <ul class="list-disc list-inside space-y-2 ml-4">
+                            <li><strong>Service Providers:</strong> We work with trusted partners who help us operate
+                                our platform (cloud hosting, analytics, customer support).</li>
+                            <li><strong>Job Applications:</strong> When you apply for jobs through our platform, we
+                                share your application materials with the respective employers.</li>
+                            <li><strong>Legal Requirements:</strong> We may disclose information when required by law or
+                                to protect our rights and users' safety.</li>
+                            <li><strong>Aggregated Data:</strong> We may share anonymized, aggregated statistics that
+                                don't identify individual users.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- AI & Machine Learning -->
+            <div class="glass-card rounded-2xl p-8">
+                <h2 class="text-3xl font-bold mb-6 flex items-center">
+                    <i class="fas fa-brain text-pink-400 mr-3"></i>
+                    AI & Machine Learning
+                </h2>
+                <div class="space-y-4 text-slate-300">
+                    <p class="text-lg">
+                        Our AI systems process your data to provide personalized career guidance. Here's how we ensure
+                        responsible AI usage:
+                    </p>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
+                        <div class="bg-slate-800/30 rounded-xl p-6">
+                            <h3 class="text-xl font-semibold text-white mb-3 flex items-center">
+                                <i class="fas fa-shield text-green-400 mr-2"></i>
+                                Data Protection
+                            </h3>
+                            <ul class="list-disc list-inside space-y-1 text-sm">
+                                <li>All AI training data is anonymized</li>
+                                <li>Personal identifiers are removed</li>
+                                <li>Secure processing environments</li>
+                                <li>Regular security audits</li>
+                            </ul>
+                        </div>
+                        <div class="bg-slate-800/30 rounded-xl p-6">
+                            <h3 class="text-xl font-semibold text-white mb-3 flex items-center">
+                                <i class="fas fa-balance-scale text-blue-400 mr-2"></i>
+                                Fair AI
+                            </h3>
+                            <ul class="list-disc list-inside space-y-1 text-sm">
+                                <li>Bias detection and mitigation</li>
+                                <li>Diverse training datasets</li>
+                                <li>Continuous model monitoring</li>
+                                <li>Transparent recommendation logic</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Your Rights -->
+            <div class="glass-card rounded-2xl p-8">
+                <h2 class="text-3xl font-bold mb-6 flex items-center">
+                    <i class="fas fa-user-check text-green-400 mr-3"></i>
+                    Your Privacy Rights
+                </h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div>
+                        <h3 class="text-xl font-semibold text-white mb-4">Data Access & Control</h3>
+                        <ul class="space-y-3 text-slate-300">
+                            <li class="flex items-start space-x-3">
+                                <i class="fas fa-eye text-blue-400 mt-1"></i>
+                                <span><strong>View:</strong> Access all your personal data we have stored</span>
+                            </li>
+                            <li class="flex items-start space-x-3">
+                                <i class="fas fa-edit text-purple-400 mt-1"></i>
+                                <span><strong>Update:</strong> Modify or correct your information at any time</span>
+                            </li>
+                            <li class="flex items-start space-x-3">
+                                <i class="fas fa-download text-green-400 mt-1"></i>
+                                <span><strong>Export:</strong> Download your data in a portable format</span>
+                            </li>
+                            <li class="flex items-start space-x-3">
+                                <i class="fas fa-trash text-red-400 mt-1"></i>
+                                <span><strong>Delete:</strong> Request complete removal of your account and data</span>
+                            </li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-semibold text-white mb-4">Privacy Preferences</h3>
+                        <ul class="space-y-3 text-slate-300">
+                            <li class="flex items-start space-x-3">
+                                <i class="fas fa-toggle-on text-orange-400 mt-1"></i>
+                                <span><strong>Opt-out:</strong> Disable marketing communications</span>
+                            </li>
+                            <li class="flex items-start space-x-3">
+                                <i class="fas fa-cookie-bite text-yellow-400 mt-1"></i>
+                                <span><strong>Cookies:</strong> Manage tracking preferences</span>
+                            </li>
+                            <li class="flex items-start space-x-3">
+                                <i class="fas fa-robot text-pink-400 mt-1"></i>
+                                <span><strong>AI Processing:</strong> Control how AI uses your data</span>
+                            </li>
+                            <li class="flex items-start space-x-3">
+                                <i class="fas fa-bell text-indigo-400 mt-1"></i>
+                                <span><strong>Notifications:</strong> Customize alert preferences</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="mt-8 p-6 bg-blue-900/20 rounded-xl border border-blue-500/30">
+                    <h3 class="text-xl font-semibold text-white mb-2 flex items-center">
+                        <i class="fas fa-info-circle text-blue-400 mr-2"></i>
+                        How to Exercise Your Rights
+                    </h3>
+                    <p class="text-slate-300">
+                        You can manage most privacy settings directly in your account dashboard. For additional requests
+                        or questions,
+                        contact our privacy team at <a href="mailto:privacy@lakshyaai.com"
+                            class="text-blue-400 hover:text-blue-300">privacy@lakshyaai.com</a>
+                        or use our <a href="/contact" class="text-blue-400 hover:text-blue-300">contact form</a>.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Data Security -->
+            <div class="glass-card rounded-2xl p-8">
+                <h2 class="text-3xl font-bold mb-6 flex items-center">
+                    <i class="fas fa-lock text-red-400 mr-3"></i>
+                    Data Security & Retention
+                </h2>
+                <div class="space-y-6 text-slate-300">
+                    <div>
+                        <h3 class="text-xl font-semibold text-white mb-3">Security Measures</h3>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div class="bg-slate-800/30 rounded-xl p-4">
+                                <h4 class="font-semibold text-white mb-2">Technical Safeguards</h4>
+                                <ul class="list-disc list-inside space-y-1 text-sm">
+                                    <li>End-to-end encryption</li>
+                                    <li>Secure HTTPS connections</li>
+                                    <li>Regular security updates</li>
+                                    <li>Intrusion detection systems</li>
+                                </ul>
+                            </div>
+                            <div class="bg-slate-800/30 rounded-xl p-4">
+                                <h4 class="font-semibold text-white mb-2">Operational Security</h4>
+                                <ul class="list-disc list-inside space-y-1 text-sm">
+                                    <li>Access controls and monitoring</li>
+                                    <li>Employee security training</li>
+                                    <li>Regular security audits</li>
+                                    <li>Incident response procedures</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-semibold text-white mb-3">Data Retention</h3>
+                        <ul class="list-disc list-inside space-y-2 ml-4">
+                            <li><strong>Active Accounts:</strong> We retain your data as long as your account is active
+                                and for legitimate business purposes.</li>
+                            <li><strong>Inactive Accounts:</strong> Data from inactive accounts may be deleted after 3
+                                years of inactivity.</li>
+                            <li><strong>Legal Requirements:</strong> Some data may be retained longer to comply with
+                                legal obligations.</li>
+                            <li><strong>Anonymized Data:</strong> Aggregated, non-identifiable data may be retained
+                                indefinitely for research and improvement.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Cookies & Tracking -->
+            <div class="glass-card rounded-2xl p-8">
+                <h2 class="text-3xl font-bold mb-6 flex items-center">
+                    <i class="fas fa-cookie-bite text-yellow-400 mr-3"></i>
+                    Cookies & Tracking Technologies
+                </h2>
+                <div class="space-y-6 text-slate-300">
+                    <p>We use cookies and similar technologies to enhance your experience and understand how you use our
+                        platform.</p>
+
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <div class="bg-slate-800/30 rounded-xl p-6">
+                            <h3 class="text-lg font-semibold text-green-400 mb-3">Essential Cookies</h3>
+                            <p class="text-sm">Required for basic functionality like login, security, and preferences.
+                                Cannot be disabled.</p>
+                        </div>
+                        <div class="bg-slate-800/30 rounded-xl p-6">
+                            <h3 class="text-lg font-semibold text-blue-400 mb-3">Analytics Cookies</h3>
+                            <p class="text-sm">Help us understand usage patterns and improve our services. Can be
+                                disabled in settings.</p>
+                        </div>
+                        <div class="bg-slate-800/30 rounded-xl p-6">
+                            <h3 class="text-lg font-semibold text-purple-400 mb-3">Preference Cookies</h3>
+                            <p class="text-sm">Remember your choices and personalize your experience. Can be managed
+                                individually.</p>
+                        </div>
+                    </div>
+
+                    <div class="p-6 bg-yellow-900/20 rounded-xl border border-yellow-500/30">
+                        <h3 class="text-lg font-semibold text-white mb-2">Cookie Management</h3>
+                        <p>You can control cookies through your browser settings or our preference center. Note that
+                            disabling essential cookies may limit platform functionality.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Updates & Contact -->
+            <div class="glass-card rounded-2xl p-8">
+                <h2 class="text-3xl font-bold mb-6 flex items-center">
+                    <i class="fas fa-phone text-blue-400 mr-3"></i>
+                    Updates & Contact Information
+                </h2>
+                <div class="space-y-6 text-slate-300">
+                    <div>
+                        <h3 class="text-xl font-semibold text-white mb-3">Policy Updates</h3>
+                        <p>
+                            We may update this Privacy Policy periodically to reflect changes in our practices or legal
+                            requirements.
+                            When we make significant changes, we'll notify you via email or through our platform. The
+                            "Last updated"
+                            date at the top of this policy indicates when it was last revised.
+                        </p>
+                    </div>
+
+                    <div>
+                        <h3 class="text-xl font-semibold text-white mb-3">Contact Our Privacy Team</h3>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div class="space-y-4">
+                                <div class="flex items-center space-x-3">
+                                    <i class="fas fa-envelope text-blue-400"></i>
+                                    <span>privacy@lakshyaai.com</span>
+                                </div>
+                                <div class="flex items-center space-x-3">
+                                    <i class="fas fa-shield-alt text-green-400"></i>
+                                    <span>Data Protection Officer</span>
+                                </div>
+                                <div class="flex items-center space-x-3">
+                                    <i class="fas fa-clock text-purple-400"></i>
+                                    <span>Response within 72 hours</span>
+                                </div>
+                            </div>
+                            <div class="bg-slate-800/30 rounded-xl p-4">
+                                <h4 class="font-semibold text-white mb-2">Privacy Inquiries</h4>
+                                <ul class="list-disc list-inside space-y-1 text-sm">
+                                    <li>Data access requests</li>
+                                    <li>Account deletion</li>
+                                    <li>Privacy concerns</li>
+                                    <li>Data portability</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA Section -->
+        <section class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 mt-20 text-center">
+            <div class="glass-card rounded-3xl p-12 gradient-border">
+                <h2 class="text-4xl font-bold mb-6">
+                    <span class="bg-gradient-to-r from-green-400 to-blue-400 bg-clip-text text-transparent">
+                        Questions About Privacy?
+                    </span>
+                </h2>
+                <p class="text-xl text-slate-300 mb-8 max-w-2xl mx-auto">
+                    We're here to help. Our privacy team is ready to answer any questions about how we protect and use
+                    your data.
+                </p>
+                <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                    <a href="/contact"
+                        class="px-8 py-4 bg-gradient-to-r from-green-500 to-blue-600 text-white font-semibold rounded-xl hover:shadow-lg transition-all">
+                        <i class="fas fa-envelope mr-2"></i>Contact Privacy Team
+                    </a>
+                    <a href="/dashboard"
+                        class="px-8 py-4 border border-slate-600 text-slate-300 font-semibold rounded-xl hover:text-white hover:border-blue-500 transition-all">
+                        <i class="fas fa-cog mr-2"></i>Privacy Settings
+                    </a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="relative z-10 mt-20 border-t border-slate-800/50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <!-- Logo & Description -->
+                <div class="md:col-span-2">
+                    <div class="flex items-center space-x-3 mb-4">
+                        <div
+                            class="w-10 h-10 bg-gradient-to-br from-blue-500 to-purple-600 rounded-xl flex items-center justify-center">
+                            <i class="fas fa-rocket text-white text-lg"></i>
+                        </div>
+                        <h3
+                            class="text-xl font-bold bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
+                            LakshyaAI</h3>
+                    </div>
+                    <p class="text-slate-400 max-w-md">
+                        Empowering careers with AI-driven insights, personalized guidance, and intelligent job matching
+                        to help you achieve your professional goals.
+                    </p>
+                </div>
+
+                <!-- Quick Links -->
+                <div>
+                    <h4 class="text-white font-semibold mb-4">Quick Links</h4>
+                    <ul class="space-y-2">
+                        <li><a href="/" class="text-slate-400 hover:text-white transition-colors">Home</a></li>
+                        <li><a href="/features" class="text-slate-400 hover:text-white transition-colors">Features</a>
+                        </li>
+                        <li><a href="/dashboard" class="text-slate-400 hover:text-white transition-colors">Dashboard</a>
+                        </li>
+                        <li><a href="/about" class="text-slate-400 hover:text-white transition-colors">About</a></li>
+                    </ul>
+                </div>
+
+                <!-- Legal -->
+                <div>
+                    <h4 class="text-white font-semibold mb-4">Legal</h4>
+                    <ul class="space-y-2">
+                        <li><a href="/privacy" class="text-slate-400 hover:text-white transition-colors">Privacy
+                                Policy</a></li>
+                        <li><a href="#" class="text-slate-400 hover:text-white transition-colors">Terms of Service</a>
+                        </li>
+                        <li><a href="/contact" class="text-slate-400 hover:text-white transition-colors">Contact Us</a>
+                        </li>
+                        <li><a href="#" class="text-slate-400 hover:text-white transition-colors">Support</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="border-t border-slate-800 mt-8 pt-8 text-center">
+                <p class="text-slate-400">
+                    © 2025 LakshyaAI. All rights reserved. Built with ❤️ by syashu16
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script>
+        // Animate elements on load
+        document.addEventListener('DOMContentLoaded', function () {
+            const cards = document.querySelectorAll('.glass-card');
+            cards.forEach((card, index) => {
+                card.style.animationDelay = `${index * 0.1}s`;
+                card.classList.add('animate-slide-up');
+            });
+        });
+    </script>
+</body>
+
+</html>

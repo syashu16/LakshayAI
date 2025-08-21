@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LakshyaAI - AI-Powered Career Transformation</title>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    
+    <!-- Icons CDN -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+    
+    <!-- Tailwind CSS CDN for quick styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        'inter': ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        'primary': {
+                            500: '#3b82f6',
+                            600: '#2563eb',
+                        },
+                        'purple': {
+                            500: '#8b5cf6',
+                            600: '#7c3aed',
+                        },
+                        'slate': {
+                            800: '#1e293b',
+                            900: '#0f172a',
+                            950: '#020617',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- Custom CSS -->
+    <link href="{{ url_for('static', filename='css/style.css') }}" rel="stylesheet">
+</head>
+<body class="font-inter bg-slate-950 text-white overflow-x-hidden">
+    
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full z-50 bg-slate-950/80 backdrop-blur-xl border-b border-slate-800/50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <!-- Logo -->
+                <div class="flex items-center space-x-3">
+                    <div class="w-8 h-8 bg-gradient-to-br from-blue-500 to-purple-600 rounded-lg flex items-center justify-center">
+                        <i class="fas fa-rocket text-white text-sm"></i>
+                    </div>
+                    <span class="text-xl font-bold bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
+                        LakshyaAI
+                    </span>
+                </div>
+
+                <!-- Desktop Navigation -->
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="#features" class="nav-link text-slate-300 hover:text-white transition-colors">Features</a>
+                    <a href="#how-it-works" class="nav-link text-slate-300 hover:text-white transition-colors">How It Works</a>
+                    <a href="#testimonials" class="nav-link text-slate-300 hover:text-white transition-colors">Success Stories</a>
+                    <a href="#pricing" class="nav-link text-slate-300 hover:text-white transition-colors">Pricing</a>
+                </div>
+
+                <!-- CTA Buttons -->
+                <div class="hidden md:flex items-center space-x-4">
+                    <a href="/login" class="px-4 py-2 text-slate-300 hover:text-white transition-colors">Sign In</a>
+                    <a href="/register" class="btn-primary px-6 py-2 bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-xl font-semibold hover:shadow-lg transition-all">
+                        Get Started
+                    </a>
+                </div>
+
+                <!-- Mobile menu button -->
+                <button id="mobile-menu-btn" class="md:hidden p-2 rounded-lg hover:bg-slate-800 transition-colors">
+                    <i class="fas fa-bars text-white"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="md:hidden hidden bg-slate-900/95 backdrop-blur-xl border-t border-slate-800">
+            <div class="px-4 py-6 space-y-4">
+                <a href="#features" class="block py-2 text-slate-300 hover:text-white transition-colors">Features</a>
+                <a href="#how-it-works" class="block py-2 text-slate-300 hover:text-white transition-colors">How It Works</a>
+                <a href="#testimonials" class="block py-2 text-slate-300 hover:text-white transition-colors">Success Stories</a>
+                <a href="#pricing" class="block py-2 text-slate-300 hover:text-white transition-colors">Pricing</a>
+                <div class="pt-4 space-y-3">
+                    <a href="/login" class="block w-full text-center py-2 text-slate-300">Sign In</a>
+                    <a href="/register" class="block w-full text-center py-2 bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-xl font-semibold">Get Started</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="relative min-h-screen flex items-center justify-center overflow-hidden pt-16">
+        <!-- Animated Background -->
+        <div class="absolute inset-0 bg-gradient-to-br from-slate-950 via-slate-900 to-slate-800"></div>
+        
+        <!-- Floating Orbs -->
+        <div class="absolute inset-0 overflow-hidden pointer-events-none">
+            <div class="floating-orb absolute top-20 left-10 w-48 h-48 bg-blue-500/20 rounded-full blur-3xl animate-pulse"></div>
+            <div class="floating-orb absolute top-60 right-20 w-32 h-32 bg-purple-500/20 rounded-full blur-3xl animate-pulse" style="animation-delay: 2s;"></div>
+            <div class="floating-orb absolute bottom-20 left-1/3 w-24 h-24 bg-pink-500/20 rounded-full blur-3xl animate-pulse" style="animation-delay: 4s;"></div>
+        </div>
+
+        <!-- Content -->
+        <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <div class="space-y-8">
+                <!-- Badge -->
+                <div class="inline-flex items-center px-4 py-2 rounded-full bg-blue-500/10 border border-blue-500/20 backdrop-blur-sm">
+                    <span class="text-blue-400 text-sm font-medium">✨ AI-Powered Career Transformation</span>
+                </div>
+
+                <!-- Main Heading -->
+                <div class="space-y-4">
+                    <h1 class="text-4xl md:text-6xl lg:text-7xl font-bold leading-tight">
+                        <span class="block">Transform Your</span>
+                        <span class="block bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent">
+                            Career Journey
+                        </span>
+                        <span class="block">with AI</span>
+                    </h1>
+                </div>
+
+                <!-- Subtitle -->
+                <p class="text-xl md:text-2xl text-slate-300 max-w-3xl mx-auto leading-relaxed">
+                    Discover perfect job matches, identify skill gaps, and accelerate your career growth with 
+                    <span class="text-blue-400 font-semibold">intelligent recommendations</span> designed for Indian professionals.
+                </p>
+
+                <!-- CTA Buttons -->
+                <div class="flex flex-col sm:flex-row gap-4 justify-center items-center pt-8">
+                    <a href="/register" class="group inline-flex items-center px-8 py-4 bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-2xl font-bold text-lg transition-all hover:shadow-2xl hover:scale-105">
+                        <span>Start Your Journey</span>
+                        <i class="fas fa-arrow-right ml-2 group-hover:translate-x-1 transition-transform"></i>
+                    </a>
+                    <a href="#demo" class="group inline-flex items-center px-8 py-4 bg-white/10 backdrop-blur-sm border border-white/20 text-white rounded-2xl font-semibold text-lg transition-all hover:bg-white/20">
+                        <i class="fas fa-play mr-2"></i>
+                        <span>Watch Demo</span>
+                    </a>
+                </div>
+
+                <!-- Stats -->
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-8 pt-16">
+                    <div class="text-center">
+                        <div class="text-3xl md:text-4xl font-black bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">10K+</div>
+                        <div class="text-slate-400 font-medium mt-2">Job Matches</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-3xl md:text-4xl font-black bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">95%</div>
+                        <div class="text-slate-400 font-medium mt-2">Accuracy Rate</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-3xl md:text-4xl font-black bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">500+</div>
+                        <div class="text-slate-400 font-medium mt-2">Companies</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-3xl md:text-4xl font-black bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">24/7</div>
+                        <div class="text-slate-400 font-medium mt-2">AI Support</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Scroll Indicator -->
+        <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
+            <i class="fas fa-chevron-down text-slate-400 text-xl"></i>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="py-24 bg-slate-900/50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <!-- Section Header -->
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-5xl font-bold mb-6">
+                    Powerful Features for Your
+                    <span class="bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">Success</span>
+                </h2>
+                <p class="text-xl text-slate-300 max-w-3xl mx-auto">
+                    Everything you need to accelerate your career journey with cutting-edge AI technology
+                </p>
+            </div>
+
+            <!-- Features Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Feature 1 -->
+                <div class="feature-card bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-8 hover:bg-white/10 transition-all hover:scale-105">
+                    <div class="w-16 h-16 bg-gradient-to-br from-blue-500 to-purple-600 rounded-2xl flex items-center justify-center mb-6">
+                        <i class="fas fa-brain text-white text-2xl"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-4">Smart Resume Analysis</h3>
+                    <p class="text-slate-300 mb-6 leading-relaxed">
+                        AI-powered resume parsing extracts skills, experience, and qualifications with 95% accuracy using advanced NLP models.
+                    </p>
+                    <div class="flex gap-2 flex-wrap">
+                        <span class="px-3 py-1 bg-blue-500/20 text-blue-400 rounded-full text-sm border border-blue-500/30">NLP</span>
+                        <span class="px-3 py-1 bg-blue-500/20 text-blue-400 rounded-full text-sm border border-blue-500/30">Machine Learning</span>
+                    </div>
+                </div>
+
+                <!-- Feature 2 -->
+                <div class="feature-card bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-8 hover:bg-white/10 transition-all hover:scale-105">
+                    <div class="w-16 h-16 bg-gradient-to-br from-purple-500 to-pink-600 rounded-2xl flex items-center justify-center mb-6">
+                        <i class="fas fa-bullseye text-white text-2xl"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-4">Perfect Job Matching</h3>
+                    <p class="text-slate-300 mb-6 leading-relaxed">
+                        Hybrid ML algorithms analyze your profile to find the most relevant job opportunities from 500+ top companies.
+                    </p>
+                    <div class="flex gap-2 flex-wrap">
+                        <span class="px-3 py-1 bg-purple-500/20 text-purple-400 rounded-full text-sm border border-purple-500/30">Hybrid ML</span>
+                        <span class="px-3 py-1 bg-purple-500/20 text-purple-400 rounded-full text-sm border border-purple-500/30">Real-time</span>
+                    </div>
+                </div>
+
+                <!-- Feature 3 -->
+                <div class="feature-card bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-8 hover:bg-white/10 transition-all hover:scale-105">
+                    <div class="w-16 h-16 bg-gradient-to-br from-green-500 to-blue-600 rounded-2xl flex items-center justify-center mb-6">
+                        <i class="fas fa-chart-line text-white text-2xl"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-4">Skill Gap Analysis</h3>
+                    <p class="text-slate-300 mb-6 leading-relaxed">
+                        Identify missing skills and get personalized learning recommendations to boost your market competitiveness.
+                    </p>
+                    <div class="flex gap-2 flex-wrap">
+                        <span class="px-3 py-1 bg-green-500/20 text-green-400 rounded-full text-sm border border-green-500/30">Personalized</span>
+                        <span class="px-3 py-1 bg-green-500/20 text-green-400 rounded-full text-sm border border-green-500/30">Growth</span>
+                    </div>
+                </div>
+
+                <!-- Feature 4 -->
+                <div class="feature-card bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-8 hover:bg-white/10 transition-all hover:scale-105">
+                    <div class="w-16 h-16 bg-gradient-to-br from-yellow-500 to-orange-600 rounded-2xl flex items-center justify-center mb-6">
+                        <i class="fas fa-comments text-white text-2xl"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-4">AI Career Counselor</h3>
+                    <p class="text-slate-300 mb-6 leading-relaxed">
+                        24/7 multilingual chatbot provides career guidance in English, Hindi, and Hinglish with contextual responses.
+                    </p>
+                    <div class="flex gap-2 flex-wrap">
+                        <span class="px-3 py-1 bg-yellow-500/20 text-yellow-400 rounded-full text-sm border border-yellow-500/30">Multilingual</span>
+                        <span class="px-3 py-1 bg-yellow-500/20 text-yellow-400 rounded-full text-sm border border-yellow-500/30">24/7</span>
+                    </div>
+                </div>
+
+                <!-- Feature 5 -->
+                <div class="feature-card bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-8 hover:bg-white/10 transition-all hover:scale-105">
+                    <div class="w-16 h-16 bg-gradient-to-br from-red-500 to-pink-600 rounded-2xl flex items-center justify-center mb-6">
+                        <i class="fas fa-shield-alt text-white text-2xl"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-4">Bias-Free Recommendations</h3>
+                    <p class="text-slate-300 mb-6 leading-relaxed">
+                        Advanced fairness algorithms ensure unbiased job recommendations regardless of gender, location, or background.
+                    </p>
+                    <div class="flex gap-2 flex-wrap">
+                        <span class="px-3 py-1 bg-red-500/20 text-red-400 rounded-full text-sm border border-red-500/30">Fair AI</span>
+                        <span class="px-3 py-1 bg-red-500/20 text-red-400 rounded-full text-sm border border-red-500/30">Ethical</span>
+                    </div>
+                </div>
+
+                <!-- Feature 6 -->
+                <div class="feature-card bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-8 hover:bg-white/10 transition-all hover:scale-105">
+                    <div class="w-16 h-16 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-2xl flex items-center justify-center mb-6">
+                        <i class="fas fa-globe text-white text-2xl"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-4">Multilingual Support</h3>
+                    <p class="text-slate-300 mb-6 leading-relaxed">
+                        Platform available in multiple Indian languages with seamless translation and localized content delivery.
+                    </p>
+                    <div class="flex gap-2 flex-wrap">
+                        <span class="px-3 py-1 bg-indigo-500/20 text-indigo-400 rounded-full text-sm border border-indigo-500/30">i18n</span>
+                        <span class="px-3 py-1 bg-indigo-500/20 text-indigo-400 rounded-full text-sm border border-indigo-500/30">Accessible</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works Section -->
+    <section id="how-it-works" class="py-24">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-5xl font-bold mb-6">
+                    How LakshyaAI
+                    <span class="bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">Works</span>
+                </h2>
+                <p class="text-xl text-slate-300 max-w-3xl mx-auto">
+                    Simple steps to transform your career with AI-powered insights
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-4 gap-8">
+                <!-- Step 1 -->
+                <div class="text-center relative">
+                    <div class="absolute -top-6 left-1/2 transform -translate-x-1/2 w-12 h-12 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full flex items-center justify-center text-white font-bold text-xl">01</div>
+                    <div class="w-20 h-20 bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl flex items-center justify-center mx-auto mt-6 mb-6">
+                        <i class="fas fa-user-plus text-blue-400 text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4">Create Profile</h3>
+                    <p class="text-slate-300">
+                        Sign up in 60 seconds and create your professional profile with our intelligent form.
+                    </p>
+                </div>
+
+                <!-- Step 2 -->
+                <div class="text-center relative">
+                    <div class="absolute -top-6 left-1/2 transform -translate-x-1/2 w-12 h-12 bg-gradient-to-r from-purple-500 to-pink-600 rounded-full flex items-center justify-center text-white font-bold text-xl">02</div>
+                    <div class="w-20 h-20 bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl flex items-center justify-center mx-auto mt-6 mb-6">
+                        <i class="fas fa-upload text-purple-400 text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4">Upload Resume</h3>
+                    <p class="text-slate-300">
+                        Upload your resume and watch AI extract skills, experience, and qualifications instantly.
+                    </p>
+                </div>
+
+                <!-- Step 3 -->
+                <div class="text-center relative">
+                    <div class="absolute -top-6 left-1/2 transform -translate-x-1/2 w-12 h-12 bg-gradient-to-r from-green-500 to-blue-600 rounded-full flex items-center justify-center text-white font-bold text-xl">03</div>
+                    <div class="w-20 h-20 bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl flex items-center justify-center mx-auto mt-6 mb-6">
+                        <i class="fas fa-magic text-green-400 text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4">Get AI Insights</h3>
+                    <p class="text-slate-300">
+                        Receive personalized job matches, skill gap analysis, and career recommendations.
+                    </p>
+                </div>
+
+                <!-- Step 4 -->
+                <div class="text-center relative">
+                    <div class="absolute -top-6 left-1/2 transform -translate-x-1/2 w-12 h-12 bg-gradient-to-r from-yellow-500 to-red-600 rounded-full flex items-center justify-center text-white font-bold text-xl">04</div>
+                    <div class="w-20 h-20 bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl flex items-center justify-center mx-auto mt-6 mb-6">
+                        <i class="fas fa-rocket text-yellow-400 text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4">Land Your Dream Job</h3>
+                    <p class="text-slate-300">
+                        Apply to perfect matches and accelerate your career growth with AI guidance.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-24 bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600">
+        <div class="max-w-4xl mx-auto text-center px-4 sm:px-6 lg:px-8">
+            <h2 class="text-3xl md:text-5xl font-bold mb-6">
+                Ready to Transform Your Career?
+            </h2>
+            <p class="text-xl mb-8 text-blue-100">
+                Join thousands of professionals who have accelerated their careers with LakshyaAI
+            </p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <a href="/register" class="inline-flex items-center px-8 py-4 bg-white/20 backdrop-blur-sm border border-white/30 text-white rounded-2xl font-bold text-lg transition-all hover:bg-white/30">
+                    Start Free Today
+                    <i class="fas fa-arrow-right ml-2"></i>
+                </a>
+                <a href="#contact" class="inline-flex items-center px-8 py-4 border-2 border-white/50 text-white rounded-2xl font-semibold text-lg transition-all hover:bg-white/10">
+                    Contact Sales
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-slate-900 border-t border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <!-- Brand -->
+                <div class="col-span-1 md:col-span-2">
+                    <div class="flex items-center space-x-3 mb-4">
+                        <div class="w-8 h-8 bg-gradient-to-br from-blue-500 to-purple-600 rounded-lg flex items-center justify-center">
+                            <i class="fas fa-rocket text-white text-sm"></i>
+                        </div>
+                        <span class="text-xl font-bold bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
+                            LakshyaAI
+                        </span>
+                    </div>
+                    <p class="text-slate-300 max-w-md mb-6">
+                        Empowering Indian youth with AI-driven career development and job opportunities.
+                        Transform your career journey today.
+                    </p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center text-slate-400 hover:text-white hover:bg-blue-500 transition-all">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center text-slate-400 hover:text-white hover:bg-blue-600 transition-all">
+                            <i class="fab fa-linkedin"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center text-slate-400 hover:text-white hover:bg-gray-700 transition-all">
+                            <i class="fab fa-github"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Quick Links -->
+                <div>
+                    <h3 class="font-semibold mb-4">Quick Links</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-slate-400 hover:text-blue-400 transition-colors">About Us</a></li>
+                        <li><a href="#" class="text-slate-400 hover:text-blue-400 transition-colors">Features</a></li>
+                        <li><a href="#" class="text-slate-400 hover:text-blue-400 transition-colors">Pricing</a></li>
+                        <li><a href="#" class="text-slate-400 hover:text-blue-400 transition-colors">Contact</a></li>
+                    </ul>
+                </div>
+
+                <!-- Support -->
+                <div>
+                    <h3 class="font-semibold mb-4">Support</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-slate-400 hover:text-blue-400 transition-colors">Help Center</a></li>
+                        <li><a href="#" class="text-slate-400 hover:text-blue-400 transition-colors">Privacy Policy</a></li>
+                        <li><a href="#" class="text-slate-400 hover:text-blue-400 transition-colors">Terms of Service</a></li>
+                        <li><a href="#" class="text-slate-400 hover:text-blue-400 transition-colors">API Docs</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="border-t border-slate-800 mt-12 pt-8 text-center">
+                <p class="text-slate-400">
+                    © 2025 LakshyaAI. Made with ❤️ by Yashu, Aaditya, and Neelanjan.
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>
