@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Career Path Planner - LakshyaAI</title>
+
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Free Open Source Libraries -->
+    <!-- Chart.js for Progress Visualization -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.min.js"></script>
+
+    <!-- AOS for Scroll Animations -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+
+    <!-- SortableJS for Drag & Drop -->
+    <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
+
+    <!-- Day.js for Date Handling -->
+    <script src="https://cdn.jsdelivr.net/npm/dayjs@1.11.10/dayjs.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/dayjs@1.11.10/plugin/relativeTime.js"></script>
+
+    <!-- Vis.js for Network Visualization -->
+    <script src="https://unpkg.com/vis-network@9.1.6/standalone/umd/vis-network.min.js"></script>
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/career-path-planner.css') }}">
+</head>
+
+<body class="font-inter bg-slate-950 text-white min-h-screen">
+
+    <!-- Background Orbs -->
+    <div class="career-bg">
+        <div class="orb1"></div>
+        <div class="orb2"></div>
+        <div class="orb3"></div>
+        <div class="orb4"></div>
+        <div class="orb5"></div>
+        <div class="orb6"></div>
+        <div class="orb7"></div>
+    </div>
+
+    <!-- Header -->
+    <header class="glass-card border-b border-slate-800/50 sticky top-0 z-40">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <!-- Logo & Title -->
+                <div class="flex items-center space-x-4">
+                    <a href="/dashboard" class="flex items-center space-x-3">
+                        <div
+                            class="w-10 h-10 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-xl flex items-center justify-center shadow-lg">
+                            <i class="fas fa-route text-white text-lg"></i>
+                        </div>
+                        <div>
+                            <h1
+                                class="text-xl font-bold bg-gradient-to-r from-indigo-400 to-purple-400 bg-clip-text text-transparent">
+                                Career Path Planner</h1>
+                            <p class="text-xs text-slate-400">Powered by LakshyaAI • User: {{ user.username if user else
+                                'Guest' }}</p>
+                        </div>
+                    </a>
+
+                    <!-- AI Status -->
+                    <div
+                        class="flex items-center space-x-2 px-3 py-1 bg-indigo-500/20 rounded-full border border-indigo-500/30">
+                        <div class="w-2 h-2 bg-indigo-400 rounded-full animate-pulse"></div>
+                        <span id="ai-status" class="text-indigo-400 text-sm font-semibold">AI Planning</span>
+                    </div>
+                </div>
+
+                <!-- Header Actions -->
+                <div class="flex items-center space-x-4">
+                    <!-- Progress Indicator -->
+                    <div
+                        class="flex items-center space-x-2 px-3 py-1 bg-green-500/20 rounded-full border border-green-500/30">
+                        <i class="fas fa-target text-green-400"></i>
+                        <span id="goals-progress" class="text-green-400 text-sm font-semibold">3/5 Goals</span>
+                    </div>
+
+                    <a href="/dashboard"
+                        class="flex items-center space-x-2 px-4 py-2 bg-slate-800/50 hover:bg-slate-700/50 rounded-xl transition-all">
+                        <i class="fas fa-arrow-left text-slate-400"></i>
+                        <span class="text-slate-300">Dashboard</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="relative z-10 max-w-7xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
+
+        <!-- Page Title -->
+        <div class="text-center mb-8" data-aos="fade-up">
+            <h2
+                class="text-3xl font-bold bg-gradient-to-r from-indigo-400 to-purple-400 bg-clip-text text-transparent mb-4">
+                AI-Powered Career Path Planner
+            </h2>
+            <p class="text-slate-300 max-w-2xl mx-auto">
+                Design your career journey with intelligent roadmaps, milestone tracking, and personalized
+                recommendations to achieve your professional goals.
+            </p>
+        </div>
+
+        <!-- Current Career Overview -->
+        <div class="glass-card rounded-3xl p-8 mb-8 shadow-xl" data-aos="fade-up" data-aos-delay="100">
+            <h3 class="text-2xl font-bold text-white mb-6">
+                <i class="fas fa-user-tie mr-2 text-indigo-400"></i>Your Career Journey Overview
+            </h3>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <!-- Current Position -->
+                <div class="current-position-card">
+                    <div class="position-icon current">
+                        <i class="fas fa-briefcase"></i>
+                    </div>
+                    <h4 class="font-bold text-white mb-2">Current Position</h4>
+                    <p class="text-indigo-400 font-semibold text-lg" id="current-role">Software Developer</p>
+                    <p class="text-slate-400 text-sm" id="current-company">Tech Solutions Inc.</p>
+                    <p class="text-slate-500 text-xs mt-2" id="current-duration">2 years 3 months</p>
+                </div>
+
+                <!-- Target Position -->
+                <div class="target-position-card">
+                    <div class="position-icon target">
+                        <i class="fas fa-bullseye"></i>
+                    </div>
+                    <h4 class="font-bold text-white mb-2">Target Position</h4>
+                    <p class="text-purple-400 font-semibold text-lg" id="target-role">Senior Full Stack Developer</p>
+                    <p class="text-slate-400 text-sm" id="target-timeline">12-18 months</p>
+                    <div class="mt-2">
+                        <div class="w-full bg-slate-800 rounded-full h-2">
+                            <div id="target-progress"
+                                class="bg-gradient-to-r from-indigo-500 to-purple-500 h-2 rounded-full transition-all duration-1000"
+                                style="width: 65%"></div>
+                        </div>
+                        <p class="text-slate-500 text-xs mt-1">65% Progress</p>
+                    </div>
+                </div>
+
+                <!-- Dream Position -->
+                <div class="dream-position-card">
+                    <div class="position-icon dream">
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <h4 class="font-bold text-white mb-2">Dream Position</h4>
+                    <p class="text-yellow-400 font-semibold text-lg" id="dream-role">Tech Lead / CTO</p>
+                    <p class="text-slate-400 text-sm" id="dream-timeline">5-7 years</p>
+                    <div class="flex items-center mt-2">
+                        <i class="fas fa-coins text-yellow-400 mr-2"></i>
+                        <span class="text-slate-300 text-sm">₹25-40 LPA</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Interactive Career Roadmap -->
+        <div class="glass-card rounded-3xl p-8 mb-8 shadow-xl" data-aos="fade-up" data-aos-delay="200">
+            <div class="flex items-center justify-between mb-6">
+                <h3 class="text-2xl font-bold text-white">
+                    <i class="fas fa-map-signs mr-2 text-purple-400"></i>Interactive Career Roadmap
+                </h3>
+                <div class="flex space-x-2">
+                    <button id="roadmap-view-timeline"
+                        class="px-3 py-1 bg-indigo-500/20 border border-indigo-500/30 rounded-lg text-indigo-400 text-sm hover:bg-indigo-500/30 transition-all">
+                        <i class="fas fa-timeline mr-1"></i>Timeline
+                    </button>
+                    <button id="roadmap-view-network"
+                        class="px-3 py-1 bg-slate-800/50 border border-slate-700 rounded-lg text-slate-400 text-sm hover:bg-slate-700/50 transition-all">
+                        <i class="fas fa-project-diagram mr-1"></i>Network
+                    </button>
+                </div>
+            </div>
+
+            <!-- Timeline View -->
+            <div id="roadmap-timeline" class="roadmap-container">
+                <div class="timeline-wrapper">
+                    <div class="timeline-line"></div>
+                    <div id="timeline-milestones" class="timeline-milestones">
+                        <!-- Milestones will be populated by JavaScript -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Network View (Hidden initially) -->
+            <div id="roadmap-network" class="roadmap-container hidden">
+                <div id="career-network" class="w-full h-96 bg-slate-900/50 rounded-2xl border border-slate-700"></div>
+            </div>
+        </div>
+
+        <!-- Goal Management -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
+
+            <!-- Active Goals -->
+            <div class="glass-card rounded-3xl p-6 shadow-xl" data-aos="fade-right" data-aos-delay="300">
+                <div class="flex items-center justify-between mb-6">
+                    <h3 class="text-xl font-bold text-white">
+                        <i class="fas fa-tasks mr-2 text-green-400"></i>Active Goals
+                    </h3>
+                    <button id="add-goal-btn"
+                        class="px-3 py-1 bg-green-500/20 border border-green-500/30 rounded-lg text-green-400 text-sm hover:bg-green-500/30 transition-all">
+                        <i class="fas fa-plus mr-1"></i>Add Goal
+                    </button>
+                </div>
+
+                <div id="active-goals" class="space-y-4 sortable-goals">
+                    <!-- Goals will be populated by JavaScript -->
+                </div>
+
+                <!-- Add Goal Form (Hidden initially) -->
+                <div id="add-goal-form" class="hidden mt-4 p-4 bg-slate-800/30 rounded-2xl border border-slate-700">
+                    <div class="space-y-3">
+                        <input type="text" id="new-goal-title" placeholder="Goal title..."
+                            class="w-full px-3 py-2 bg-slate-800/50 border border-slate-700 rounded-lg text-sm focus:border-green-500 transition-all">
+                        <textarea id="new-goal-description" rows="2" placeholder="Description..."
+                            class="w-full px-3 py-2 bg-slate-800/50 border border-slate-700 rounded-lg text-sm focus:border-green-500 transition-all resize-none"></textarea>
+                        <div class="grid grid-cols-2 gap-2">
+                            <select id="new-goal-priority"
+                                class="px-3 py-2 bg-slate-800/50 border border-slate-700 rounded-lg text-sm focus:border-green-500 transition-all">
+                                <option value="high">High Priority</option>
+                                <option value="medium" selected>Medium Priority</option>
+                                <option value="low">Low Priority</option>
+                            </select>
+                            <input type="date" id="new-goal-deadline"
+                                class="px-3 py-2 bg-slate-800/50 border border-slate-700 rounded-lg text-sm focus:border-green-500 transition-all">
+                        </div>
+                        <div class="flex space-x-2">
+                            <button id="save-goal-btn"
+                                class="flex-1 px-3 py-2 bg-green-500/20 border border-green-500/30 rounded-lg text-green-400 text-sm hover:bg-green-500/30 transition-all">
+                                <i class="fas fa-save mr-1"></i>Save Goal
+                            </button>
+                            <button id="cancel-goal-btn"
+                                class="px-3 py-2 bg-slate-700/50 border border-slate-600 rounded-lg text-slate-400 text-sm hover:bg-slate-600/50 transition-all">
+                                Cancel
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Progress Analytics -->
+            <div class="glass-card rounded-3xl p-6 shadow-xl" data-aos="fade-left" data-aos-delay="300">
+                <h3 class="text-xl font-bold text-white mb-6">
+                    <i class="fas fa-chart-line mr-2 text-blue-400"></i>Progress Analytics
+                </h3>
+
+                <!-- Progress Charts -->
+                <div class="space-y-6">
+                    <!-- Skills Progress -->
+                    <div>
+                        <h4 class="font-semibold text-slate-300 mb-3">Skills Development</h4>
+                        <canvas id="skills-progress-chart" width="400" height="200"></canvas>
+                    </div>
+
+                    <!-- Monthly Progress -->
+                    <div>
+                        <h4 class="font-semibold text-slate-300 mb-3">Monthly Achievement Rate</h4>
+                        <canvas id="monthly-progress-chart" width="400" height="150"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Career Insights & Recommendations -->
+        <div class="glass-card rounded-3xl p-8 mb-8 shadow-xl" data-aos="fade-up" data-aos-delay="400">
+            <h3 class="text-2xl font-bold text-white mb-6">
+                <i class="fas fa-lightbulb mr-2 text-yellow-400"></i>AI Career Insights & Recommendations
+            </h3>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Market Trends -->
+                <div class="insight-card trend" data-aos="zoom-in" data-aos-delay="500">
+                    <div class="insight-icon">
+                        <i class="fas fa-trending-up"></i>
+                    </div>
+                    <h4 class="font-bold text-white mb-2">Market Trends</h4>
+                    <p class="text-slate-300 text-sm mb-3">Full Stack Developer roles increased by 25% this quarter.
+                        Cloud skills are in high demand.</p>
+                    <div class="insight-metric">
+                        <span class="text-green-400 font-semibold">+25% Growth</span>
+                    </div>
+                </div>
+
+                <!-- Skill Recommendations -->
+                <div class="insight-card skill" data-aos="zoom-in" data-aos-delay="600">
+                    <div class="insight-icon">
+                        <i class="fas fa-cogs"></i>
+                    </div>
+                    <h4 class="font-bold text-white mb-2">Recommended Skills</h4>
+                    <p class="text-slate-300 text-sm mb-3">Focus on Docker, Kubernetes, and AWS to accelerate your
+                        career progression.</p>
+                    <div class="flex flex-wrap gap-1">
+                        <span class="skill-chip">Docker</span>
+                        <span class="skill-chip">AWS</span>
+                        <span class="skill-chip">K8s</span>
+                    </div>
+                </div>
+
+                <!-- Salary Growth -->
+                <div class="insight-card salary" data-aos="zoom-in" data-aos-delay="700">
+                    <div class="insight-icon">
+                        <i class="fas fa-chart-bar"></i>
+                    </div>
+                    <h4 class="font-bold text-white mb-2">Salary Projection</h4>
+                    <p class="text-slate-300 text-sm mb-3">With your planned skills, expect 40-60% salary increase in 18
+                        months.</p>
+                    <div class="insight-metric">
+                        <span class="text-green-400 font-semibold">₹8-12 LPA</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Industry Benchmarking -->
+        <div class="glass-card rounded-3xl p-8 mb-8 shadow-xl" data-aos="fade-up" data-aos-delay="500">
+            <h3 class="text-2xl font-bold text-white mb-6">
+                <i class="fas fa-industry mr-2 text-orange-400"></i>Industry Benchmarking
+            </h3>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <!-- Peer Comparison -->
+                <div>
+                    <h4 class="font-semibold text-orange-400 mb-4">Your Position vs Industry Peers</h4>
+                    <canvas id="peer-comparison-chart" width="400" height="300"></canvas>
+                </div>
+
+                <!-- Industry Statistics -->
+                <div class="space-y-4">
+                    <h4 class="font-semibold text-orange-400 mb-4">Industry Statistics</h4>
+
+                    <div class="stat-item">
+                        <div class="flex justify-between items-center mb-2">
+                            <span class="text-slate-300">Average Experience</span>
+                            <span class="text-white font-semibold">3.5 years</span>
+                        </div>
+                        <div class="w-full bg-slate-800 rounded-full h-2">
+                            <div class="bg-orange-400 h-2 rounded-full" style="width: 60%"></div>
+                        </div>
+                    </div>
+
+                    <div class="stat-item">
+                        <div class="flex justify-between items-center mb-2">
+                            <span class="text-slate-300">Skills Proficiency</span>
+                            <span class="text-white font-semibold">78%</span>
+                        </div>
+                        <div class="w-full bg-slate-800 rounded-full h-2">
+                            <div class="bg-blue-400 h-2 rounded-full" style="width: 78%"></div>
+                        </div>
+                    </div>
+
+                    <div class="stat-item">
+                        <div class="flex justify-between items-center mb-2">
+                            <span class="text-slate-300">Career Progress</span>
+                            <span class="text-white font-semibold">65%</span>
+                        </div>
+                        <div class="w-full bg-slate-800 rounded-full h-2">
+                            <div class="bg-green-400 h-2 rounded-full" style="width: 65%"></div>
+                        </div>
+                    </div>
+
+                    <div class="bg-orange-500/10 border border-orange-500/20 rounded-2xl p-4 mt-6">
+                        <h5 class="font-semibold text-orange-400 mb-2">Industry Insight</h5>
+                        <p class="text-slate-300 text-sm">
+                            You're performing above average! Focus on leadership skills and system design
+                            to reach the top 10% of professionals in your field.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Action Plan Generator -->
+        <div class="glass-card rounded-3xl p-8 mb-8 shadow-xl" data-aos="fade-up" data-aos-delay="600">
+            <div class="flex items-center justify-between mb-6">
+                <h3 class="text-2xl font-bold text-white">
+                    <i class="fas fa-magic mr-2 text-pink-400"></i>AI Action Plan Generator
+                </h3>
+                <button id="generate-plan-btn"
+                    class="px-4 py-2 bg-gradient-to-r from-pink-500 to-purple-600 rounded-xl font-semibold text-white hover:shadow-lg transition-all">
+                    <i class="fas fa-robot mr-2"></i>Generate New Plan
+                </button>
+            </div>
+
+            <div id="action-plan" class="space-y-4">
+                <!-- Action plan items will be populated by JavaScript -->
+            </div>
+        </div>
+
+        <!-- Export & Sharing -->
+        <div class="glass-card rounded-3xl p-6 shadow-xl" data-aos="fade-up" data-aos-delay="700">
+            <div class="flex flex-col sm:flex-row items-center justify-between gap-4">
+                <div>
+                    <h3 class="text-lg font-bold text-white mb-1">Export Your Career Plan</h3>
+                    <p class="text-slate-400 text-sm">Save and share your personalized career roadmap</p>
+                </div>
+                <div class="flex space-x-3">
+                    <button id="export-pdf"
+                        class="px-4 py-2 bg-red-500/20 border border-red-500/30 rounded-xl text-red-400 hover:bg-red-500/30 transition-all">
+                        <i class="fas fa-file-pdf mr-2"></i>PDF Report
+                    </button>
+                    <button id="export-calendar"
+                        class="px-4 py-2 bg-blue-500/20 border border-blue-500/30 rounded-xl text-blue-400 hover:bg-blue-500/30 transition-all">
+                        <i class="fas fa-calendar mr-2"></i>Add to Calendar
+                    </button>
+                    <button id="share-plan"
+                        class="px-4 py-2 bg-green-500/20 border border-green-500/30 rounded-xl text-green-400 hover:bg-green-500/30 transition-all">
+                        <i class="fas fa-share mr-2"></i>Share Plan
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Current Time Display -->
+        <div class="text-center mt-8">
+            <p class="text-slate-500 text-sm">
+                <i class="fas fa-clock mr-1"></i>
+                Last updated: <span class="text-indigo-400">2025-08-05 15:40:19 UTC</span>
+                • Career Planning by <span class="text-purple-400 font-semibold">LakshyaAI</span>
+            </p>
+        </div>
+    </main>
+
+    <!-- Custom JS -->
+    <script src="{{ url_for('static', filename='js/career-path-planner.js') }}"></script>
+</body>
+
+</html>

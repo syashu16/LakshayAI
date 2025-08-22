@@ -1,0 +1,53 @@
+This application is a sophisticated **resume parsing and job recommendation system**. It uses a pipeline of different tools and libraries to handle each step, from extracting text from a resume to suggesting relevant jobs and analyzing skills gaps.
+
+Here's a detailed breakdown of the tools and libraries used in each part of the application:
+
+### Step 1: Resume Text and Section Extraction
+
+This step focuses on converting a resume file (PDF or DOCX) into plain text and then structuring that text into meaningful sections like skills, experience, and education.
+
+* `docx2txt`: This library is used to read and extract text from `.docx` files. It's a simple, single-purpose tool that converts the binary document format into a readable string.
+* `pdfminer.high_level`: A powerful library for extracting text from PDF documents. Unlike simpler libraries, `pdfminer` can handle more complex PDF layouts, which is crucial for reliably parsing professional resumes.
+* `spacy`: This is a major NLP (Natural Language Processing) library. The `en_core_web_sm` model is loaded specifically to perform **Named Entity Recognition (NER)**. The code uses it to identify and extract the candidate's name (`PERSON` entity) from the resume text.
+* `re` (Regular Expressions): This built-in Python module is used extensively for pattern matching. In this step, it's used to:
+    * Find and extract email addresses and phone numbers.
+    * Identify and locate section headers (e.g., "Education", "Experience") to split the resume into different parts.
+* `os`: This library is used to check if the resume file exists on the system before attempting to process it, preventing errors.
+
+### Step 2: Skill Extraction and Classification
+
+Once the resume is parsed into sections, this step identifies and categorizes the skills mentioned.
+
+* `spacy.matcher.PhraseMatcher`: Part of the spaCy library, this tool is used to find specific, pre-defined phrases (skills from the ontology) within the resume's text. It's highly efficient and more accurate for this task than simple string matching.
+* `re` (Regular Expressions): The regex module is also used here to handle skills that are already presented in a structured, categorized list on the resume (e.g., "Languages: Python, Java"). It helps parse these specific formats.
+
+### Step 3: Experience Analysis and Calculation
+
+This step extracts work history information, including job titles, companies, and responsibilities, and calculates the total years of experience.
+
+* `dateutil.relativedelta`: This is a very useful library for performing date calculations. It's used here to accurately calculate the duration of each job, handling different formats and "Present" dates, and then summing them up to get the total experience.
+* `datetime`: Python's built-in date and time library is used for parsing start and end dates from the resume text into a standard format that `relativedelta` can work with.
+* `re` (Regular Expressions): The regex module is key here for identifying date ranges (e.g., "Jan 2020 - Dec 2022") and extracting the start and end dates from the text.
+
+---
+
+### Step 4: Job Recommendation System with Adzuna API
+
+This is the core of the recommendation system. It leverages different models and tools to find a user's profile match in a dataset and then fetches jobs from an external API.
+
+* `pandas`: The go-to library for data manipulation and analysis. It's used to load the `cleaned_resume_dataset.csv` into a DataFrame, which allows for easy manipulation and processing of the data.
+* `sentence-transformers`: This is a powerful library for generating high-quality **sentence embeddings**. It uses a pre-trained model (`all-MiniLM-L6-v2`) to convert resume text and job descriptions into numerical vectors. These vectors capture the semantic meaning of the text, enabling the system to find conceptually similar items.
+* `torch`: The underlying deep learning framework for `sentence-transformers`. The code uses it to handle tensors (multi-dimensional arrays) for efficient computations, specifically for calculating cosine similarity.
+* `faiss`: A library developed by Facebook for efficient similarity search and clustering of dense vectors. The code uses `faiss.IndexFlatL2` to create an index of all resume embeddings from the dataset. This allows the system to find the most similar resumes to the user's profile extremely fast, even with a very large dataset, by performing a **nearest-neighbor search**.
+* `requests`: This library is used to make HTTP requests to the **Adzuna API**, which is a job search engine. The application sends a search query to the API and receives job listings in a JSON format.
+* `json`: The built-in JSON module is used to parse the JSON data received from the Adzuna API and also to handle job titles stored in the dataset as JSON strings.
+
+---
+
+### Step 5: Skills Gap Analysis
+
+This final step compares the user's skills with the requirements of a specific job to identify a skills gap.
+
+* `sentence-transformers`: Again, the `all-MiniLM-L6-v2` model is used for **semantic skill inference**. It encodes the text from job descriptions and other resume sections (like projects) and compares them to a list of known skills. This helps identify relevant skills even if they aren't explicitly listed.
+* `torch.util.cos_sim`: This function calculates the cosine similarity between the user's profile and job descriptions. The score is used to rank jobs based on how well they match the user's profile.
+* `re` (Regular Expressions): Used in the `filter_jobs_by_experience` function to parse job descriptions and extract required years of experience.

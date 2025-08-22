@@ -1,0 +1,266 @@
+/* Resume Analysis Page Styles */
+.font-inter {
+    font-family: 'Inter', sans-serif;
+}
+
+/* Glass Card Effect */
+.glass-card {
+    background: rgba(15, 23, 42, 0.6);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Background Orbs */
+.resume-bg {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+}
+
+.resume-bg div {
+    position: absolute;
+    border-radius: 100%;
+    filter: blur(40px);
+    animation: float 8s ease-in-out infinite;
+}
+
+.orb1 {
+    top: 6rem;
+    left: 2rem;
+    width: 20rem;
+    height: 20rem;
+    background: rgba(59, 130, 246, 0.1);
+}
+
+.orb2 {
+    top: 10rem;
+    right: 4rem;
+    width: 12rem;
+    height: 12rem;
+    background: rgba(34, 197, 94, 0.1);
+    animation-delay: -2s;
+}
+
+.orb3 {
+    bottom: 4rem;
+    left: 25vw;
+    width: 8rem;
+    height: 8rem;
+    background: rgba(139, 92, 246, 0.1);
+    animation-delay: -4s;
+}
+
+@keyframes float {
+    0%, 100% {
+        transform: translateY(0px) rotate(0deg);
+    }
+    50% {
+        transform: translateY(-20px) rotate(180deg);
+    }
+}
+
+/* Upload Area */
+.upload-area {
+    border: 2px dashed rgba(34, 197, 94, 0.3);
+    border-radius: 1.5rem;
+    transition: all 0.3s ease;
+}
+
+.upload-area:hover {
+    border-color: rgba(34, 197, 94, 0.5);
+    background: rgba(34, 197, 94, 0.05);
+}
+
+.upload-label {
+    display: block;
+    cursor: pointer;
+    padding: 3rem 2rem;
+    text-align: center;
+    transition: all 0.3s ease;
+}
+
+.upload-content {
+    transition: transform 0.3s ease;
+}
+
+.upload-label:hover .upload-content {
+    transform: translateY(-4px);
+}
+
+/* File Info Display */
+.file-info {
+    padding: 1rem;
+    background: rgba(34, 197, 94, 0.1);
+    border: 1px solid rgba(34, 197, 94, 0.2);
+    border-radius: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+/* Skills and Keywords Tags */
+.skill-tag {
+    display: inline-block;
+    padding: 0.5rem 1rem;
+    background: rgba(59, 130, 246, 0.2);
+    border: 1px solid rgba(59, 130, 246, 0.3);
+    border-radius: 0.75rem;
+    color: #60a5fa;
+    font-size: 0.875rem;
+    font-weight: 500;
+    margin: 0.25rem;
+}
+
+.keyword-tag {
+    display: inline-block;
+    padding: 0.5rem 1rem;
+    background: rgba(139, 92, 246, 0.2);
+    border: 1px solid rgba(139, 92, 246, 0.3);
+    border-radius: 0.75rem;
+    color: #a78bfa;
+    font-size: 0.875rem;
+    font-weight: 500;
+    margin: 0.25rem;
+    transition: all 0.3s ease;
+}
+
+.keyword-tag:hover {
+    background: rgba(139, 92, 246, 0.3);
+    transform: translateY(-1px);
+}
+
+.keyword-tag.missing {
+    background: rgba(249, 115, 22, 0.2);
+    border-color: rgba(249, 115, 22, 0.3);
+    color: #fb923c;
+}
+
+.keyword-tag.missing:hover {
+    background: rgba(249, 115, 22, 0.3);
+}
+
+.keywords-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+.keywords-note {
+    color: #94a3b8;
+    font-size: 0.875rem;
+    margin-top: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.no-keywords {
+    text-align: center;
+    padding: 2rem;
+    color: #22c55e;
+}
+
+.no-keywords i {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+}
+
+/* Suggestion Items */
+.suggestion-item {
+    padding: 1rem;
+    background: rgba(34, 197, 94, 0.1);
+    border: 1px solid rgba(34, 197, 94, 0.2);
+    border-radius: 1rem;
+    border-left: 4px solid #22c55e;
+}
+
+.suggestion-item h4 {
+    color: #22c55e;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+.suggestion-item p {
+    color: #cbd5e1;
+    font-size: 0.875rem;
+    line-height: 1.5;
+}
+
+/* Loading Animation */
+.loading-spinner {
+    display: inline-block;
+    width: 1rem;
+    height: 1rem;
+    border: 2px solid rgba(34, 197, 94, 0.2);
+    border-top: 2px solid #22c55e;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Score Animation */
+.score-animate {
+    animation: scoreCounter 2s ease-out forwards;
+}
+
+@keyframes scoreCounter {
+    from { transform: scale(0.5); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .orb1, .orb2, .orb3 {
+        width: 8rem;
+        height: 8rem;
+    }
+    
+    .upload-label {
+        padding: 2rem 1rem;
+    }
+    
+    .grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Focus States */
+input:focus, textarea:focus {
+    outline: none;
+    border-color: #22c55e;
+    box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.2);
+}
+
+/* Button Hover Effects */
+button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+}
+
+/* Transition Classes */
+.transition-all {
+    transition: all 0.3s ease;
+}
+
+/* Status Messages */
+.status-success {
+    color: #22c55e;
+}
+
+.status-error {
+    color: #ef4444;
+}
+
+.status-warning {
+    color: #f59e0b;
+}
+
+.status-info {
+    color: #3b82f6;
+}

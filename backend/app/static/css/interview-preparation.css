@@ -1,0 +1,644 @@
+/* Interview Preparation Page Styles */
+/* LakshyaAI - User: syashu16 - Updated: 2025-08-05 13:50:28 */
+
+.font-inter {
+    font-family: 'Inter', sans-serif;
+}
+
+/* Glass Card Effect */
+.glass-card {
+    background: rgba(15, 23, 42, 0.6);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Background Orbs */
+.interview-bg {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+}
+
+.interview-bg div {
+    position: absolute;
+    border-radius: 100%;
+    filter: blur(40px);
+    animation: float 12s ease-in-out infinite;
+}
+
+.orb1 {
+    top: 6rem;
+    left: 5%;
+    width: 20rem;
+    height: 20rem;
+    background: rgba(16, 185, 129, 0.12);
+}
+
+.orb2 {
+    top: 18rem;
+    right: 8%;
+    width: 16rem;
+    height: 16rem;
+    background: rgba(6, 182, 212, 0.1);
+    animation-delay: -2s;
+}
+
+.orb3 {
+    bottom: 12rem;
+    left: 12%;
+    width: 12rem;
+    height: 12rem;
+    background: rgba(59, 130, 246, 0.08);
+    animation-delay: -4s;
+}
+
+.orb4 {
+    bottom: 25rem;
+    right: 15%;
+    width: 14rem;
+    height: 14rem;
+    background: rgba(139, 92, 246, 0.09);
+    animation-delay: -6s;
+}
+
+.orb5 {
+    top: 35rem;
+    left: 40%;
+    width: 10rem;
+    height: 10rem;
+    background: rgba(236, 72, 153, 0.07);
+    animation-delay: -8s;
+}
+
+.orb6 {
+    top: 50rem;
+    right: 30%;
+    width: 8rem;
+    height: 8rem;
+    background: rgba(245, 158, 11, 0.06);
+    animation-delay: -10s;
+}
+
+@keyframes float {
+    0%, 100% {
+        transform: translateY(0px) rotate(0deg) scale(1);
+    }
+    20% {
+        transform: translateY(-15px) rotate(72deg) scale(1.05);
+    }
+    40% {
+        transform: translateY(-25px) rotate(144deg) scale(0.95);
+    }
+    60% {
+        transform: translateY(-10px) rotate(216deg) scale(1.1);
+    }
+    80% {
+        transform: translateY(-20px) rotate(288deg) scale(0.9);
+    }
+}
+
+/* Practice Category Cards */
+.practice-category-card {
+    background: rgba(30, 41, 59, 0.6);
+    backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 1.5rem;
+    padding: 2rem;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+}
+
+.practice-category-card:hover {
+    transform: translateY(-6px);
+    border-color: rgba(16, 185, 129, 0.3);
+    box-shadow: 0 25px 50px rgba(16, 185, 129, 0.1);
+}
+
+.practice-category-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, #10b981, #06b6d4);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.practice-category-card:hover::before {
+    opacity: 1;
+}
+
+/* Practice Icons */
+.practice-icon {
+    width: 4rem;
+    height: 4rem;
+    border-radius: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1.5rem;
+    font-size: 1.5rem;
+    transition: all 0.3s ease;
+}
+
+.practice-icon.technical {
+    background: rgba(16, 185, 129, 0.2);
+    color: #10b981;
+}
+
+.practice-icon.behavioral {
+    background: rgba(59, 130, 246, 0.2);
+    color: #3b82f6;
+}
+
+.practice-icon.system-design {
+    background: rgba(139, 92, 246, 0.2);
+    color: #8b5cf6;
+}
+
+.practice-icon.hr-round {
+    background: rgba(236, 72, 153, 0.2);
+    color: #ec4899;
+}
+
+.practice-icon.coding {
+    background: rgba(34, 197, 94, 0.2);
+    color: #22c55e;
+}
+
+.practice-icon.industry {
+    background: rgba(245, 158, 11, 0.2);
+    color: #f59e0b;
+}
+
+.practice-category-card:hover .practice-icon {
+    transform: scale(1.1) rotate(5deg);
+}
+
+/* Interview Session Styles */
+#interview-session {
+    animation: slideIn 0.8s ease-out;
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Question Analysis Cards */
+.question-card {
+    background: rgba(30, 41, 59, 0.5);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 1rem;
+    padding: 1.5rem;
+    margin-bottom: 1rem;
+    transition: all 0.3s ease;
+}
+
+.question-card:hover {
+    background: rgba(30, 41, 59, 0.7);
+    border-color: rgba(6, 182, 212, 0.3);
+}
+
+.question-card.excellent {
+    border-left: 4px solid #22c55e;
+    background: rgba(34, 197, 94, 0.05);
+}
+
+.question-card.good {
+    border-left: 4px solid #3b82f6;
+    background: rgba(59, 130, 246, 0.05);
+}
+
+.question-card.needs-improvement {
+    border-left: 4px solid #f59e0b;
+    background: rgba(245, 158, 11, 0.05);
+}
+
+.question-card.poor {
+    border-left: 4px solid #ef4444;
+    background: rgba(239, 68, 68, 0.05);
+}
+
+/* Score Circles */
+.score-circle {
+    transition: stroke-dashoffset 2s ease-in-out;
+}
+
+/* Action Item Cards */
+.action-item {
+    background: rgba(51, 65, 85, 0.4);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 1rem;
+    padding: 1.5rem;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.action-item:hover {
+    background: rgba(51, 65, 85, 0.6);
+    transform: translateY(-2px);
+}
+
+.action-item.priority-high {
+    border-left: 4px solid #ef4444;
+}
+
+.action-item.priority-medium {
+    border-left: 4px solid #f59e0b;
+}
+
+.action-item.priority-low {
+    border-left: 4px solid #22c55e;
+}
+
+.action-item h4 {
+    color: #ffffff;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+.action-item p {
+    color: #cbd5e1;
+    font-size: 0.875rem;
+    line-height: 1.5;
+    margin-bottom: 1rem;
+}
+
+.action-item-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.priority-badge {
+    padding: 0.25rem 0.75rem;
+    border-radius: 0.5rem;
+    font-size: 0.75rem;
+    font-weight: 500;
+}
+
+.priority-badge.high {
+    background: rgba(239, 68, 68, 0.2);
+    color: #ef4444;
+}
+
+.priority-badge.medium {
+    background: rgba(245, 158, 11, 0.2);
+    color: #f59e0b;
+}
+
+.priority-badge.low {
+    background: rgba(34, 197, 94, 0.2);
+    color: #22c55e;
+}
+
+/* Session History Cards */
+.session-card {
+    background: rgba(30, 41, 59, 0.5);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 1rem;
+    padding: 1.5rem;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.session-card:hover {
+    background: rgba(30, 41, 59, 0.7);
+    border-color: rgba(16, 185, 129, 0.3);
+    transform: translateY(-2px);
+}
+
+.session-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: start;
+    margin-bottom: 1rem;
+}
+
+.session-title {
+    font-weight: 600;
+    color: #ffffff;
+    margin-bottom: 0.25rem;
+}
+
+.session-meta {
+    font-size: 0.875rem;
+    color: #94a3b8;
+}
+
+.session-score {
+    text-align: right;
+}
+
+.session-score-value {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #10b981;
+}
+
+.session-score-label {
+    font-size: 0.75rem;
+    color: #64748b;
+}
+
+.session-stats {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.stat-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: #94a3b8;
+    font-size: 0.875rem;
+}
+
+/* Tip Cards */
+.tip-card {
+    background: rgba(30, 41, 59, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 1rem;
+    padding: 1.5rem;
+    transition: all 0.3s ease;
+}
+
+.tip-card:hover {
+    background: rgba(30, 41, 59, 0.5);
+    border-color: rgba(255, 255, 255, 0.1);
+}
+
+.tip-icon {
+    width: 3rem;
+    height: 3rem;
+    background: rgba(245, 158, 11, 0.2);
+    border-radius: 0.75rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1rem;
+    color: #f59e0b;
+    font-size: 1.25rem;
+}
+
+/* Loading and Animation States */
+.loading-spinner {
+    display: inline-block;
+    width: 1.5rem;
+    height: 1.5rem;
+    border: 3px solid rgba(16, 185, 129, 0.2);
+    border-top: 3px solid #10b981;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Pulse Animation for Active Elements */
+.pulse-active {
+    animation: pulseGlow 2s infinite;
+}
+
+@keyframes pulseGlow {
+    0%, 100% {
+        box-shadow: 0 0 5px rgba(16, 185, 129, 0.3);
+    }
+    50% {
+        box-shadow: 0 0 20px rgba(16, 185, 129, 0.6);
+    }
+}
+
+/* Voice Input Animation */
+.voice-recording {
+    animation: voicePulse 1.5s infinite;
+}
+
+@keyframes voicePulse {
+    0%, 100% {
+        background: rgba(239, 68, 68, 0.2);
+        color: #ef4444;
+    }
+    50% {
+        background: rgba(239, 68, 68, 0.4);
+        color: #fca5a5;
+    }
+}
+
+/* Timer Animation */
+.timer-warning {
+    animation: timerBlink 1s infinite;
+}
+
+@keyframes timerBlink {
+    0%, 100% {
+        color: #f59e0b;
+    }
+    50% {
+        color: #ef4444;
+    }
+}
+
+/* Progress Bar Animation */
+.progress-bar-animated {
+    background: linear-gradient(90deg, #10b981, #06b6d4, #10b981);
+    background-size: 200% 100%;
+    animation: progressFlow 2s linear infinite;
+}
+
+@keyframes progressFlow {
+    0% { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+}
+
+/* Fade In Animation */
+.fade-in {
+    animation: fadeIn 0.6s ease-out forwards;
+    opacity: 0;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Stagger Animation for Cards */
+.stagger-animation:nth-child(1) { animation-delay: 0.1s; }
+.stagger-animation:nth-child(2) { animation-delay: 0.2s; }
+.stagger-animation:nth-child(3) { animation-delay: 0.3s; }
+.stagger-animation:nth-child(4) { animation-delay: 0.4s; }
+.stagger-animation:nth-child(5) { animation-delay: 0.5s; }
+.stagger-animation:nth-child(6) { animation-delay: 0.6s; }
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .orb1, .orb2, .orb3, .orb4, .orb5, .orb6 {
+        width: 8rem;
+        height: 8rem;
+    }
+    
+    .practice-category-card {
+        padding: 1.5rem;
+    }
+    
+    .practice-icon {
+        width: 3rem;
+        height: 3rem;
+        font-size: 1.25rem;
+    }
+    
+    .glass-card {
+        padding: 1.5rem;
+    }
+    
+    .session-header {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+    
+    .session-stats {
+        flex-wrap: wrap;
+        gap: 0.5rem;
+    }
+}
+
+/* Focus States */
+input:focus, textarea:focus, select:focus {
+    outline: none;
+    border-color: #10b981;
+    box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.2);
+}
+
+/* Button Hover Effects */
+button:hover {
+    transform: translateY(-1px);
+}
+
+/* Transition Classes */
+.transition-all {
+    transition: all 0.3s ease;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: rgba(30, 41, 59, 0.3);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: rgba(16, 185, 129, 0.5);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: rgba(16, 185, 129, 0.7);
+}
+
+/* Status Messages */
+.status-success {
+    color: #22c55e;
+}
+
+.status-error {
+    color: #ef4444;
+}
+
+.status-warning {
+    color: #f59e0b;
+}
+
+.status-info {
+    color: #3b82f6;
+}
+
+/* Interview Timer States */
+.timer-normal {
+    color: #f59e0b;
+}
+
+.timer-warning {
+    color: #ef4444;
+    animation: timerBlink 1s infinite;
+}
+
+.timer-critical {
+    color: #dc2626;
+    animation: timerBlink 0.5s infinite;
+}
+
+/* Answer Quality Indicators */
+.answer-quality {
+    display: inline-block;
+    padding: 0.25rem 0.75rem;
+    border-radius: 0.5rem;
+    font-size: 0.75rem;
+    font-weight: 500;
+    margin: 0.125rem;
+}
+
+.answer-quality.excellent {
+    background: rgba(34, 197, 94, 0.2);
+    color: #22c55e;
+}
+
+.answer-quality.good {
+    background: rgba(59, 130, 246, 0.2);
+    color: #3b82f6;
+}
+
+.answer-quality.average {
+    background: rgba(245, 158, 11, 0.2);
+    color: #f59e0b;
+}
+
+.answer-quality.needs-improvement {
+    background: rgba(239, 68, 68, 0.2);
+    color: #ef4444;
+}
+
+/* Interview Mode Styles */
+.interview-mode {
+    position: relative;
+    overflow: hidden;
+}
+
+.interview-mode::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(16, 185, 129, 0.1), transparent);
+    animation: shimmer 3s infinite;
+}
+
+@keyframes shimmer {
+    0% { left: -100%; }
+    100% { left: 100%; }
+}

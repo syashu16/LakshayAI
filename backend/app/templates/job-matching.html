@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Job Matching - LakshyaAI</title>
+
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/job-matching.css') }}">
+</head>
+
+<body class="font-inter bg-slate-950 text-white min-h-screen">
+
+    <!-- Background Orbs -->
+    <div class="job-bg">
+        <div class="orb1"></div>
+        <div class="orb2"></div>
+        <div class="orb3"></div>
+        <div class="orb4"></div>
+    </div>
+
+    <!-- Header -->
+    <header class="glass-card border-b border-slate-800/50 sticky top-0 z-40">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <!-- Logo & Title -->
+                <div class="flex items-center space-x-4">
+                    <a href="/dashboard" class="flex items-center space-x-3">
+                        <div
+                            class="w-10 h-10 bg-gradient-to-br from-purple-500 to-blue-600 rounded-xl flex items-center justify-center shadow-lg">
+                            <i class="fas fa-briefcase text-white text-lg"></i>
+                        </div>
+                        <div>
+                            <h1
+                                class="text-xl font-bold bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent">
+                                Job Matching</h1>
+                            <p class="text-xs text-slate-400">Powered by LakshyaAI • User: {{ user.username if user else
+                                'Guest' }}</p>
+                        </div>
+                    </a>
+
+                    <!-- AI Status -->
+                    <div
+                        class="flex items-center space-x-2 px-3 py-1 bg-purple-500/20 rounded-full border border-purple-500/30">
+                        <div class="w-2 h-2 bg-purple-400 rounded-full animate-pulse"></div>
+                        <span id="ai-status" class="text-purple-400 text-sm font-semibold">AI Matching</span>
+                    </div>
+                </div>
+
+                <!-- Header Actions -->
+                <div class="flex items-center space-x-4">
+                    <!-- Saved Jobs Counter -->
+                    <div
+                        class="flex items-center space-x-2 px-3 py-1 bg-green-500/20 rounded-full border border-green-500/30">
+                        <i class="fas fa-heart text-green-400"></i>
+                        <span id="saved-count" class="text-green-400 text-sm font-semibold">0 Saved</span>
+                    </div>
+
+                    <a href="/dashboard"
+                        class="flex items-center space-x-2 px-4 py-2 bg-slate-800/50 hover:bg-slate-700/50 rounded-xl transition-all">
+                        <i class="fas fa-arrow-left text-slate-400"></i>
+                        <span class="text-slate-300">Dashboard</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="relative z-10 max-w-7xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
+        <!-- Page Switcher -->
+        <div class="glass-card rounded-2xl p-4 mb-8">
+            <div class="flex items-center justify-between">
+                <h1 class="text-2xl font-bold text-white">AI Job Matching</h1>
+                <div class="flex space-x-2">
+                    <span
+                        class="px-4 py-2 text-sm bg-purple-500/20 text-purple-300 rounded-lg border border-purple-500/30">
+                        <i class="fas fa-magic mr-1"></i>AI Matching
+                    </span>
+                    <a href="/dashboard/jobs"
+                        class="px-4 py-2 text-sm bg-slate-800/50 text-slate-300 rounded-lg hover:bg-slate-700/50 transition-colors">
+                        <i class="fas fa-search mr-1"></i>Dashboard Jobs
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Page Title -->
+        <div class="text-center mb-8">
+            <h2
+                class="text-3xl font-bold bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent mb-4">
+                AI-Powered Job Matching
+            </h2>
+            <p class="text-slate-300 max-w-2xl mx-auto">
+                Find your perfect job match with our intelligent recommendation system.
+                Search, filter, and discover opportunities tailored to your skills and career goals.
+            </p>
+        </div>
+
+        <!-- Search & Filters Section -->
+        <div class="glass-card rounded-3xl p-6 mb-8 shadow-xl">
+            <form id="job-search-form" class="space-y-4">
+                <!-- Main Search Bar -->
+                <div class="flex flex-col lg:flex-row gap-4">
+                    <div class="flex-1 relative">
+                        <i class="fas fa-search absolute left-4 top-1/2 transform -translate-y-1/2 text-slate-400"></i>
+                        <input type="text" id="what" name="what" placeholder="Search jobs, skills, or companies..."
+                            class="w-full pl-12 pr-4 py-3 bg-slate-800/50 border border-slate-700 rounded-xl focus:border-purple-500 focus:ring-2 focus:ring-purple-500/20 transition-all">
+                    </div>
+                    <div class="flex-1 relative">
+                        <i
+                            class="fas fa-map-marker-alt absolute left-4 top-1/2 transform -translate-y-1/2 text-slate-400"></i>
+                        <input type="text" id="where" name="where" placeholder="Location (e.g., Mumbai, Remote)"
+                            class="w-full pl-12 pr-4 py-3 bg-slate-800/50 border border-slate-700 rounded-xl focus:border-purple-500 focus:ring-2 focus:ring-purple-500/20 transition-all">
+                    </div>
+                    <button type="submit"
+                        class="px-6 py-3 bg-gradient-to-r from-purple-500 to-blue-600 rounded-xl font-semibold text-white hover:shadow-lg transition-all group">
+                        <i class="fas fa-search mr-2 group-hover:animate-pulse"></i>
+                        Search Jobs
+                    </button>
+                    <button type="button" id="ai-recommendations-btn"
+                        class="px-6 py-3 bg-gradient-to-r from-green-500 to-emerald-600 rounded-xl font-semibold text-white hover:shadow-lg transition-all group">
+                        <i class="fas fa-robot mr-2 group-hover:animate-pulse"></i>
+                        AI Match
+                    </button>
+                </div>
+
+                <!-- Advanced Filters -->
+                <div id="advanced-filters"
+                    class="grid grid-cols-1 md:grid-cols-4 gap-4 pt-4 border-t border-slate-700/50">
+                    <!-- Experience Level -->
+                    <div>
+                        <label class="block text-sm font-medium text-slate-300 mb-2">Experience</label>
+                        <select id="experience-filter"
+                            class="w-full px-3 py-2 bg-slate-800/50 border border-slate-700 rounded-lg focus:border-purple-500 transition-all text-sm">
+                            <option value="">Any Level</option>
+                            <option value="entry">Entry Level (0-2 years)</option>
+                            <option value="mid">Mid Level (2-5 years)</option>
+                            <option value="senior">Senior Level (5+ years)</option>
+                        </select>
+                    </div>
+
+                    <!-- Job Type -->
+                    <div>
+                        <label class="block text-sm font-medium text-slate-300 mb-2">Job Type</label>
+                        <select id="job-type-filter"
+                            class="w-full px-3 py-2 bg-slate-800/50 border border-slate-700 rounded-lg focus:border-purple-500 transition-all text-sm">
+                            <option value="">Any Type</option>
+                            <option value="full-time">Full Time</option>
+                            <option value="part-time">Part Time</option>
+                            <option value="contract">Contract</option>
+                            <option value="internship">Internship</option>
+                        </select>
+                    </div>
+
+                    <!-- Salary Range -->
+                    <div>
+                        <label class="block text-sm font-medium text-slate-300 mb-2">Salary (₹ LPA)</label>
+                        <select id="salary-filter"
+                            class="w-full px-3 py-2 bg-slate-800/50 border border-slate-700 rounded-lg focus:border-purple-500 transition-all text-sm">
+                            <option value="">Any Salary</option>
+                            <option value="0-3">0-3 LPA</option>
+                            <option value="3-6">3-6 LPA</option>
+                            <option value="6-12">6-12 LPA</option>
+                            <option value="12+">12+ LPA</option>
+                        </select>
+                    </div>
+
+                    <!-- Work Mode -->
+                    <div>
+                        <label class="block text-sm font-medium text-slate-300 mb-2">Work Mode</label>
+                        <select id="work-mode-filter"
+                            class="w-full px-3 py-2 bg-slate-800/50 border border-slate-700 rounded-lg focus:border-purple-500 transition-all text-sm">
+                            <option value="">Any Mode</option>
+                            <option value="remote">Remote</option>
+                            <option value="hybrid">Hybrid</option>
+                            <option value="onsite">On-site</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Quick Filters -->
+                <div class="flex flex-wrap gap-2 pt-2">
+                    <span class="text-sm text-slate-400">Quick filters:</span>
+                    <button type="button"
+                        class="quick-filter px-3 py-1 bg-purple-500/20 border border-purple-500/30 rounded-full text-purple-400 text-sm hover:bg-purple-500/30 transition-all"
+                        data-filter="python">Python</button>
+                    <button type="button"
+                        class="quick-filter px-3 py-1 bg-blue-500/20 border border-blue-500/30 rounded-full text-blue-400 text-sm hover:bg-blue-500/30 transition-all"
+                        data-filter="javascript">JavaScript</button>
+                    <button type="button"
+                        class="quick-filter px-3 py-1 bg-green-500/20 border border-green-500/30 rounded-full text-green-400 text-sm hover:bg-green-500/30 transition-all"
+                        data-filter="react">React</button>
+                    <button type="button"
+                        class="quick-filter px-3 py-1 bg-yellow-500/20 border border-yellow-500/30 rounded-full text-yellow-400 text-sm hover:bg-yellow-500/30 transition-all"
+                        data-filter="data-science">Data Science</button>
+                    <button type="button"
+                        class="quick-filter px-3 py-1 bg-red-500/20 border border-red-500/30 rounded-full text-red-400 text-sm hover:bg-red-500/30 transition-all"
+                        data-filter="remote">Remote Only</button>
+                </div>
+            </form>
+        </div>
+
+        <!-- Search Results Stats -->
+        <div class="flex items-center justify-between mb-6">
+            <div id="results-stats" class="text-slate-400">
+                <span id="results-count">Loading jobs...</span>
+            </div>
+            <div class="flex items-center space-x-3">
+                <!-- Sort Options -->
+                <select id="sort-options"
+                    class="px-3 py-2 bg-slate-800/50 border border-slate-700 rounded-lg text-sm text-slate-300">
+                    <option value="relevance">Most Relevant</option>
+                    <option value="date">Latest First</option>
+                    <option value="salary">Highest Salary</option>
+                    <option value="match">Best Match</option>
+                </select>
+
+                <!-- View Toggle -->
+                <div class="flex rounded-lg border border-slate-700 overflow-hidden">
+                    <button id="grid-view"
+                        class="px-3 py-2 bg-slate-800/50 text-slate-400 hover:text-white transition-all">
+                        <i class="fas fa-th-large"></i>
+                    </button>
+                    <button id="list-view"
+                        class="px-3 py-2 bg-purple-500/20 text-purple-400 hover:text-white transition-all">
+                        <i class="fas fa-list"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Results Stats -->
+        <div id="search-results">
+            <div id="results-stats" class="mb-6 text-center">
+                <div class="text-slate-400 text-sm">
+                    Ready to search for jobs with Adzuna API
+                </div>
+            </div>
+
+            <!-- Job Results -->
+            <div id="jobs-container" class="space-y-4">
+                <!-- Loading State -->
+                <div id="loading-jobs" class="text-center py-12">
+                    <div class="loading-spinner mx-auto mb-4"></div>
+                    <p class="text-slate-400">Finding perfect job matches for you...</p>
+                </div>
+
+                <!-- Job Cards will be inserted here by JavaScript -->
+            </div>
+
+            <!-- Pagination -->
+            <div id="pagination-container" class="flex justify-center mt-8">
+                <!-- Pagination will be inserted here by JavaScript -->
+            </div>
+        </div>
+
+        <!-- Load More Button -->
+        <div class="text-center mt-8">
+            <button id="load-more"
+                class="hidden px-6 py-3 bg-slate-800/50 border border-slate-700 rounded-xl text-slate-300 hover:bg-slate-700/50 transition-all">
+                <i class="fas fa-plus mr-2"></i>
+                Load More Jobs
+            </button>
+        </div>
+
+        <!-- AI Recommendations -->
+        <div class="glass-card rounded-3xl p-8 mt-8 shadow-xl">
+            <h3 class="text-xl font-bold text-white mb-4">
+                <i class="fas fa-magic mr-2 text-purple-400"></i>AI Career Recommendations
+            </h3>
+            <div id="ai-recommendations" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="bg-purple-500/10 border border-purple-500/20 rounded-2xl p-4">
+                    <h4 class="font-semibold text-purple-400 mb-2">🎯 Skills to Focus On</h4>
+                    <p class="text-slate-300 text-sm">Based on current job market trends, consider learning Cloud
+                        Computing and DevOps skills to increase your opportunities by 40%.</p>
+                </div>
+                <div class="bg-blue-500/10 border border-blue-500/20 rounded-2xl p-4">
+                    <h4 class="font-semibold text-blue-400 mb-2">📈 Salary Insights</h4>
+                    <p class="text-slate-300 text-sm">Jobs in your profile range from ₹4-12 LPA. Remote positions
+                        typically offer 15-20% higher compensation.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- How Matching Works -->
+        <div class="glass-card rounded-3xl p-8 mt-8 shadow-xl">
+            <h3 class="text-xl font-bold text-white mb-4">
+                <i class="fas fa-question-circle mr-2 text-blue-400"></i>How AI Job Matching Works
+            </h3>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="text-center">
+                    <div class="w-12 h-12 bg-purple-500/20 rounded-xl flex items-center justify-center mx-auto mb-3">
+                        <i class="fas fa-user-cog text-purple-400"></i>
+                    </div>
+                    <h4 class="font-semibold text-white mb-2">1. Profile Analysis</h4>
+                    <p class="text-slate-400 text-sm">AI analyzes your skills, experience, and career preferences from
+                        your profile and resume</p>
+                </div>
+                <div class="text-center">
+                    <div class="w-12 h-12 bg-blue-500/20 rounded-xl flex items-center justify-center mx-auto mb-3">
+                        <i class="fas fa-search text-blue-400"></i>
+                    </div>
+                    <h4 class="font-semibold text-white mb-2">2. Smart Matching</h4>
+                    <p class="text-slate-400 text-sm">Advanced algorithms match you with relevant opportunities based on
+                        multiple factors</p>
+                </div>
+                <div class="text-center">
+                    <div class="w-12 h-12 bg-green-500/20 rounded-xl flex items-center justify-center mx-auto mb-3">
+                        <i class="fas fa-chart-line text-green-400"></i>
+                    </div>
+                    <h4 class="font-semibold text-white mb-2">3. Personalized Results</h4>
+                    <p class="text-slate-400 text-sm">Get ranked job recommendations with match scores and application
+                        insights</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Current Time Display -->
+        <div class="text-center mt-8">
+            <p class="text-slate-500 text-sm">
+                <i class="fas fa-clock mr-1"></i>
+                Last updated: <span class="text-purple-400">2025-08-05 12:08:05 UTC</span>
+                • Powered by <span class="text-green-400 font-semibold">LakshyaAI</span>
+            </p>
+        </div>
+    </main>
+
+    <!-- Custom JS -->
+    <script>
+        console.log('🚀 Job Matching Page Loaded');
+
+        class QuickJobMatcher {
+            constructor() {
+                this.jobs = [];
+                this.isLoading = false;
+                console.log('✅ QuickJobMatcher initialized');
+                this.init();
+            }
+
+            init() {
+                this.setupEventListeners();
+                this.loadJobs();
+            }
+
+            setupEventListeners() {
+                const form = document.getElementById('job-search-form');
+                if (form) {
+                    form.addEventListener('submit', (e) => this.handleSearch(e));
+                    console.log('✅ Form listener added');
+                }
+            }
+
+            async handleSearch(event) {
+                event.preventDefault();
+                const what = document.getElementById('what')?.value || 'Software Engineer';
+                const where = document.getElementById('where')?.value || 'Remote';
+                await this.searchJobs(what, where);
+            }
+
+            async searchJobs(what = 'Software Engineer', where = 'Remote') {
+                console.log('🔍 Searching jobs:', { what, where });
+                this.showLoading(true);
+
+                try {
+                    const response = await fetch('/api/job-search', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            what: what,
+                            where: where,
+                            page: 1,
+                            results_per_page: 12
+                        })
+                    });
+
+                    if (response.ok) {
+                        const data = await response.json();
+                        if (data.success && data.jobs) {
+                            this.displayJobs(data.jobs);
+                            this.updateStats(data.count, data.jobs.length);
+                            console.log('✅ Jobs loaded:', data.jobs.length);
+                        }
+                    }
+                } catch (error) {
+                    console.error('❌ Search error:', error);
+                }
+
+                this.showLoading(false);
+            }
+
+            displayJobs(jobs) {
+                const container = document.getElementById('jobs-container');
+                if (!container) return;
+
+                container.innerHTML = '';
+
+                jobs.forEach(job => {
+                    const card = document.createElement('div');
+                    card.className = 'bg-slate-800/50 rounded-xl p-6 border border-slate-700 hover:border-purple-500/50 transition-all';
+
+                    // Handle salary display
+                    let salaryDisplay = 'Salary not specified';
+                    if (job.salary && job.salary !== 'Not specified') {
+                        salaryDisplay = job.salary;
+                    } else if (job.salary_min) {
+                        const minLPA = Math.round(job.salary_min / 100000);
+                        salaryDisplay = job.salary_max
+                            ? `₹${minLPA}-${Math.round(job.salary_max / 100000)} LPA`
+                            : `₹${minLPA}+ LPA`;
+                    }
+
+                    // Handle company and location (they're strings, not objects)
+                    const company = job.company || 'Company not specified';
+                    const location = job.location || 'Location not specified';
+                    const contractType = job.contract_type || 'Full-time';
+
+                    card.innerHTML = `
+                        <div class="flex justify-between items-start mb-4">
+                            <div class="flex-1">
+                                <h3 class="text-lg font-bold text-white mb-2">${job.title || 'Job Title'}</h3>
+                                <p class="text-purple-400 font-medium">${company}</p>
+                                <p class="text-slate-400 text-sm">${location}</p>
+                            </div>
+                            <div class="text-right">
+                                <div class="text-green-400 font-bold text-sm">${salaryDisplay}</div>
+                                <div class="text-sm text-slate-400">${contractType}</div>
+                            </div>
+                        </div>
+                        <div class="text-slate-300 text-sm mb-4 leading-relaxed">
+                            ${job.description?.substring(0, 200) || 'No description available'}...
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <span class="text-xs text-slate-500">
+                                Posted: ${job.created ? new Date(job.created).toLocaleDateString() : 'Recently'}
+                            </span>
+                            <a href="${job.redirect_url || '#'}" target="_blank" 
+                               class="px-4 py-2 bg-purple-500 text-white rounded-lg hover:bg-purple-600 transition-all">
+                                Apply Now
+                            </a>
+                        </div>
+                    `;
+                    container.appendChild(card);
+                });
+            }
+
+            showLoading(show) {
+                const container = document.getElementById('jobs-container');
+                const loadingElement = document.getElementById('loading-jobs');
+
+                if (show) {
+                    if (container) container.innerHTML = '<div class="text-center py-8 text-slate-400">Loading jobs...</div>';
+                } else {
+                    if (loadingElement) loadingElement.style.display = 'none';
+                }
+            }
+
+            updateStats(total, showing) {
+                const statsElement = document.getElementById('results-count');
+                if (statsElement) {
+                    statsElement.textContent = `Showing ${showing} of ${total} jobs`;
+                }
+            }
+
+            async loadJobs() {
+                console.log('🏠 Loading initial jobs...');
+
+                // Check for resume data
+                const resumeData = localStorage.getItem('resumeAnalysisData');
+                if (resumeData) {
+                    try {
+                        const data = JSON.parse(resumeData);
+                        console.log('📋 Found resume data:', data);
+
+                        // Show resume-based search banner
+                        this.showResumeBanner(data);
+
+                        // Auto-populate search fields
+                        const whatField = document.getElementById('what');
+                        const whereField = document.getElementById('where');
+
+                        if (whatField && data.category) {
+                            whatField.value = data.category;
+                        }
+                        if (whereField && !whereField.value) {
+                            whereField.value = 'Remote';
+                        }
+
+                        await this.searchJobs(data.category || 'Software Engineer', 'Remote');
+                        return;
+                    } catch (e) {
+                        console.log('Could not parse resume data');
+                    }
+                }
+
+                // Default search
+                await this.searchJobs('Software Engineer', 'Remote');
+            }
+
+            showResumeBanner(resumeData) {
+                const container = document.getElementById('jobs-container');
+                if (!container) return;
+
+                const banner = document.createElement('div');
+                banner.className = 'bg-gradient-to-r from-green-500/20 to-blue-500/20 border border-green-500/30 rounded-xl p-6 mb-6';
+                banner.innerHTML = `
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <h3 class="text-lg font-bold text-green-400 mb-2">
+                                <i class="fas fa-file-alt mr-2"></i>Resume-Based Job Search
+                            </h3>
+                            <p class="text-slate-300 text-sm">
+                                Showing jobs matched to your resume: <strong>${resumeData.category}</strong> 
+                                with ${resumeData.total_skills_count} skills (${Math.round(resumeData.match_score)}% match)
+                            </p>
+                        </div>
+                        <div class="text-right">
+                            <div class="text-2xl font-bold text-green-400">${Math.round(resumeData.match_score)}%</div>
+                            <div class="text-xs text-slate-400">Resume Score</div>
+                        </div>
+                    </div>
+                    <div class="mt-4 flex flex-wrap gap-2">
+                        ${this.getSkillTags(resumeData.skills)}
+                    </div>
+                `;
+                container.appendChild(banner);
+            }
+
+            getSkillTags(skills) {
+                if (!skills || typeof skills !== 'object') return '';
+
+                const allSkills = [];
+                Object.keys(skills).forEach(category => {
+                    if (Array.isArray(skills[category])) {
+                        allSkills.push(...skills[category]);
+                    }
+                });
+
+                return allSkills.slice(0, 6).map(skill =>
+                    `<span class="px-3 py-1 bg-purple-500/20 text-purple-300 rounded-full text-xs">${skill}</span>`
+                ).join('');
+            }
+        }
+
+        // Initialize when DOM is ready
+        document.addEventListener('DOMContentLoaded', () => {
+            console.log('📄 DOM ready, starting job matcher...');
+            window.jobMatcher = new QuickJobMatcher();
+        });
+    </script>
+</body>
+
+</html>
