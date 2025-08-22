@@ -1,0 +1,765 @@
+{% extends "base.html" %}
+
+{% block title %}Job Search - LakshyaAI{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/dashboard.css') }}">
+<style>
+    .job-search-container {
+        padding: 2rem;
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+
+    .search-header {
+        text-align: center;
+        margin-bottom: 2rem;
+    }
+
+    .search-form {
+        background: white;
+        border-radius: 1rem;
+        padding: 2rem;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        margin-bottom: 2rem;
+    }
+
+    .search-filters {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 1rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .filter-group {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .filter-label {
+        font-weight: 600;
+        color: #374151;
+        margin-bottom: 0.5rem;
+    }
+
+    .filter-input {
+        padding: 0.75rem;
+        border: 1px solid #d1d5db;
+        border-radius: 0.5rem;
+        transition: border-color 0.2s;
+    }
+
+    .filter-input:focus {
+        outline: none;
+        border-color: #3b82f6;
+        box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+    }
+
+    .search-actions {
+        display: flex;
+        gap: 1rem;
+        justify-content: center;
+    }
+
+    .btn-primary {
+        padding: 0.75rem 2rem;
+        background: #3b82f6;
+        color: white;
+        border: none;
+        border-radius: 0.5rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: background-color 0.2s;
+    }
+
+    .btn-primary:hover {
+        background: #2563eb;
+    }
+
+    .btn-secondary {
+        padding: 0.75rem 2rem;
+        background: white;
+        color: #374151;
+        border: 1px solid #d1d5db;
+        border-radius: 0.5rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.2s;
+    }
+
+    .btn-secondary:hover {
+        background: #f9fafb;
+        border-color: #9ca3af;
+    }
+
+    .job-results {
+        background: white;
+        border-radius: 1rem;
+        padding: 1.5rem;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    }
+
+    .results-header {
+        display: flex;
+        justify-content: between;
+        align-items: center;
+        margin-bottom: 1.5rem;
+        padding-bottom: 1rem;
+        border-bottom: 1px solid #e5e7eb;
+    }
+
+    .results-stats {
+        color: #6b7280;
+        font-size: 0.875rem;
+    }
+
+    .sort-controls {
+        display: flex;
+        gap: 1rem;
+        align-items: center;
+    }
+
+    .job-list {
+        space-y: 1rem;
+    }
+
+    .job-card {
+        border: 1px solid #e5e7eb;
+        border-radius: 0.75rem;
+        padding: 1.5rem;
+        transition: all 0.2s;
+        cursor: pointer;
+    }
+
+    .job-card:hover {
+        border-color: #3b82f6;
+        box-shadow: 0 4px 12px -2px rgba(59, 130, 246, 0.1);
+    }
+
+    .job-header {
+        display: flex;
+        justify-content: between;
+        align-items: start;
+        margin-bottom: 1rem;
+    }
+
+    .job-title {
+        font-size: 1.25rem;
+        font-weight: 700;
+        color: #111827;
+        margin-bottom: 0.25rem;
+    }
+
+    .job-company {
+        color: #3b82f6;
+        font-weight: 600;
+        text-decoration: none;
+    }
+
+    .job-company:hover {
+        text-decoration: underline;
+    }
+
+    .job-meta {
+        display: flex;
+        gap: 1rem;
+        margin-bottom: 1rem;
+        font-size: 0.875rem;
+        color: #6b7280;
+    }
+
+    .job-description {
+        color: #4b5563;
+        line-height: 1.6;
+        margin-bottom: 1rem;
+    }
+
+    .job-tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+        margin-bottom: 1rem;
+    }
+
+    .job-tag {
+        padding: 0.25rem 0.75rem;
+        background: #f3f4f6;
+        color: #374151;
+        border-radius: 9999px;
+        font-size: 0.75rem;
+        font-weight: 500;
+    }
+
+    .job-actions {
+        display: flex;
+        gap: 0.75rem;
+    }
+
+    .btn-apply {
+        padding: 0.5rem 1rem;
+        background: #3b82f6;
+        color: white;
+        border: none;
+        border-radius: 0.375rem;
+        font-size: 0.875rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: background-color 0.2s;
+    }
+
+    .btn-apply:hover {
+        background: #2563eb;
+    }
+
+    .btn-save {
+        padding: 0.5rem 1rem;
+        background: white;
+        color: #374151;
+        border: 1px solid #d1d5db;
+        border-radius: 0.375rem;
+        font-size: 0.875rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.2s;
+    }
+
+    .btn-save:hover {
+        background: #f9fafb;
+    }
+
+    .btn-save.saved {
+        background: #fef3c7;
+        color: #d97706;
+        border-color: #fbbf24;
+    }
+
+    .loading-state {
+        text-align: center;
+        padding: 3rem;
+        color: #6b7280;
+    }
+
+    .no-results {
+        text-align: center;
+        padding: 3rem;
+        color: #6b7280;
+    }
+
+    .pagination {
+        display: flex;
+        justify-content: center;
+        gap: 0.5rem;
+        margin-top: 2rem;
+    }
+
+    .pagination button {
+        padding: 0.5rem 0.75rem;
+        border: 1px solid #d1d5db;
+        background: white;
+        color: #374151;
+        border-radius: 0.375rem;
+        cursor: pointer;
+        transition: all 0.2s;
+    }
+
+    .pagination button:hover:not(:disabled) {
+        background: #f9fafb;
+    }
+
+    .pagination button.active {
+        background: #3b82f6;
+        color: white;
+        border-color: #3b82f6;
+    }
+
+    .pagination button:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="job-search-container">
+    <!-- Page Switcher -->
+    <div class="bg-white rounded-lg shadow-sm p-4 mb-6">
+        <div class="flex items-center justify-between">
+            <h1 class="text-2xl font-bold text-gray-900">Job Search</h1>
+            <div class="flex space-x-2">
+                <a href="/job-matching"
+                    class="px-4 py-2 text-sm bg-purple-100 text-purple-700 rounded-lg hover:bg-purple-200 transition-colors">
+                    <i class="fas fa-magic mr-1"></i>AI Job Matching
+                </a>
+                <span class="px-4 py-2 text-sm bg-blue-100 text-blue-700 rounded-lg">
+                    <i class="fas fa-search mr-1"></i>Dashboard Jobs
+                </span>
+            </div>
+        </div>
+    </div>
+
+    <div class="search-header">
+        <h1 class="text-3xl font-bold text-gray-900 mb-2">Find Your Next Opportunity</h1>
+        <p class="text-gray-600">Discover jobs that match your skills and career goals</p>
+    </div>
+
+    <!-- Search Form -->
+    <div class="search-form">
+        <form id="job-search-form">
+            <div class="search-filters">
+                <div class="filter-group">
+                    <label class="filter-label">Job Title / Keywords</label>
+                    <input type="text" id="what" name="what" class="filter-input"
+                        placeholder="e.g. Software Engineer, Marketing Manager">
+                </div>
+
+                <div class="filter-group">
+                    <label class="filter-label">Location</label>
+                    <input type="text" id="where" name="where" class="filter-input"
+                        placeholder="e.g. New York, NY or Remote">
+                </div>
+
+                <div class="filter-group">
+                    <label class="filter-label">Experience Level</label>
+                    <select id="experience" name="experience" class="filter-input">
+                        <option value="">Any Experience</option>
+                        <option value="entry">Entry Level (0-2 years)</option>
+                        <option value="mid">Mid Level (3-7 years)</option>
+                        <option value="senior">Senior Level (8+ years)</option>
+                        <option value="executive">Executive</option>
+                    </select>
+                </div>
+
+                <div class="filter-group">
+                    <label class="filter-label">Job Type</label>
+                    <select id="job-type" name="job_type" class="filter-input">
+                        <option value="">Any Type</option>
+                        <option value="full-time">Full Time</option>
+                        <option value="part-time">Part Time</option>
+                        <option value="contract">Contract</option>
+                        <option value="freelance">Freelance</option>
+                        <option value="internship">Internship</option>
+                    </select>
+                </div>
+
+                <div class="filter-group">
+                    <label class="filter-label">Salary Range</label>
+                    <select id="salary" name="salary" class="filter-input">
+                        <option value="">Any Salary</option>
+                        <option value="0-40000">Under $40,000</option>
+                        <option value="40000-60000">$40,000 - $60,000</option>
+                        <option value="60000-80000">$60,000 - $80,000</option>
+                        <option value="80000-100000">$80,000 - $100,000</option>
+                        <option value="100000-150000">$100,000 - $150,000</option>
+                        <option value="150000+">$150,000+</option>
+                    </select>
+                </div>
+
+                <div class="filter-group">
+                    <label class="filter-label">Remote Work</label>
+                    <select id="remote" name="remote" class="filter-input">
+                        <option value="">Any</option>
+                        <option value="remote">Remote Only</option>
+                        <option value="hybrid">Hybrid</option>
+                        <option value="onsite">On-site Only</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="search-actions">
+                <button type="submit" class="btn-primary">
+                    <i class="fas fa-search mr-2"></i>Search Jobs
+                </button>
+                <button type="button" id="clear-filters" class="btn-secondary">
+                    <i class="fas fa-times mr-2"></i>Clear Filters
+                </button>
+                <button type="button" id="save-search" class="btn-secondary">
+                    <i class="fas fa-bookmark mr-2"></i>Save Search
+                </button>
+            </div>
+        </form>
+    </div>
+
+    <!-- Job Results -->
+    <div class="job-results" id="search-results">
+        <div class="results-header">
+            <div>
+                <h2 class="text-xl font-semibold text-gray-900">Job Results</h2>
+                <div class="results-stats" id="results-stats">
+                    Search for jobs to see results
+                </div>
+            </div>
+
+            <div class="sort-controls">
+                <label class="filter-label">Sort by:</label>
+                <select id="sort-by" class="filter-input">
+                    <option value="relevance">Relevance</option>
+                    <option value="date">Date Posted</option>
+                    <option value="salary">Salary</option>
+                    <option value="company">Company</option>
+                </select>
+            </div>
+        </div>
+
+        <div id="jobs-container" class="job-list">
+            <!-- Initial state -->
+            <div class="no-results">
+                <i class="fas fa-search text-4xl text-gray-300 mb-4"></i>
+                <h3 class="text-lg font-medium text-gray-900 mb-2">Start Your Job Search</h3>
+                <p class="text-gray-600">Enter your criteria above to find relevant job opportunities</p>
+            </div>
+        </div>
+
+        <!-- Pagination -->
+        <div id="pagination-container" class="pagination" style="display: none;">
+            <!-- Pagination buttons will be inserted here -->
+        </div>
+    </div>
+</div>
+
+<!-- Job Detail Modal -->
+<div id="job-modal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden flex items-center justify-center">
+    <div class="bg-white rounded-lg max-w-4xl max-h-[90vh] overflow-y-auto m-4 w-full">
+        <div class="p-6 border-b">
+            <div class="flex justify-between items-start">
+                <div>
+                    <h2 id="modal-job-title" class="text-2xl font-bold text-gray-900"></h2>
+                    <p id="modal-job-company" class="text-lg text-blue-600 mt-1"></p>
+                </div>
+                <button id="close-modal" class="text-gray-400 hover:text-gray-600">
+                    <i class="fas fa-times text-xl"></i>
+                </button>
+            </div>
+        </div>
+
+        <div class="p-6">
+            <div id="modal-job-content">
+                <!-- Job details will be loaded here -->
+            </div>
+        </div>
+
+        <div class="p-6 border-t bg-gray-50 flex gap-3">
+            <button id="modal-apply-btn" class="btn-primary">
+                <i class="fas fa-paper-plane mr-2"></i>Apply Now
+            </button>
+            <button id="modal-save-btn" class="btn-secondary">
+                <i class="fas fa-bookmark mr-2"></i>Save Job
+            </button>
+            <button class="btn-secondary" onclick="shareJob()">
+                <i class="fas fa-share mr-2"></i>Share
+            </button>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{{ url_for('static', filename='js/job-matching-adzuna.js') }}"></script>
+<script>
+    // Page-specific initialization
+    document.addEventListener('DOMContentLoaded', function () {
+        // Initialize job search functionality
+        initializeJobSearch();
+
+        // Load saved searches if any
+        loadSavedSearches();
+
+        // Auto-search if coming from a direct link with parameters
+        const urlParams = new URLSearchParams(window.location.search);
+        if (urlParams.has('q') || urlParams.has('location')) {
+            document.getElementById('what').value = urlParams.get('q') || '';
+            document.getElementById('where').value = urlParams.get('location') || '';
+            document.getElementById('job-search-form').dispatchEvent(new Event('submit'));
+        }
+    });
+
+    function initializeJobSearch() {
+        const searchForm = document.getElementById('job-search-form');
+        const clearButton = document.getElementById('clear-filters');
+        const saveSearchButton = document.getElementById('save-search');
+        const sortSelect = document.getElementById('sort-by');
+
+        // Handle form submission
+        searchForm.addEventListener('submit', handleJobSearch);
+
+        // Handle clear filters
+        clearButton.addEventListener('click', clearAllFilters);
+
+        // Handle save search
+        saveSearchButton.addEventListener('click', saveCurrentSearch);
+
+        // Handle sort change
+        sortSelect.addEventListener('change', handleSortChange);
+
+        // Handle modal
+        document.getElementById('close-modal').addEventListener('click', closeJobModal);
+        document.getElementById('job-modal').addEventListener('click', function (e) {
+            if (e.target === this) closeJobModal();
+        });
+    }
+
+    async function handleJobSearch(e) {
+        e.preventDefault();
+
+        const formData = new FormData(e.target);
+        const searchParams = Object.fromEntries(formData.entries());
+
+        try {
+            // Use the job matching functionality from job-matching-adzuna.js
+            if (window.jobMatching) {
+                // Convert form data to the format expected by JobMatchingApp
+                const jobSearchParams = {
+                    what: searchParams.what || "",
+                    where: searchParams.where || "",
+                    salary_min: searchParams.salary ? searchParams.salary.split('-')[0] : null,
+                    salary_max: searchParams.salary ? (searchParams.salary.includes('-') ? searchParams.salary.split('-')[1] : null) : null,
+                    contract_type: searchParams.job_type || null,
+                    sort_by: searchParams.sort_by || "relevance",
+                    page: 1,
+                };
+
+                await window.jobMatching.performSearch(jobSearchParams);
+            } else {
+                // Fallback search implementation using JobUtils
+                showLoadingState();
+                const data = await window.JobUtils.searchJobs(searchParams);
+                if (data.success) {
+                    displayJobResults(data.jobs, data.count, searchParams);
+                } else {
+                    throw new Error(data.error || 'Search failed');
+                }
+            }
+        } catch (error) {
+            console.error('Job search error:', error);
+            showErrorState('Failed to search jobs. Please try again.');
+        }
+    }
+
+    async function performJobSearch(params) {
+        const response = await fetch('/api/job-search', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(params)
+        });
+
+        const data = await response.json();
+
+        if (data.success) {
+            displayJobResults(data.jobs, data.total, params);
+        } else {
+            throw new Error(data.error || 'Search failed');
+        }
+    }
+
+    function displayJobResults(jobs, total, searchParams) {
+        const jobList = document.getElementById('jobs-container');
+        const resultsStats = document.getElementById('results-stats');
+        const pagination = document.getElementById('pagination-container');
+
+        // Update stats
+        resultsStats.textContent = `Found ${total} jobs`;
+
+        if (jobs.length === 0) {
+            jobList.innerHTML = `
+            <div class="no-results">
+                <i class="fas fa-search text-4xl text-gray-300 mb-4"></i>
+                <h3 class="text-lg font-medium text-gray-900 mb-2">No Jobs Found</h3>
+                <p class="text-gray-600">Try adjusting your search criteria or keywords</p>
+            </div>
+        `;
+            pagination.style.display = 'none';
+            return;
+        }
+
+        // Display jobs
+        jobList.innerHTML = jobs.map(job => createJobCard(job)).join('');
+
+        // Show pagination if needed
+        if (total > 20) {
+            showPagination(total, searchParams);
+        } else {
+            pagination.style.display = 'none';
+        }
+    }
+
+    function createJobCard(job) {
+        // Use JobUtils for consistent formatting
+        const salary = window.JobUtils.formatSalary(job);
+        const postedDate = window.JobUtils.formatDate(job.created);
+        const company = window.JobUtils.getCompany(job);
+        const location = window.JobUtils.getLocation(job);
+        const category = window.JobUtils.getCategory(job);
+
+        return `
+        <div class="job-card" onclick="openJobModal('${job.id}')">
+            <div class="job-header">
+                <div>
+                    <h3 class="job-title">${job.title}</h3>
+                    <a href="#" class="job-company" onclick="event.stopPropagation()">${company}</a>
+                </div>
+                <div class="text-right">
+                    <div class="text-lg font-semibold text-green-600">${salary}</div>
+                    <div class="text-sm text-gray-500">${postedDate}</div>
+                </div>
+            </div>
+            
+            <div class="job-meta">
+                <span><i class="fas fa-map-marker-alt mr-1"></i>${location}</span>
+                <span><i class="fas fa-briefcase mr-1"></i>${job.contract_type || 'Full-time'}</span>
+                <span><i class="fas fa-building mr-1"></i>${company}</span>
+            </div>
+            
+            <div class="job-description">
+                ${job.description ? job.description.substring(0, 200) : 'No description available'}${job.description && job.description.length > 200 ? '...' : ''}
+            </div>
+            
+            <div class="job-tags">
+                ${category ? `<span class="job-tag">${category}</span>` : ''}
+                ${(job.tags || []).slice(0, 4).map(tag => `<span class="job-tag">${tag}</span>`).join('')}
+            </div>
+            
+            <div class="job-actions">
+                <button class="btn-apply" data-job-url="${job.redirect_url}" data-job-id="${job.id}" onclick="event.stopPropagation();">
+                    <i class="fas fa-paper-plane mr-1"></i>Apply
+                </button>
+                <button class="btn-save" data-job-id="${job.id}" onclick="event.stopPropagation();">
+                    <i class="fas fa-bookmark mr-1"></i>Save
+                </button>
+                <button class="btn-secondary" onclick="event.stopPropagation(); shareJob('${job.id}')">
+                    <i class="fas fa-share mr-1"></i>Share
+                </button>
+            </div>
+        </div>
+    `;
+    }
+
+    function showLoadingState() {
+        const jobList = document.getElementById('jobs-container');
+        if (jobList) {
+            jobList.innerHTML = `
+                <div class="loading-state text-center py-12">
+                    <div class="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600 mb-4"></div>
+                    <p class="text-gray-600">Searching for jobs...</p>
+                </div>
+            `;
+        }
+    }
+
+    function showErrorState(message) {
+        const jobList = document.getElementById('jobs-container');
+        if (jobList) {
+            jobList.innerHTML = `
+                <div class="error-state text-center py-12">
+                    <i class="fas fa-exclamation-triangle text-red-400 text-4xl mb-4"></i>
+                    <h3 class="text-lg font-medium text-gray-900 mb-2">Search Error</h3>
+                    <p class="text-gray-600 mb-4">${message}</p>
+                    <button onclick="document.getElementById('job-search-form').dispatchEvent(new Event('submit'))" 
+                            class="btn-primary">
+                        Try Again
+                    </button>
+                </div>
+            `;
+        }
+    }
+
+    function clearAllFilters() {
+        document.getElementById('job-search-form').reset();
+        document.getElementById('jobs-container').innerHTML = `
+        <div class="no-results">
+            <i class="fas fa-search text-4xl text-gray-300 mb-4"></i>
+            <h3 class="text-lg font-medium text-gray-900 mb-2">Start Your Job Search</h3>
+            <p class="text-gray-600">Enter your criteria above to find relevant job opportunities</p>
+        </div>
+    `;
+        document.getElementById('results-stats').textContent = 'Search for jobs to see results';
+    }
+
+    function formatNumber(num) {
+        return new Intl.NumberFormat().format(num);
+    }
+
+    function formatDate(dateString) {
+        const date = new Date(dateString);
+        const now = new Date();
+        const diffTime = Math.abs(now - date);
+        const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+
+        if (diffDays === 1) return '1 day ago';
+        if (diffDays < 7) return `${diffDays} days ago`;
+        if (diffDays < 30) return `${Math.ceil(diffDays / 7)} weeks ago`;
+        return date.toLocaleDateString();
+    }
+
+    function showLoadingState() {
+        const jobList = document.getElementById('jobs-container');
+        if (jobList) {
+            jobList.innerHTML = `
+                <div class="loading-state text-center py-12">
+                    <div class="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600 mb-4"></div>
+                    <p class="text-gray-600">Searching for jobs...</p>
+                </div>
+            `;
+        }
+    }
+
+    function showErrorState(message) {
+        const jobList = document.getElementById('jobs-container');
+        if (jobList) {
+            jobList.innerHTML = `
+                <div class="error-state text-center py-12">
+                    <i class="fas fa-exclamation-triangle text-red-400 text-4xl mb-4"></i>
+                    <h3 class="text-lg font-medium text-gray-900 mb-2">Search Error</h3>
+                    <p class="text-gray-600 mb-4">${message}</p>
+                    <button onclick="document.getElementById('job-search-form').dispatchEvent(new Event('submit'))" 
+                            class="btn-primary">
+                        Try Again
+                    </button>
+                </div>
+            `;
+        }
+    }
+
+    // Placeholder functions - implement as needed
+    function openJobModal(jobId) {
+        console.log('Opening job modal for:', jobId);
+        // Implement job detail modal
+    }
+
+    function closeJobModal() {
+        document.getElementById('job-modal').classList.add('hidden');
+    }
+
+    function applyToJob(jobId) {
+        console.log('Applying to job:', jobId);
+        // Implement job application
+    }
+
+    function saveJob(jobId) {
+        console.log('Saving job:', jobId);
+        // Implement save job functionality
+    }
+
+    function shareJob(jobId) {
+        console.log('Sharing job:', jobId);
+        // Implement share functionality
+    }
+
+    function saveCurrentSearch() {
+        console.log('Saving current search');
+        // Implement save search functionality
+    }
+
+    function loadSavedSearches() {
+        // Implement load saved searches
+    }
+
+    function handleSortChange(e) {
+        // Implement sort functionality
+    }
+
+    function showPagination(total, searchParams) {
+        // Implement pagination
+    }
+</script>
+{% endblock %}

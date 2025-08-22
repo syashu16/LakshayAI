@@ -1,0 +1,1055 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - LakshyaAI</title>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
+
+    <!-- Icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { 'inter': ['Inter', 'sans-serif'] },
+                    animation: {
+                        'float': 'float 6s ease-in-out infinite',
+                        'pulse-glow': 'pulse-glow 2s ease-in-out infinite alternate',
+                        'slide-up': 'slide-up 0.5s ease-out',
+                        'fade-in': 'fade-in 0.3s ease-out',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- Custom Styles -->
+    <style>
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: translateY(0px) rotate(0deg);
+            }
+
+            50% {
+                transform: translateY(-20px) rotate(180deg);
+            }
+        }
+
+        @keyframes pulse-glow {
+            0% {
+                box-shadow: 0 0 20px rgba(59, 130, 246, 0.4);
+            }
+
+            100% {
+                box-shadow: 0 0 40px rgba(139, 92, 246, 0.6);
+            }
+        }
+
+        @keyframes slide-up {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fade-in {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        .glass-card {
+            background: rgba(15, 23, 42, 0.6);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .gradient-border {
+            position: relative;
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(139, 92, 246, 0.1));
+        }
+
+        .gradient-border::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            padding: 1px;
+            background: linear-gradient(135deg, #3b82f6, #8b5cf6, #ec4899);
+            border-radius: inherit;
+            mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            mask-composite: exclude;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 25px 50px rgba(59, 130, 246, 0.3);
+        }
+
+        .stats-card {
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(139, 92, 246, 0.1));
+            border: 1px solid rgba(59, 130, 246, 0.3);
+        }
+
+        .progress-bar {
+            background: linear-gradient(90deg, #3b82f6, #8b5cf6);
+            animation: shimmer 2s infinite;
+        }
+
+        @keyframes shimmer {
+            0% {
+                background-position: -200px 0;
+            }
+
+            100% {
+                background-position: 200px 0;
+            }
+        }
+
+        .notification-dot {
+            animation: pulse-glow 2s infinite;
+        }
+
+        .sidebar-item:hover {
+            background: linear-gradient(90deg, rgba(59, 130, 246, 0.1), rgba(139, 92, 246, 0.1));
+            border-left: 3px solid #3b82f6;
+        }
+
+        .floating-orb {
+            animation: float 8s ease-in-out infinite;
+        }
+    </style>
+</head>
+
+<body class="font-inter bg-slate-950 text-white overflow-x-hidden">
+
+    <!-- Background -->
+    <div class="fixed inset-0 z-0">
+        <div class="absolute inset-0 bg-gradient-to-br from-slate-950 via-slate-900 to-slate-800"></div>
+        <div class="absolute inset-0 overflow-hidden pointer-events-none">
+            <div class="floating-orb absolute top-20 left-10 w-96 h-96 bg-blue-500/5 rounded-full blur-3xl"></div>
+            <div class="floating-orb absolute top-40 right-20 w-64 h-64 bg-purple-500/5 rounded-full blur-3xl"
+                style="animation-delay: 3s;"></div>
+            <div class="floating-orb absolute bottom-20 left-1/4 w-48 h-48 bg-pink-500/5 rounded-full blur-3xl"
+                style="animation-delay: 6s;"></div>
+        </div>
+    </div>
+
+    <!-- Header -->
+    <header class="relative z-50 glass-card border-b border-slate-800/50 sticky top-0">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <!-- Logo & Welcome -->
+                <div class="flex items-center space-x-6">
+                    <div class="flex items-center space-x-3">
+                        <div
+                            class="w-10 h-10 bg-gradient-to-br from-blue-500 to-purple-600 rounded-xl flex items-center justify-center shadow-lg">
+                            <i class="fas fa-rocket text-white text-lg"></i>
+                        </div>
+                        <div>
+                            <h1
+                                class="text-xl font-bold bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
+                                LakshyaAI</h1>
+                            <p class="text-xs text-slate-400">Welcome back, syashu16!</p>
+                        </div>
+                    </div>
+
+                    <!-- Quick Stats -->
+                    <div class="hidden md:flex items-center space-x-6 ml-8">
+                        <div class="text-center">
+                            <div class="text-lg font-bold text-blue-400">95%</div>
+                            <div class="text-xs text-slate-400">Profile Score</div>
+                        </div>
+                        <div class="text-center">
+                            <div class="text-lg font-bold text-green-400">12</div>
+                            <div class="text-xs text-slate-400">Job Matches</div>
+                        </div>
+                        <div class="text-center">
+                            <div class="text-lg font-bold text-purple-400">5</div>
+                            <div class="text-xs text-slate-400">Skills Gap</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Header Actions -->
+                <div class="flex items-center space-x-4">
+                    <!-- Search -->
+                    <div class="hidden md:block relative">
+                        <input type="text" placeholder="Search anything..."
+                            class="w-64 px-4 py-2 pl-10 bg-slate-800/50 border border-slate-700 rounded-xl text-white placeholder-slate-400 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all">
+                        <i class="fas fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-400"></i>
+                    </div>
+
+                    <!-- Notifications -->
+                    <button class="relative p-2 rounded-xl bg-slate-800/50 hover:bg-slate-700/50 transition-all group">
+                        <i class="fas fa-bell text-slate-300 group-hover:text-white"></i>
+                        <span class="notification-dot absolute -top-1 -right-1 w-3 h-3 bg-red-500 rounded-full"></span>
+                    </button>
+
+                    <!-- Profile Menu -->
+                    <div class="relative">
+                        <button id="profile-menu-btn"
+                            class="flex items-center space-x-3 p-2 rounded-xl bg-slate-800/50 hover:bg-slate-700/50 transition-all">
+                            <div
+                                class="w-8 h-8 bg-gradient-to-br from-blue-500 to-purple-600 rounded-lg flex items-center justify-center">
+                                <span class="text-white text-sm font-bold">S</span>
+                            </div>
+                            <i class="fas fa-chevron-down text-slate-400"></i>
+                        </button>
+
+                        <!-- Dropdown Menu -->
+                        <div id="profile-menu"
+                            class="hidden absolute right-0 top-12 w-48 glass-card rounded-xl shadow-xl border border-slate-700/50 py-2 z-50">
+                            <a href="#"
+                                class="flex items-center px-4 py-3 text-slate-300 hover:text-white hover:bg-slate-700/50 transition-colors">
+                                <i class="fas fa-user mr-3"></i>Profile Settings
+                            </a>
+                            <a href="#"
+                                class="flex items-center px-4 py-3 text-slate-300 hover:text-white hover:bg-slate-700/50 transition-colors">
+                                <i class="fas fa-cog mr-3"></i>Preferences
+                            </a>
+                            <a href="#"
+                                class="flex items-center px-4 py-3 text-slate-300 hover:text-white hover:bg-slate-700/50 transition-colors">
+                                <i class="fas fa-question-circle mr-3"></i>Help & Support
+                            </a>
+                            <hr class="border-slate-700 my-2">
+                            <a href="/"
+                                class="flex items-center px-4 py-3 text-red-400 hover:text-red-300 hover:bg-slate-700/50 transition-colors">
+                                <i class="fas fa-sign-out-alt mr-3"></i>Sign Out
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="flex relative z-10">
+        <!-- Sidebar -->
+        <aside
+            class="fixed left-0 top-16 h-[calc(100vh-4rem)] w-64 glass-card border-r border-slate-800/50 overflow-y-auto">
+            <div class="p-6">
+                <!-- Navigation -->
+                <nav class="space-y-2">
+                    <a href="#overview"
+                        class="sidebar-item flex items-center px-4 py-3 rounded-xl text-white bg-gradient-to-r from-blue-500/20 to-purple-500/20 border-l-3 border-blue-500 transition-all">
+                        <i class="fas fa-home mr-3"></i>
+                        <span>Overview</span>
+                    </a>
+                    <a href="#resume"
+                        class="sidebar-item flex items-center px-4 py-3 rounded-xl text-slate-300 hover:text-white transition-all">
+                        <i class="fas fa-file-alt mr-3"></i>
+                        <span>Resume Analysis</span>
+                        <span class="ml-auto bg-green-500 text-white text-xs px-2 py-1 rounded-full">New</span>
+                    </a>
+                    <a href="#jobs"
+                        class="sidebar-item flex items-center px-4 py-3 rounded-xl text-slate-300 hover:text-white transition-all">
+                        <i class="fas fa-briefcase mr-3"></i>
+                        <span>Job Matching</span>
+                        <span class="ml-auto text-blue-400 text-xs">12</span>
+                    </a>
+                    <a href="#skills"
+                        class="sidebar-item flex items-center px-4 py-3 rounded-xl text-slate-300 hover:text-white transition-all">
+                        <i class="fas fa-chart-line mr-3"></i>
+                        <span>Skill Gap Analysis</span>
+                    </a>
+                    <a href="#learning"
+                        class="sidebar-item flex items-center px-4 py-3 rounded-xl text-slate-300 hover:text-white transition-all">
+                        <i class="fas fa-graduation-cap mr-3"></i>
+                        <span>Learning Path</span>
+                    </a>
+                    <a href="#ai-coach"
+                        class="sidebar-item flex items-center px-4 py-3 rounded-xl text-slate-300 hover:text-white transition-all">
+                        <i class="fas fa-robot mr-3"></i>
+                        <span>AI Career Coach</span>
+                        <span class="notification-dot ml-auto w-2 h-2 bg-red-500 rounded-full"></span>
+                    </a>
+                    <a href="#applications"
+                        class="sidebar-item flex items-center px-4 py-3 rounded-xl text-slate-300 hover:text-white transition-all">
+                        <i class="fas fa-paper-plane mr-3"></i>
+                        <span>Applications</span>
+                    </a>
+                    <a href="#interview"
+                        class="sidebar-item flex items-center px-4 py-3 rounded-xl text-slate-300 hover:text-white transition-all">
+                        <i class="fas fa-video mr-3"></i>
+                        <span>Interview Prep</span>
+                    </a>
+                    <a href="#network"
+                        class="sidebar-item flex items-center px-4 py-3 rounded-xl text-slate-300 hover:text-white transition-all">
+                        <i class="fas fa-users mr-3"></i>
+                        <span>Network</span>
+                    </a>
+                    <a href="#analytics"
+                        class="sidebar-item flex items-center px-4 py-3 rounded-xl text-slate-300 hover:text-white transition-all">
+                        <i class="fas fa-chart-bar mr-3"></i>
+                        <span>Analytics</span>
+                    </a>
+                </nav>
+
+                <!-- Quick Actions -->
+                <div class="mt-8">
+                    <h3 class="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-4">Quick Actions</h3>
+                    <div class="space-y-2">
+                        <button
+                            class="w-full flex items-center px-4 py-3 rounded-xl bg-gradient-to-r from-blue-500 to-purple-600 text-white font-semibold hover:shadow-lg transition-all">
+                            <i class="fas fa-upload mr-3"></i>
+                            Upload Resume
+                        </button>
+                        <button
+                            class="w-full flex items-center px-4 py-3 rounded-xl border border-slate-600 text-slate-300 hover:text-white hover:border-blue-500 transition-all">
+                            <i class="fas fa-search mr-3"></i>
+                            Find Jobs
+                        </button>
+                        <button
+                            class="w-full flex items-center px-4 py-3 rounded-xl border border-slate-600 text-slate-300 hover:text-white hover:border-purple-500 transition-all">
+                            <i class="fas fa-comments mr-3"></i>
+                            Ask AI Coach
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Progress Card -->
+                <div class="mt-8 p-4 gradient-border rounded-xl">
+                    <h3 class="font-semibold mb-2">Profile Completion</h3>
+                    <div class="flex items-center justify-between text-sm text-slate-300 mb-2">
+                        <span>95% Complete</span>
+                        <span>19/20 steps</span>
+                    </div>
+                    <div class="w-full bg-slate-700 rounded-full h-2">
+                        <div class="progress-bar h-2 rounded-full" style="width: 95%"></div>
+                    </div>
+                    <p class="text-xs text-slate-400 mt-2">Complete your profile to unlock premium features!</p>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="flex-1 ml-64 p-6 space-y-6">
+
+            <!-- Welcome Section -->
+            <div class="glass-card rounded-3xl p-8 gradient-border">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <h1 class="text-3xl font-bold mb-2">
+                            Good Evening, <span
+                                class="bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">syashu16</span>
+                            👋
+                        </h1>
+                        <p class="text-slate-300 text-lg">Ready to accelerate your career journey? Let's make today
+                            count!</p>
+                        <div class="flex items-center space-x-4 mt-4">
+                            <span
+                                class="px-3 py-1 bg-green-500/20 text-green-400 rounded-full text-sm border border-green-500/30">
+                                <i class="fas fa-circle mr-1 text-xs"></i>Online
+                            </span>
+                            <span class="text-slate-400 text-sm">Last active: Just now</span>
+                        </div>
+                    </div>
+                    <div class="hidden lg:block">
+                        <div
+                            class="w-32 h-32 bg-gradient-to-br from-blue-500/20 to-purple-600/20 rounded-full flex items-center justify-center border border-blue-500/30">
+                            <i class="fas fa-rocket text-blue-400 text-4xl"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Stats Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- Profile Score -->
+                <div class="stats-card rounded-2xl p-6 relative overflow-hidden">
+                    <div class="absolute top-0 right-0 w-20 h-20 bg-blue-500/10 rounded-full blur-xl"></div>
+                    <div class="relative">
+                        <div class="flex items-center justify-between mb-4">
+                            <div class="w-12 h-12 bg-blue-500/20 rounded-xl flex items-center justify-center">
+                                <i class="fas fa-user-check text-blue-400 text-xl"></i>
+                            </div>
+                            <span class="text-green-400 text-sm font-semibold">+5% this week</span>
+                        </div>
+                        <h3 class="text-2xl font-bold">95%</h3>
+                        <p class="text-slate-400">Profile Score</p>
+                        <div class="w-full bg-slate-800 rounded-full h-1 mt-2">
+                            <div class="bg-blue-500 h-1 rounded-full" style="width: 95%"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Job Matches -->
+                <div class="stats-card rounded-2xl p-6 relative overflow-hidden">
+                    <div class="absolute top-0 right-0 w-20 h-20 bg-purple-500/10 rounded-full blur-xl"></div>
+                    <div class="relative">
+                        <div class="flex items-center justify-between mb-4">
+                            <div class="w-12 h-12 bg-purple-500/20 rounded-xl flex items-center justify-center">
+                                <i class="fas fa-briefcase text-purple-400 text-xl"></i>
+                            </div>
+                            <span class="text-green-400 text-sm font-semibold">+3 new</span>
+                        </div>
+                        <h3 class="text-2xl font-bold">47</h3>
+                        <p class="text-slate-400">Job Matches</p>
+                        <p class="text-xs text-purple-400 mt-1">12 perfect matches</p>
+                    </div>
+                </div>
+
+                <!-- Applications -->
+                <div class="stats-card rounded-2xl p-6 relative overflow-hidden">
+                    <div class="absolute top-0 right-0 w-20 h-20 bg-green-500/10 rounded-full blur-xl"></div>
+                    <div class="relative">
+                        <div class="flex items-center justify-between mb-4">
+                            <div class="w-12 h-12 bg-green-500/20 rounded-xl flex items-center justify-center">
+                                <i class="fas fa-paper-plane text-green-400 text-xl"></i>
+                            </div>
+                            <span class="text-green-400 text-sm font-semibold">+2 today</span>
+                        </div>
+                        <h3 class="text-2xl font-bold">23</h3>
+                        <p class="text-slate-400">Applications</p>
+                        <p class="text-xs text-green-400 mt-1">5 responses</p>
+                    </div>
+                </div>
+
+                <!-- Skill Growth -->
+                <div class="stats-card rounded-2xl p-6 relative overflow-hidden">
+                    <div class="absolute top-0 right-0 w-20 h-20 bg-pink-500/10 rounded-full blur-xl"></div>
+                    <div class="relative">
+                        <div class="flex items-center justify-between mb-4">
+                            <div class="w-12 h-12 bg-pink-500/20 rounded-xl flex items-center justify-center">
+                                <i class="fas fa-chart-line text-pink-400 text-xl"></i>
+                            </div>
+                            <span class="text-green-400 text-sm font-semibold">+15%</span>
+                        </div>
+                        <h3 class="text-2xl font-bold">78%</h3>
+                        <p class="text-slate-400">Skill Score</p>
+                        <p class="text-xs text-pink-400 mt-1">3 skills improved</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Main Features Grid -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
+
+                <!-- Resume Analysis -->
+                <div class="feature-card glass-card rounded-2xl p-6 transition-all duration-300 hover:scale-105">
+                    <div class="flex items-center justify-between mb-4">
+                        <div
+                            class="w-14 h-14 bg-gradient-to-br from-blue-500 to-blue-600 rounded-2xl flex items-center justify-center shadow-lg">
+                            <i class="fas fa-file-alt text-white text-xl"></i>
+                        </div>
+                        <span
+                            class="px-3 py-1 bg-green-500/20 text-green-400 rounded-full text-xs border border-green-500/30">
+                            Analyzed
+                        </span>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2">Smart Resume Analysis</h3>
+                    <p class="text-slate-400 mb-4">AI-powered analysis of your resume with 95% accuracy using advanced
+                        NLP models.</p>
+                    <div class="space-y-2 mb-4">
+                        <div class="flex justify-between text-sm">
+                            <span class="text-slate-300">Skills Extracted</span>
+                            <span class="text-blue-400 font-semibold">18/20</span>
+                        </div>
+                        <div class="flex justify-between text-sm">
+                            <span class="text-slate-300">ATS Score</span>
+                            <span class="text-green-400 font-semibold">92/100</span>
+                        </div>
+                        <div class="flex justify-between text-sm">
+                            <span class="text-slate-300">Match Quality</span>
+                            <span class="text-purple-400 font-semibold">Excellent</span>
+                        </div>
+                    </div>
+                    <div class="flex space-x-2">
+                        <button id="upload-resume"
+                            class="flex-1 py-3 bg-gradient-to-r from-blue-500 to-blue-600 text-white font-semibold rounded-xl hover:shadow-lg transition-all">
+                            <i class="fas fa-upload mr-2"></i>Upload New
+                        </button>
+                        <button id="view-analysis"
+                            class="flex-1 py-3 border border-blue-500 text-blue-400 font-semibold rounded-xl hover:bg-blue-500/10 transition-all">
+                            <i class="fas fa-eye mr-2"></i>View Analysis
+                        </button>
+                    </div>
+
+                    <!-- Resume Upload Area -->
+                    <div id="resume-upload-area" class="hidden mt-4 border-t border-slate-700 pt-4">
+                        <div
+                            class="border-2 border-dashed border-slate-600 rounded-xl p-6 text-center hover:border-blue-500 transition-all">
+                            <input type="file" id="resume-file" accept=".pdf,.doc,.docx" class="hidden">
+                            <label for="resume-file" class="cursor-pointer">
+                                <i class="fas fa-cloud-upload-alt text-3xl text-slate-400 mb-3"></i>
+                                <p class="text-slate-300 mb-2">Drop your resume here or click to browse</p>
+                                <p class="text-xs text-slate-500">Supports PDF, DOC, DOCX formats</p>
+                            </label>
+                        </div>
+                        <div class="flex space-x-2 mt-4">
+                            <button id="analyze-resume"
+                                class="flex-1 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-all disabled:opacity-50"
+                                disabled>
+                                <i class="fas fa-brain mr-2"></i>Analyze Resume
+                            </button>
+                            <button id="cancel-upload"
+                                class="px-4 py-2 border border-slate-600 text-slate-400 rounded-lg hover:text-white transition-all">
+                                Cancel
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Interactive Job Search -->
+                <div
+                    class="feature-card glass-card rounded-2xl p-6 transition-all duration-300 col-span-1 lg:col-span-2 xl:col-span-3">
+                    <div class="flex items-center justify-between mb-6">
+                        <div class="flex items-center space-x-4">
+                            <div
+                                class="w-14 h-14 bg-gradient-to-br from-purple-500 to-purple-600 rounded-2xl flex items-center justify-center shadow-lg">
+                                <i class="fas fa-search text-white text-xl"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-2xl font-bold">AI Job Search</h3>
+                                <p class="text-slate-400">Find your perfect career opportunity with smart matching</p>
+                            </div>
+                        </div>
+                        <span
+                            class="px-3 py-1 bg-purple-500/20 text-purple-400 rounded-full text-xs border border-purple-500/30">
+                            Live Search
+                        </span>
+                    </div>
+
+                    <!-- Job Search Form -->
+                    <form id="job-search-form" class="mb-6">
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+                            <div class="relative">
+                                <input type="text" id="what" name="what" placeholder="Job title, keywords..."
+                                    class="w-full px-4 py-3 pl-12 bg-slate-800/50 border border-slate-700 rounded-xl text-white placeholder-slate-400 focus:border-purple-500 focus:ring-2 focus:ring-purple-500/20 transition-all">
+                                <i
+                                    class="fas fa-briefcase absolute left-4 top-1/2 transform -translate-y-1/2 text-slate-400"></i>
+                            </div>
+                            <div class="relative">
+                                <input type="text" id="where" name="where" placeholder="Location..."
+                                    class="w-full px-4 py-3 pl-12 bg-slate-800/50 border border-slate-700 rounded-xl text-white placeholder-slate-400 focus:border-purple-500 focus:ring-2 focus:ring-purple-500/20 transition-all">
+                                <i
+                                    class="fas fa-map-marker-alt absolute left-4 top-1/2 transform -translate-y-1/2 text-slate-400"></i>
+                            </div>
+                            <button type="submit"
+                                class="w-full py-3 bg-gradient-to-r from-purple-500 to-purple-600 text-white font-semibold rounded-xl hover:shadow-lg transition-all">
+                                <i class="fas fa-search mr-2"></i>Search Jobs
+                            </button>
+                        </div>
+
+                        <!-- Advanced Filters -->
+                        <div class="flex items-center justify-between">
+                            <button type="button" id="advanced-search-toggle"
+                                class="text-slate-400 hover:text-white text-sm transition-colors">
+                                <i class="fas fa-sliders-h mr-2"></i>Advanced Filters
+                            </button>
+                            <div class="flex items-center space-x-4 text-sm">
+                                <span class="text-slate-400">Sort by:</span>
+                                <select id="sort-by"
+                                    class="bg-slate-800/50 border border-slate-700 rounded-lg px-3 py-1 text-white text-sm">
+                                    <option value="relevance">Relevance</option>
+                                    <option value="date">Date</option>
+                                    <option value="salary">Salary</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- Advanced Search Panel -->
+                        <div id="advanced-search-panel"
+                            class="hidden mt-4 p-4 bg-slate-800/30 rounded-xl border border-slate-700/50">
+                            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                                <div>
+                                    <label class="block text-sm text-slate-300 mb-2">Salary Range</label>
+                                    <select id="salary-range"
+                                        class="w-full bg-slate-800/50 border border-slate-700 rounded-lg px-3 py-2 text-white">
+                                        <option value="">Any salary</option>
+                                        <option value="20000">$20,000+</option>
+                                        <option value="30000">$30,000+</option>
+                                        <option value="50000">$50,000+</option>
+                                        <option value="75000">$75,000+</option>
+                                        <option value="100000">$100,000+</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label class="block text-sm text-slate-300 mb-2">Job Type</label>
+                                    <select id="job-type"
+                                        class="w-full bg-slate-800/50 border border-slate-700 rounded-lg px-3 py-2 text-white">
+                                        <option value="">All types</option>
+                                        <option value="permanent">Full-time</option>
+                                        <option value="contract">Contract</option>
+                                        <option value="part_time">Part-time</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label class="block text-sm text-slate-300 mb-2">Company Size</label>
+                                    <select id="company-size"
+                                        class="w-full bg-slate-800/50 border border-slate-700 rounded-lg px-3 py-2 text-white">
+                                        <option value="">Any size</option>
+                                        <option value="startup">Startup (1-50)</option>
+                                        <option value="medium">Medium (51-200)</option>
+                                        <option value="large">Large (200+)</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+
+                    <!-- Loading Indicator -->
+                    <div id="loading-indicator" class="hidden text-center py-8">
+                        <div class="inline-flex items-center space-x-3">
+                            <div
+                                class="animate-spin rounded-full h-6 w-6 border-2 border-purple-500 border-t-transparent">
+                            </div>
+                            <span class="text-slate-300">Searching for perfect matches...</span>
+                        </div>
+                    </div>
+
+                    <!-- Job Results -->
+                    <div id="jobs-container" class="space-y-4">
+                        <!-- Job results will be inserted here -->
+                    </div>
+
+                    <!-- Pagination -->
+                    <div id="pagination-container" class="hidden mt-6 flex justify-center">
+                        <!-- Pagination will be inserted here -->
+                    </div>
+                </div>
+
+                <!-- AI Career Coach -->
+                <div class="feature-card glass-card rounded-2xl p-6 transition-all duration-300 hover:scale-105">
+                    <div class="flex items-center justify-between mb-4">
+                        <div
+                            class="w-14 h-14 bg-gradient-to-br from-green-500 to-green-600 rounded-2xl flex items-center justify-center shadow-lg">
+                            <i class="fas fa-robot text-white text-xl"></i>
+                        </div>
+                        <span
+                            class="px-3 py-1 bg-red-500/20 text-red-400 rounded-full text-xs border border-red-500/30 notification-dot">
+                            Live
+                        </span>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2">AI Career Counselor</h3>
+                    <p class="text-slate-400 mb-4">24/7 multilingual chatbot provides personalized career guidance in
+                        multiple languages.</p>
+                    <div class="bg-slate-800/50 rounded-xl p-4 mb-4">
+                        <div class="flex items-start space-x-3">
+                            <div class="w-6 h-6 bg-green-500 rounded-full flex items-center justify-center">
+                                <i class="fas fa-robot text-white text-xs"></i>
+                            </div>
+                            <div class="flex-1">
+                                <p class="text-sm text-slate-300">"Based on your profile, I recommend focusing on Python
+                                    and Machine Learning skills to increase your job match rate by 25%."</p>
+                                <p class="text-xs text-slate-500 mt-1">AI Coach • 5 min ago</p>
+                            </div>
+                        </div>
+                    </div>
+                    <button id="toggle-ai-chat"
+                        class="w-full py-3 bg-gradient-to-r from-green-500 to-green-600 text-white font-semibold rounded-xl hover:shadow-lg transition-all">
+                        <i class="fas fa-comments mr-2"></i>Chat with AI
+                    </button>
+
+                    <!-- Expandable Chat Interface -->
+                    <div id="ai-chat-interface" class="hidden mt-4 border-t border-slate-700 pt-4">
+                        <div id="chat-messages"
+                            class="h-64 overflow-y-auto bg-slate-800/30 rounded-xl p-4 mb-4 space-y-3">
+                            <!-- Chat messages will appear here -->
+                        </div>
+                        <div class="flex space-x-2">
+                            <input type="text" id="chat-input" placeholder="Ask me anything about your career..."
+                                class="flex-1 px-4 py-2 bg-slate-800/50 border border-slate-700 rounded-xl text-white placeholder-slate-400 focus:border-green-500 focus:ring-2 focus:ring-green-500/20 transition-all">
+                            <button id="send-chat"
+                                class="px-4 py-2 bg-gradient-to-r from-green-500 to-green-600 text-white rounded-xl hover:shadow-lg transition-all">
+                                <i class="fas fa-paper-plane"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Skill Gap Analysis -->
+                <div class="feature-card glass-card rounded-2xl p-6 transition-all duration-300 hover:scale-105">
+                    <div class="flex items-center justify-between mb-4">
+                        <div
+                            class="w-14 h-14 bg-gradient-to-br from-orange-500 to-orange-600 rounded-2xl flex items-center justify-center shadow-lg">
+                            <i class="fas fa-chart-line text-white text-xl"></i>
+                        </div>
+                        <span
+                            class="px-3 py-1 bg-orange-500/20 text-orange-400 rounded-full text-xs border border-orange-500/30">
+                            Updated
+                        </span>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2">Skill Gap Analysis</h3>
+                    <p class="text-slate-400 mb-4">Identify missing skills and get personalized learning
+                        recommendations.</p>
+                    <div class="space-y-3 mb-4">
+                        <div>
+                            <div class="flex justify-between text-sm mb-1">
+                                <span class="text-slate-300">Python</span>
+                                <span class="text-green-400">Advanced</span>
+                            </div>
+                            <div class="w-full bg-slate-800 rounded-full h-2">
+                                <div class="bg-green-500 h-2 rounded-full" style="width: 90%"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between text-sm mb-1">
+                                <span class="text-slate-300">Machine Learning</span>
+                                <span class="text-blue-400">Intermediate</span>
+                            </div>
+                            <div class="w-full bg-slate-800 rounded-full h-2">
+                                <div class="bg-blue-500 h-2 rounded-full" style="width: 70%"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between text-sm mb-1">
+                                <span class="text-slate-300">DevOps</span>
+                                <span class="text-orange-400">Beginner</span>
+                            </div>
+                            <div class="w-full bg-slate-800 rounded-full h-2">
+                                <div class="bg-orange-500 h-2 rounded-full" style="width: 35%"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <button
+                        class="w-full py-3 bg-gradient-to-r from-orange-500 to-orange-600 text-white font-semibold rounded-xl hover:shadow-lg transition-all">
+                        <i class="fas fa-graduation-cap mr-2"></i>Start Learning
+                    </button>
+                </div>
+
+                <!-- Interview Preparation -->
+                <div class="feature-card glass-card rounded-2xl p-6 transition-all duration-300 hover:scale-105">
+                    <div class="flex items-center justify-between mb-4">
+                        <div
+                            class="w-14 h-14 bg-gradient-to-br from-pink-500 to-pink-600 rounded-2xl flex items-center justify-center shadow-lg">
+                            <i class="fas fa-video text-white text-xl"></i>
+                        </div>
+                        <span
+                            class="px-3 py-1 bg-pink-500/20 text-pink-400 rounded-full text-xs border border-pink-500/30">
+                            Premium
+                        </span>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2">Interview Preparation</h3>
+                    <p class="text-slate-400 mb-4">AI-powered mock interviews with real-time feedback and personalized
+                        coaching.</p>
+                    <div class="space-y-2 mb-4">
+                        <div class="flex justify-between text-sm">
+                            <span class="text-slate-300">Completed Sessions</span>
+                            <span class="text-pink-400 font-semibold">7</span>
+                        </div>
+                        <div class="flex justify-between text-sm">
+                            <span class="text-slate-300">Average Score</span>
+                            <span class="text-green-400 font-semibold">8.5/10</span>
+                        </div>
+                        <div class="flex justify-between text-sm">
+                            <span class="text-slate-300">Next Session</span>
+                            <span class="text-blue-400 font-semibold">Tomorrow</span>
+                        </div>
+                    </div>
+                    <button
+                        class="w-full py-3 bg-gradient-to-r from-pink-500 to-pink-600 text-white font-semibold rounded-xl hover:shadow-lg transition-all">
+                        <i class="fas fa-play mr-2"></i>Start Practice
+                    </button>
+                </div>
+
+                <!-- Application Tracker -->
+                <div class="feature-card glass-card rounded-2xl p-6 transition-all duration-300 hover:scale-105">
+                    <div class="flex items-center justify-between mb-4">
+                        <div
+                            class="w-14 h-14 bg-gradient-to-br from-indigo-500 to-indigo-600 rounded-2xl flex items-center justify-center shadow-lg">
+                            <i class="fas fa-clipboard-list text-white text-xl"></i>
+                        </div>
+                        <span
+                            class="px-3 py-1 bg-indigo-500/20 text-indigo-400 rounded-full text-xs border border-indigo-500/30">
+                            23 Active
+                        </span>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2">Application Tracker</h3>
+                    <p class="text-slate-400 mb-4">Track your job applications with real-time status updates and
+                        analytics.</p>
+                    <div class="grid grid-cols-3 gap-2 mb-4">
+                        <div class="text-center p-2 bg-slate-800/50 rounded-lg">
+                            <div class="text-lg font-bold text-blue-400">23</div>
+                            <div class="text-xs text-slate-400">Applied</div>
+                        </div>
+                        <div class="text-center p-2 bg-slate-800/50 rounded-lg">
+                            <div class="text-lg font-bold text-yellow-400">8</div>
+                            <div class="text-xs text-slate-400">Pending</div>
+                        </div>
+                        <div class="text-center p-2 bg-slate-800/50 rounded-lg">
+                            <div class="text-lg font-bold text-green-400">5</div>
+                            <div class="text-xs text-slate-400">Interview</div>
+                        </div>
+                    </div>
+                    <button
+                        class="w-full py-3 bg-gradient-to-r from-indigo-500 to-indigo-600 text-white font-semibold rounded-xl hover:shadow-lg transition-all">
+                        <i class="fas fa-list mr-2"></i>View Applications
+                    </button>
+                </div>
+            </div>
+
+            <!-- Recent Activity -->
+            <div class="glass-card rounded-2xl p-6">
+                <div class="flex items-center justify-between mb-6">
+                    <h2 class="text-2xl font-bold">Recent Activity</h2>
+                    <button class="text-blue-400 hover:text-blue-300 text-sm transition-colors">View All</button>
+                </div>
+                <div class="space-y-4">
+                    <div class="flex items-center space-x-4 p-4 bg-slate-800/30 rounded-xl">
+                        <div class="w-10 h-10 bg-green-500/20 rounded-full flex items-center justify-center">
+                            <i class="fas fa-check text-green-400"></i>
+                        </div>
+                        <div class="flex-1">
+                            <p class="text-white font-semibold">Application submitted to Google</p>
+                            <p class="text-slate-400 text-sm">Senior Software Engineer position • 2 hours ago</p>
+                        </div>
+                        <span class="px-3 py-1 bg-green-500/20 text-green-400 rounded-full text-xs">Success</span>
+                    </div>
+                    <div class="flex items-center space-x-4 p-4 bg-slate-800/30 rounded-xl">
+                        <div class="w-10 h-10 bg-blue-500/20 rounded-full flex items-center justify-center">
+                            <i class="fas fa-star text-blue-400"></i>
+                        </div>
+                        <div class="flex-1">
+                            <p class="text-white font-semibold">New skill recommendation</p>
+                            <p class="text-slate-400 text-sm">DevOps fundamentals course suggested • 4 hours ago</p>
+                        </div>
+                        <span class="px-3 py-1 bg-blue-500/20 text-blue-400 rounded-full text-xs">New</span>
+                    </div>
+                    <div class="flex items-center space-x-4 p-4 bg-slate-800/30 rounded-xl">
+                        <div class="w-10 h-10 bg-purple-500/20 rounded-full flex items-center justify-center">
+                            <i class="fas fa-briefcase text-purple-400"></i>
+                        </div>
+                        <div class="flex-1">
+                            <p class="text-white font-semibold">3 new job matches found</p>
+                            <p class="text-slate-400 text-sm">Based on your updated skills • 6 hours ago</p>
+                        </div>
+                        <span class="px-3 py-1 bg-purple-500/20 text-purple-400 rounded-full text-xs">Match</span>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- JavaScript -->
+    <script src="{{ url_for('static', filename='js/job-utils.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/job-matching-adzuna.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
+    <script>
+        // Inline JavaScript for immediate functionality
+        document.addEventListener('DOMContentLoaded', function () {
+            // Profile menu toggle
+            const profileMenuBtn = document.getElementById('profile-menu-btn');
+            const profileMenu = document.getElementById('profile-menu');
+
+            profileMenuBtn.addEventListener('click', function () {
+                profileMenu.classList.toggle('hidden');
+            });
+
+            // Close menu when clicking outside
+            document.addEventListener('click', function (event) {
+                if (!profileMenuBtn.contains(event.target) && !profileMenu.contains(event.target)) {
+                    profileMenu.classList.add('hidden');
+                }
+            });
+
+            // Animate cards on load
+            const cards = document.querySelectorAll('.feature-card, .stats-card');
+            cards.forEach((card, index) => {
+                card.style.animationDelay = `${index * 0.1}s`;
+                card.classList.add('animate-slide-up');
+            });
+
+            // Initialize Job Matching App
+            if (typeof JobMatchingApp !== 'undefined') {
+                window.jobApp = new JobMatchingApp();
+                console.log('🔍 Job matching functionality integrated into dashboard');
+            }
+
+            // AI Chat Interface
+            const toggleAiChat = document.getElementById('toggle-ai-chat');
+            const aiChatInterface = document.getElementById('ai-chat-interface');
+            const chatInput = document.getElementById('chat-input');
+            const sendChat = document.getElementById('send-chat');
+            const chatMessages = document.getElementById('chat-messages');
+
+            if (toggleAiChat && aiChatInterface) {
+                toggleAiChat.addEventListener('click', function () {
+                    const isHidden = aiChatInterface.classList.contains('hidden');
+                    if (isHidden) {
+                        aiChatInterface.classList.remove('hidden');
+                        toggleAiChat.innerHTML = '<i class="fas fa-times mr-2"></i>Close Chat';
+                        toggleAiChat.classList.add('bg-red-500', 'hover:bg-red-600');
+                        toggleAiChat.classList.remove('bg-gradient-to-r', 'from-green-500', 'to-green-600');
+                    } else {
+                        aiChatInterface.classList.add('hidden');
+                        toggleAiChat.innerHTML = '<i class="fas fa-comments mr-2"></i>Chat with AI';
+                        toggleAiChat.classList.remove('bg-red-500', 'hover:bg-red-600');
+                        toggleAiChat.classList.add('bg-gradient-to-r', 'from-green-500', 'to-green-600');
+                    }
+                });
+
+                // Send chat message
+                function sendChatMessage() {
+                    const message = chatInput.value.trim();
+                    if (!message) return;
+
+                    // Add user message
+                    addChatMessage(message, 'user');
+                    chatInput.value = '';
+
+                    // Simulate AI response (you can replace this with actual API call)
+                    setTimeout(() => {
+                        const responses = [
+                            "Based on your profile, I recommend focusing on these key skills to improve your job prospects.",
+                            "Let me analyze your career goals and suggest the best path forward.",
+                            "I can help you prepare for interviews and improve your resume. What specific area would you like to work on?",
+                            "Your skills are strong in Python. Consider exploring Machine Learning roles - they're in high demand!",
+                            "I notice gaps in your profile. Would you like me to suggest courses to fill them?"
+                        ];
+                        const randomResponse = responses[Math.floor(Math.random() * responses.length)];
+                        addChatMessage(randomResponse, 'ai');
+                    }, 1000);
+                }
+
+                function addChatMessage(message, sender) {
+                    const messageDiv = document.createElement('div');
+                    messageDiv.className = `flex items-start space-x-3 ${sender === 'user' ? 'justify-end' : ''}`;
+
+                    const messageContent = `
+                        <div class="flex items-start space-x-3 ${sender === 'user' ? 'flex-row-reverse space-x-reverse' : ''}">
+                            <div class="w-6 h-6 ${sender === 'user' ? 'bg-blue-500' : 'bg-green-500'} rounded-full flex items-center justify-center flex-shrink-0">
+                                <i class="fas ${sender === 'user' ? 'fa-user' : 'fa-robot'} text-white text-xs"></i>
+                            </div>
+                            <div class="max-w-xs ${sender === 'user' ? 'bg-blue-500/20 border-blue-500/30' : 'bg-slate-700/50 border-slate-600/50'} border rounded-xl p-3">
+                                <p class="text-sm text-slate-200">${message}</p>
+                                <p class="text-xs text-slate-400 mt-1">${sender === 'user' ? 'You' : 'AI Coach'} • Just now</p>
+                            </div>
+                        </div>
+                    `;
+                    messageDiv.innerHTML = messageContent;
+                    chatMessages.appendChild(messageDiv);
+                    chatMessages.scrollTop = chatMessages.scrollHeight;
+                }
+
+                if (sendChat) {
+                    sendChat.addEventListener('click', sendChatMessage);
+                }
+
+                if (chatInput) {
+                    chatInput.addEventListener('keypress', function (e) {
+                        if (e.key === 'Enter') {
+                            sendChatMessage();
+                        }
+                    });
+                }
+            }
+
+            // Resume Upload Functionality
+            const uploadResumeBtn = document.getElementById('upload-resume');
+            const viewAnalysisBtn = document.getElementById('view-analysis');
+            const resumeUploadArea = document.getElementById('resume-upload-area');
+            const resumeFileInput = document.getElementById('resume-file');
+            const analyzeResumeBtn = document.getElementById('analyze-resume');
+            const cancelUploadBtn = document.getElementById('cancel-upload');
+
+            if (uploadResumeBtn && resumeUploadArea) {
+                uploadResumeBtn.addEventListener('click', function () {
+                    const isHidden = resumeUploadArea.classList.contains('hidden');
+                    if (isHidden) {
+                        resumeUploadArea.classList.remove('hidden');
+                        uploadResumeBtn.innerHTML = '<i class="fas fa-times mr-2"></i>Cancel';
+                    } else {
+                        resumeUploadArea.classList.add('hidden');
+                        uploadResumeBtn.innerHTML = '<i class="fas fa-upload mr-2"></i>Upload New';
+                    }
+                });
+
+                if (cancelUploadBtn) {
+                    cancelUploadBtn.addEventListener('click', function () {
+                        resumeUploadArea.classList.add('hidden');
+                        uploadResumeBtn.innerHTML = '<i class="fas fa-upload mr-2"></i>Upload New';
+                        resumeFileInput.value = '';
+                        analyzeResumeBtn.disabled = true;
+                    });
+                }
+
+                if (resumeFileInput) {
+                    resumeFileInput.addEventListener('change', function () {
+                        if (this.files.length > 0) {
+                            analyzeResumeBtn.disabled = false;
+                            analyzeResumeBtn.innerHTML = `<i class="fas fa-brain mr-2"></i>Analyze ${this.files[0].name}`;
+                        } else {
+                            analyzeResumeBtn.disabled = true;
+                            analyzeResumeBtn.innerHTML = '<i class="fas fa-brain mr-2"></i>Analyze Resume';
+                        }
+                    });
+                }
+
+                if (analyzeResumeBtn) {
+                    analyzeResumeBtn.addEventListener('click', function () {
+                        const file = resumeFileInput.files[0];
+                        if (!file) return;
+
+                        // Show loading state
+                        this.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Analyzing...';
+                        this.disabled = true;
+
+                        // Simulate analysis (replace with actual API call)
+                        setTimeout(() => {
+                            // Show success message
+                            const successDiv = document.createElement('div');
+                            successDiv.className = 'mt-4 p-4 bg-green-500/20 border border-green-500/30 rounded-xl';
+                            successDiv.innerHTML = `
+                                <div class="flex items-center space-x-3">
+                                    <i class="fas fa-check text-green-400"></i>
+                                    <div>
+                                        <p class="text-green-400 font-semibold">Analysis Complete!</p>
+                                        <p class="text-sm text-slate-300">Resume analyzed successfully. Check your updated scores above.</p>
+                                    </div>
+                                </div>
+                            `;
+                            resumeUploadArea.appendChild(successDiv);
+
+                            // Reset button
+                            this.innerHTML = '<i class="fas fa-check mr-2"></i>Analyzed';
+                            this.classList.replace('bg-green-500', 'bg-green-600');
+
+                            setTimeout(() => {
+                                resumeUploadArea.classList.add('hidden');
+                                uploadResumeBtn.innerHTML = '<i class="fas fa-upload mr-2"></i>Upload New';
+                                resumeFileInput.value = '';
+                                this.disabled = true;
+                                this.innerHTML = '<i class="fas fa-brain mr-2"></i>Analyze Resume';
+                                this.classList.replace('bg-green-600', 'bg-green-500');
+                                successDiv.remove();
+                            }, 3000);
+                        }, 2000);
+                    });
+                }
+            }
+
+            if (viewAnalysisBtn) {
+                viewAnalysisBtn.addEventListener('click', function () {
+                    // You can implement a modal or redirect to detailed analysis
+                    alert('Detailed resume analysis view would open here!');
+                });
+            }
+
+            console.log('🚀 LakshyaAI Dashboard loaded successfully!');
+        });
+    </script>
+</body>
+
+</html>

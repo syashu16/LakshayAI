@@ -1,0 +1,363 @@
+{% extends "base.html" %}
+
+{% block title %}Contact Us - LakshyaAI{% endblock %}
+
+{% block content %}
+<div class="min-h-screen bg-gray-50">
+    <!-- Header Section -->
+    <section class="bg-gradient-to-r from-blue-600 to-purple-700 py-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center">
+                <h1 class="text-5xl font-bold text-white mb-6">Get in Touch</h1>
+                <p class="text-xl text-blue-100 max-w-2xl mx-auto">
+                    Have questions about LakshyaAI? We're here to help you on your career journey.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <section class="py-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+                <!-- Contact Form -->
+                <div class="bg-white rounded-2xl shadow-lg p-8">
+                    <h2 class="text-2xl font-bold text-gray-900 mb-6">Send us a Message</h2>
+
+                    <form id="contact-form" method="POST" action="{{ url_for('pages.contact') }}" class="space-y-6">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <label for="first_name" class="block text-sm font-medium text-gray-700 mb-2">
+                                    First Name *
+                                </label>
+                                <input type="text" id="first_name" name="first_name" required
+                                    class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                            </div>
+                            <div>
+                                <label for="last_name" class="block text-sm font-medium text-gray-700 mb-2">
+                                    Last Name *
+                                </label>
+                                <input type="text" id="last_name" name="last_name" required
+                                    class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                            </div>
+                        </div>
+
+                        <div>
+                            <label for="email" class="block text-sm font-medium text-gray-700 mb-2">
+                                Email Address *
+                            </label>
+                            <input type="email" id="email" name="email" required
+                                class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                        </div>
+
+                        <div>
+                            <label for="phone" class="block text-sm font-medium text-gray-700 mb-2">
+                                Phone Number
+                            </label>
+                            <input type="tel" id="phone" name="phone"
+                                class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                        </div>
+
+                        <div>
+                            <label for="subject" class="block text-sm font-medium text-gray-700 mb-2">
+                                Subject *
+                            </label>
+                            <select id="subject" name="subject" required
+                                class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                                <option value="">Select a subject</option>
+                                <option value="general">General Inquiry</option>
+                                <option value="technical">Technical Support</option>
+                                <option value="billing">Billing Question</option>
+                                <option value="feature">Feature Request</option>
+                                <option value="bug">Bug Report</option>
+                                <option value="partnership">Partnership</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+
+                        <div>
+                            <label for="message" class="block text-sm font-medium text-gray-700 mb-2">
+                                Message *
+                            </label>
+                            <textarea id="message" name="message" rows="6" required
+                                placeholder="Tell us how we can help you..."
+                                class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none"></textarea>
+                        </div>
+
+                        <div class="flex items-start">
+                            <input type="checkbox" id="newsletter" name="newsletter"
+                                class="mt-1 w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500">
+                            <label for="newsletter" class="ml-2 text-sm text-gray-600">
+                                I'd like to receive updates about LakshyaAI features and career tips
+                            </label>
+                        </div>
+
+                        <button type="submit"
+                            class="w-full bg-blue-600 text-white py-3 px-6 rounded-lg font-semibold hover:bg-blue-700 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
+                            <i class="fas fa-paper-plane mr-2"></i>
+                            Send Message
+                        </button>
+                    </form>
+                </div>
+
+                <!-- Contact Information -->
+                <div class="space-y-8">
+                    <!-- Contact Details -->
+                    <div class="bg-white rounded-2xl shadow-lg p-8">
+                        <h3 class="text-xl font-bold text-gray-900 mb-6">Contact Information</h3>
+
+                        <div class="space-y-6">
+                            <div class="flex items-start space-x-4">
+                                <div
+                                    class="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center flex-shrink-0">
+                                    <i class="fas fa-envelope text-blue-600"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-semibold text-gray-900">Email</h4>
+                                    <p class="text-gray-600">support@lakshyaai.com</p>
+                                    <p class="text-sm text-gray-500">We typically respond within 24 hours</p>
+                                </div>
+                            </div>
+
+                            <div class="flex items-start space-x-4">
+                                <div
+                                    class="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center flex-shrink-0">
+                                    <i class="fas fa-phone text-green-600"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-semibold text-gray-900">Phone</h4>
+                                    <p class="text-gray-600">+1 (555) 123-4567</p>
+                                    <p class="text-sm text-gray-500">Mon-Fri, 9:00 AM - 6:00 PM PST</p>
+                                </div>
+                            </div>
+
+                            <div class="flex items-start space-x-4">
+                                <div
+                                    class="w-10 h-10 bg-purple-100 rounded-lg flex items-center justify-center flex-shrink-0">
+                                    <i class="fas fa-map-marker-alt text-purple-600"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-semibold text-gray-900">Address</h4>
+                                    <p class="text-gray-600">
+                                        123 Innovation Drive<br>
+                                        San Francisco, CA 94105<br>
+                                        United States
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div class="flex items-start space-x-4">
+                                <div
+                                    class="w-10 h-10 bg-yellow-100 rounded-lg flex items-center justify-center flex-shrink-0">
+                                    <i class="fas fa-clock text-yellow-600"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-semibold text-gray-900">Business Hours</h4>
+                                    <p class="text-gray-600">
+                                        Monday - Friday: 9:00 AM - 6:00 PM PST<br>
+                                        Saturday - Sunday: Closed
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Social Media -->
+                    <div class="bg-white rounded-2xl shadow-lg p-8">
+                        <h3 class="text-xl font-bold text-gray-900 mb-6">Follow Us</h3>
+
+                        <div class="grid grid-cols-2 gap-4">
+                            <a href="#"
+                                class="flex items-center space-x-3 p-3 bg-blue-50 rounded-lg hover:bg-blue-100 transition-colors">
+                                <i class="fab fa-twitter text-blue-500 text-xl"></i>
+                                <span class="font-medium text-gray-900">Twitter</span>
+                            </a>
+
+                            <a href="#"
+                                class="flex items-center space-x-3 p-3 bg-blue-50 rounded-lg hover:bg-blue-100 transition-colors">
+                                <i class="fab fa-linkedin text-blue-700 text-xl"></i>
+                                <span class="font-medium text-gray-900">LinkedIn</span>
+                            </a>
+
+                            <a href="#"
+                                class="flex items-center space-x-3 p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors">
+                                <i class="fab fa-github text-gray-700 text-xl"></i>
+                                <span class="font-medium text-gray-900">GitHub</span>
+                            </a>
+
+                            <a href="#"
+                                class="flex items-center space-x-3 p-3 bg-red-50 rounded-lg hover:bg-red-100 transition-colors">
+                                <i class="fab fa-youtube text-red-600 text-xl"></i>
+                                <span class="font-medium text-gray-900">YouTube</span>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- FAQ Quick Links -->
+                    <div class="bg-white rounded-2xl shadow-lg p-8">
+                        <h3 class="text-xl font-bold text-gray-900 mb-6">Quick Help</h3>
+
+                        <div class="space-y-3">
+                            <a href="#" class="block p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors">
+                                <div class="flex items-center justify-between">
+                                    <span class="font-medium text-gray-900">How does AI coaching work?</span>
+                                    <i class="fas fa-arrow-right text-gray-400"></i>
+                                </div>
+                            </a>
+
+                            <a href="#" class="block p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors">
+                                <div class="flex items-center justify-between">
+                                    <span class="font-medium text-gray-900">Resume analysis pricing</span>
+                                    <i class="fas fa-arrow-right text-gray-400"></i>
+                                </div>
+                            </a>
+
+                            <a href="#" class="block p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors">
+                                <div class="flex items-center justify-between">
+                                    <span class="font-medium text-gray-900">Data privacy & security</span>
+                                    <i class="fas fa-arrow-right text-gray-400"></i>
+                                </div>
+                            </a>
+
+                            <a href="#" class="block p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors">
+                                <div class="flex items-center justify-between">
+                                    <span class="font-medium text-gray-900">API documentation</span>
+                                    <i class="fas fa-arrow-right text-gray-400"></i>
+                                </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+</div>
+</section>
+
+<!-- Map Section (Optional) -->
+<section class="py-16 bg-gray-100">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="bg-white rounded-2xl shadow-lg p-2">
+            <div class="bg-gray-200 rounded-xl h-96 flex items-center justify-center">
+                <div class="text-center">
+                    <i class="fas fa-map-marked-alt text-gray-400 text-4xl mb-4"></i>
+                    <p class="text-gray-500">Interactive map would be displayed here</p>
+                    <p class="text-sm text-gray-400 mt-2">San Francisco, CA Office Location</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+</div>
+
+<!-- Success Modal -->
+<div id="success-modal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden flex items-center justify-center">
+    <div class="bg-white rounded-lg p-8 max-w-md mx-4">
+        <div class="text-center">
+            <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                <i class="fas fa-check text-green-600 text-2xl"></i>
+            </div>
+            <h3 class="text-xl font-semibold text-gray-900 mb-2">Message Sent!</h3>
+            <p class="text-gray-600 mb-6">
+                Thank you for contacting us. We'll get back to you within 24 hours.
+            </p>
+            <button onclick="closeSuccessModal()"
+                class="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-colors">
+                Close
+            </button>
+        </div>
+    </div>
+</div>
+
+{% with messages = get_flashed_messages(with_categories=true) %}
+{% if messages %}
+<div id="flash-messages" class="fixed top-4 right-4 z-50 space-y-2">
+    {% for category, message in messages %}
+    <div class="alert alert-{{ category }} p-4 rounded-lg shadow-lg max-w-sm">
+        <div class="flex items-center justify-between">
+            <span>{{ message }}</span>
+            <button onclick="this.parentElement.parentElement.remove()"
+                class="ml-2 text-current opacity-70 hover:opacity-100">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endif %}
+{% endwith %}
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const contactForm = document.getElementById('contact-form');
+
+        contactForm.addEventListener('submit', async function (e) {
+            e.preventDefault();
+
+            const submitButton = this.querySelector('button[type="submit"]');
+            const originalText = submitButton.innerHTML;
+
+            // Show loading state
+            submitButton.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Sending...';
+            submitButton.disabled = true;
+
+            try {
+                const formData = new FormData(this);
+                const response = await fetch(this.action, {
+                    method: 'POST',
+                    body: formData
+                });
+
+                if (response.ok) {
+                    // Show success modal
+                    document.getElementById('success-modal').classList.remove('hidden');
+
+                    // Reset form
+                    this.reset();
+                } else {
+                    throw new Error('Failed to send message');
+                }
+            } catch (error) {
+                console.error('Error sending message:', error);
+                showNotification('Failed to send message. Please try again.', 'error');
+            } finally {
+                // Restore button
+                submitButton.innerHTML = originalText;
+                submitButton.disabled = false;
+            }
+        });
+    });
+
+    function closeSuccessModal() {
+        document.getElementById('success-modal').classList.add('hidden');
+    }
+
+    function showNotification(message, type = 'info') {
+        const notification = document.createElement('div');
+        notification.className = `fixed top-4 right-4 z-50 p-4 rounded-lg shadow-lg max-w-sm transform translate-x-full transition-transform duration-300 ${type === 'success' ? 'bg-green-500 text-white' :
+                type === 'error' ? 'bg-red-500 text-white' :
+                    type === 'warning' ? 'bg-yellow-500 text-black' :
+                        'bg-blue-500 text-white'
+            }`;
+
+        notification.innerHTML = `
+        <div class="flex items-center justify-between">
+            <span>${message}</span>
+            <button onclick="this.parentElement.parentElement.remove()" class="ml-2 text-current opacity-70 hover:opacity-100">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+    `;
+
+        document.body.appendChild(notification);
+
+        setTimeout(() => notification.classList.remove('translate-x-full'), 100);
+        setTimeout(() => {
+            if (notification.parentNode) {
+                notification.classList.add('translate-x-full');
+                setTimeout(() => notification.remove(), 300);
+            }
+        }, 5000);
+    }
+</script>
+{% endblock %}

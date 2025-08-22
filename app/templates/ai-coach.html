@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Career Coach - LakshyaAI</title>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
+
+    <!-- Icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { 'inter': ['Inter', 'sans-serif'] },
+                    animation: {
+                        'float': 'float 6s ease-in-out infinite',
+                        'pulse-glow': 'pulse-glow 2s ease-in-out infinite alternate',
+                        'typing': 'typing 1.5s infinite',
+                        'slide-in': 'slide-in 0.3s ease-out',
+                        'bounce-in': 'bounce-in 0.5s ease-out',
+                        'fade-in': 'fade-in 0.3s ease-out',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- Custom Styles -->
+    <style>
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: translateY(0px) rotate(0deg);
+            }
+
+            50% {
+                transform: translateY(-20px) rotate(180deg);
+            }
+        }
+
+        @keyframes pulse-glow {
+            0% {
+                box-shadow: 0 0 20px rgba(34, 197, 94, 0.4);
+            }
+
+            100% {
+                box-shadow: 0 0 40px rgba(34, 197, 94, 0.8);
+            }
+        }
+
+        @keyframes typing {
+
+            0%,
+            20% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0.5;
+            }
+
+            100% {
+                opacity: 1;
+            }
+        }
+
+        @keyframes slide-in {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes bounce-in {
+            0% {
+                transform: scale(0.3) translateY(20px);
+                opacity: 0;
+            }
+
+            50% {
+                transform: scale(1.05) translateY(-5px);
+            }
+
+            100% {
+                transform: scale(1) translateY(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes fade-in {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        .glass-card {
+            background: rgba(15, 23, 42, 0.6);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .chat-container {
+            height: calc(100vh - 12rem);
+            min-height: 500px;
+        }
+
+        .message-bubble {
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .user-message {
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.8), rgba(139, 92, 246, 0.8));
+        }
+
+        .ai-message {
+            background: linear-gradient(135deg, rgba(34, 197, 94, 0.1), rgba(16, 185, 129, 0.1));
+            border-color: rgba(34, 197, 94, 0.3);
+        }
+
+        .typing-indicator {
+            background: linear-gradient(135deg, rgba(34, 197, 94, 0.1), rgba(16, 185, 129, 0.1));
+            border: 1px solid rgba(34, 197, 94, 0.3);
+        }
+
+        .typing-dot {
+            animation: typing 1.4s infinite ease-in-out;
+        }
+
+        .typing-dot:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .typing-dot:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+
+        .chat-input {
+            background: rgba(30, 41, 59, 0.8);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .chat-input:focus {
+            border-color: rgba(34, 197, 94, 0.5);
+            box-shadow: 0 0 20px rgba(34, 197, 94, 0.2);
+        }
+
+        .floating-orb {
+            animation: float 8s ease-in-out infinite;
+        }
+
+        .suggestion-chip {
+            background: rgba(59, 130, 246, 0.1);
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .suggestion-chip:hover {
+            background: rgba(59, 130, 246, 0.2);
+            border-color: rgba(59, 130, 246, 0.5);
+            transform: translateY(-2px);
+        }
+
+        .voice-button {
+            background: linear-gradient(135deg, #ef4444, #dc2626);
+        }
+
+        .voice-button.recording {
+            animation: pulse-glow 1s infinite;
+            background: linear-gradient(135deg, #22c55e, #16a34a);
+        }
+
+        .sidebar-section {
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .language-selector {
+            background: rgba(59, 130, 246, 0.1);
+            border: 1px solid rgba(59, 130, 246, 0.3);
+        }
+
+        .quick-action-btn {
+            background: rgba(139, 92, 246, 0.1);
+            border: 1px solid rgba(139, 92, 246, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .quick-action-btn:hover {
+            background: rgba(139, 92, 246, 0.2);
+            border-color: rgba(139, 92, 246, 0.5);
+            transform: translateY(-2px);
+        }
+
+        /* Scrollbar styling */
+        .chat-messages::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .chat-messages::-webkit-scrollbar-track {
+            background: rgba(0, 0, 0, 0.1);
+            border-radius: 3px;
+        }
+
+        .chat-messages::-webkit-scrollbar-thumb {
+            background: rgba(34, 197, 94, 0.3);
+            border-radius: 3px;
+        }
+
+        .chat-messages::-webkit-scrollbar-thumb:hover {
+            background: rgba(34, 197, 94, 0.5);
+        }
+    </style>
+</head>
+
+<body class="font-inter bg-slate-950 text-white overflow-hidden">
+
+    <!-- Background -->
+    <div class="fixed inset-0 z-0">
+        <div class="absolute inset-0 bg-gradient-to-br from-slate-950 via-slate-900 to-slate-800"></div>
+        <div class="absolute inset-0 overflow-hidden pointer-events-none">
+            <div class="floating-orb absolute top-20 left-10 w-96 h-96 bg-green-500/5 rounded-full blur-3xl"></div>
+            <div class="floating-orb absolute top-40 right-20 w-64 h-64 bg-blue-500/5 rounded-full blur-3xl"
+                style="animation-delay: 3s;"></div>
+            <div class="floating-orb absolute bottom-20 left-1/4 w-48 h-48 bg-purple-500/5 rounded-full blur-3xl"
+                style="animation-delay: 6s;"></div>
+        </div>
+    </div>
+
+    <!-- Header -->
+    <header class="relative z-50 glass-card border-b border-slate-800/50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <!-- Logo & Title -->
+                <div class="flex items-center space-x-4">
+                    <a href="/dashboard" class="flex items-center space-x-3 group">
+                        <div
+                            class="w-10 h-10 bg-gradient-to-br from-green-500 to-green-600 rounded-xl flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform">
+                            <i class="fas fa-robot text-white text-lg"></i>
+                        </div>
+                        <div>
+                            <h1
+                                class="text-xl font-bold bg-gradient-to-r from-green-400 to-blue-400 bg-clip-text text-transparent">
+                                AI Career Coach</h1>
+                            <p class="text-xs text-slate-400">Powered by LakshyaAI</p>
+                        </div>
+                    </a>
+
+                    <!-- AI Status -->
+                    <div
+                        class="hidden md:flex items-center space-x-2 px-3 py-1 bg-green-500/20 rounded-full border border-green-500/30">
+                        <div class="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
+                        <span class="text-green-400 text-sm font-semibold">AI Online</span>
+                    </div>
+                </div>
+
+                <!-- Header Actions -->
+                <div class="flex items-center space-x-4">
+                    <!-- Language Selector -->
+                    <select id="language-selector"
+                        class="language-selector px-3 py-2 rounded-xl text-white text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/50">
+                        <option value="en">🇺🇸 English</option>
+                        <option value="hi">🇮🇳 हिंदी</option>
+                        <option value="hinglish">🇮🇳 Hinglish</option>
+                        <option value="es">🇪🇸 Español</option>
+                        <option value="fr">🇫🇷 Français</option>
+                    </select>
+
+                    <!-- Chat Actions -->
+                    <button id="clear-chat"
+                        class="p-2 rounded-xl bg-slate-800/50 hover:bg-slate-700/50 transition-all group"
+                        title="Clear Chat">
+                        <i class="fas fa-trash text-slate-400 group-hover:text-red-400"></i>
+                    </button>
+
+                    <button id="export-chat"
+                        class="p-2 rounded-xl bg-slate-800/50 hover:bg-slate-700/50 transition-all group"
+                        title="Export Chat">
+                        <i class="fas fa-download text-slate-400 group-hover:text-blue-400"></i>
+                    </button>
+
+                    <!-- Back to Dashboard -->
+                    <a href="/dashboard"
+                        class="flex items-center space-x-2 px-4 py-2 bg-slate-800/50 hover:bg-slate-700/50 rounded-xl transition-all group">
+                        <i
+                            class="fas fa-arrow-left text-slate-400 group-hover:text-white group-hover:-translate-x-1 transition-all"></i>
+                        <span class="text-slate-300 group-hover:text-white">Dashboard</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="flex relative z-10 h-screen">
+        <!-- Sidebar -->
+        <aside class="w-80 glass-card border-r border-slate-800/50 flex flex-col">
+            <!-- AI Coach Info -->
+            <div class="p-6 sidebar-section">
+                <div class="flex items-center space-x-4 mb-4">
+                    <div
+                        class="w-16 h-16 bg-gradient-to-br from-green-500 to-blue-600 rounded-2xl flex items-center justify-center shadow-lg">
+                        <i class="fas fa-robot text-white text-2xl"></i>
+                    </div>
+                    <div>
+                        <h2 class="text-xl font-bold">ARIA</h2>
+                        <p class="text-slate-400 text-sm">AI Career Advisor</p>
+                        <div class="flex items-center space-x-1 mt-1">
+                            <div class="w-1.5 h-1.5 bg-green-400 rounded-full animate-pulse"></div>
+                            <span class="text-green-400 text-xs">Active & Learning</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div
+                    class="bg-gradient-to-r from-green-500/10 to-blue-500/10 rounded-xl p-4 border border-green-500/30">
+                    <h3 class="font-semibold text-sm mb-2">Today's AI Insights</h3>
+                    <p class="text-slate-300 text-xs">Based on current market trends, Python and AI skills are 40% more
+                        in-demand this month!</p>
+                </div>
+            </div>
+
+            <!-- Quick Actions -->
+            <div class="p-6 sidebar-section">
+                <h3 class="text-sm font-semibold text-slate-400 uppercase tracking-wider mb-4">Quick Actions</h3>
+                <div class="space-y-2">
+                    <button class="quick-action-btn w-full flex items-center px-4 py-3 rounded-xl text-left hover-lift">
+                        <i class="fas fa-file-alt mr-3 text-purple-400"></i>
+                        <div>
+                            <p class="font-semibold text-sm">Analyze My Resume</p>
+                            <p class="text-slate-400 text-xs">Get instant feedback</p>
+                        </div>
+                    </button>
+
+                    <button class="quick-action-btn w-full flex items-center px-4 py-3 rounded-xl text-left hover-lift">
+                        <i class="fas fa-search mr-3 text-blue-400"></i>
+                        <div>
+                            <p class="font-semibold text-sm">Find Perfect Jobs</p>
+                            <p class="text-slate-400 text-xs">AI-powered matching</p>
+                        </div>
+                    </button>
+
+                    <button class="quick-action-btn w-full flex items-center px-4 py-3 rounded-xl text-left hover-lift">
+                        <i class="fas fa-chart-line mr-3 text-green-400"></i>
+                        <div>
+                            <p class="font-semibold text-sm">Skill Gap Analysis</p>
+                            <p class="text-slate-400 text-xs">Identify improvements</p>
+                        </div>
+                    </button>
+
+                    <button class="quick-action-btn w-full flex items-center px-4 py-3 rounded-xl text-left hover-lift">
+                        <i class="fas fa-video mr-3 text-pink-400"></i>
+                        <div>
+                            <p class="font-semibold text-sm">Interview Practice</p>
+                            <p class="text-slate-400 text-xs">Mock interviews</p>
+                        </div>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Conversation Topics -->
+            <div class="p-6 sidebar-section">
+                <h3 class="text-sm font-semibold text-slate-400 uppercase tracking-wider mb-4">Popular Topics</h3>
+                <div class="space-y-2">
+                    <button
+                        class="conversation-topic w-full text-left px-3 py-2 rounded-lg hover:bg-slate-800/50 transition-colors text-sm text-slate-300 hover:text-white">
+                        Career Change Guidance
+                    </button>
+                    <button
+                        class="conversation-topic w-full text-left px-3 py-2 rounded-lg hover:bg-slate-800/50 transition-colors text-sm text-slate-300 hover:text-white">
+                        Salary Negotiation Tips
+                    </button>
+                    <button
+                        class="conversation-topic w-full text-left px-3 py-2 rounded-lg hover:bg-slate-800/50 transition-colors text-sm text-slate-300 hover:text-white">
+                        Interview Preparation
+                    </button>
+                    <button
+                        class="conversation-topic w-full text-left px-3 py-2 rounded-lg hover:bg-slate-800/50 transition-colors text-sm text-slate-300 hover:text-white">
+                        Skill Development
+                    </button>
+                    <button
+                        class="conversation-topic w-full text-left px-3 py-2 rounded-lg hover:bg-slate-800/50 transition-colors text-sm text-slate-300 hover:text-white">
+                        Personal Branding
+                    </button>
+                </div>
+            </div>
+
+            <!-- Chat History -->
+            <div class="p-6 flex-1">
+                <h3 class="text-sm font-semibold text-slate-400 uppercase tracking-wider mb-4">Recent Chats</h3>
+                <div class="space-y-2">
+                    <div
+                        class="flex items-center space-x-3 p-3 rounded-xl hover:bg-slate-800/30 transition-colors cursor-pointer">
+                        <div class="w-8 h-8 bg-blue-500/20 rounded-lg flex items-center justify-center">
+                            <i class="fas fa-comments text-blue-400 text-xs"></i>
+                        </div>
+                        <div class="flex-1 min-w-0">
+                            <p class="text-sm font-semibold truncate">Resume Review Session</p>
+                            <p class="text-xs text-slate-400">2 hours ago</p>
+                        </div>
+                    </div>
+
+                    <div
+                        class="flex items-center space-x-3 p-3 rounded-xl hover:bg-slate-800/30 transition-colors cursor-pointer">
+                        <div class="w-8 h-8 bg-green-500/20 rounded-lg flex items-center justify-center">
+                            <i class="fas fa-briefcase text-green-400 text-xs"></i>
+                        </div>
+                        <div class="flex-1 min-w-0">
+                            <p class="text-sm font-semibold truncate">Job Search Strategy</p>
+                            <p class="text-xs text-slate-400">Yesterday</p>
+                        </div>
+                    </div>
+
+                    <div
+                        class="flex items-center space-x-3 p-3 rounded-xl hover:bg-slate-800/30 transition-colors cursor-pointer">
+                        <div class="w-8 h-8 bg-purple-500/20 rounded-lg flex items-center justify-center">
+                            <i class="fas fa-chart-line text-purple-400 text-xs"></i>
+                        </div>
+                        <div class="flex-1 min-w-0">
+                            <p class="text-sm font-semibold truncate">Skill Development Plan</p>
+                            <p class="text-xs text-slate-400">3 days ago</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Chat Area -->
+        <main class="flex-1 flex flex-col">
+            <!-- Chat Messages -->
+            <div class="chat-container flex-1 overflow-hidden">
+                <div id="chat-messages" class="chat-messages h-full overflow-y-auto p-6 space-y-4">
+
+                    <!-- Welcome Message -->
+                    <div class="flex items-start space-x-4 animate-slide-in">
+                        <div
+                            class="w-10 h-10 bg-gradient-to-br from-green-500 to-blue-600 rounded-full flex items-center justify-center shadow-lg flex-shrink-0">
+                            <i class="fas fa-robot text-white"></i>
+                        </div>
+                        <div class="ai-message message-bubble rounded-2xl rounded-tl-lg p-4 max-w-md">
+                            <div class="mb-2">
+                                <span class="text-green-400 font-semibold text-sm">ARIA - AI Career Advisor</span>
+                                <span class="text-slate-500 text-xs ml-2">Just now</span>
+                            </div>
+                            <p class="text-slate-200 leading-relaxed">
+                                Hello <strong class="text-green-400">syashu16</strong>!
+                                <br><br>
+                                I'm ARIA, your AI-powered career advisor. I'm here to help you navigate your career
+                                journey with personalized guidance, job matching, and skill development recommendations.
+                                <br><br>
+                                <strong>What can I help you with today?</strong>
+                                <br>
+                                • Career planning & strategy
+                                <br>
+                                • Resume optimization
+                                <br>
+                                • Job search guidance
+                                <br>
+                                • Skill development
+                                <br>
+                                • Interview preparation
+                                <br>
+                                • Salary negotiation
+                                <br><br>
+                                Feel free to ask me anything in <strong>English, Hindi, or Hinglish</strong>! 🌟
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Typing Indicator (Hidden by default) -->
+                    <div id="typing-indicator" class="flex items-start space-x-4 hidden">
+                        <div
+                            class="w-10 h-10 bg-gradient-to-br from-green-500 to-blue-600 rounded-full flex items-center justify-center shadow-lg flex-shrink-0">
+                            <i class="fas fa-robot text-white"></i>
+                        </div>
+                        <div class="typing-indicator rounded-2xl rounded-tl-lg p-4">
+                            <div class="flex space-x-1">
+                                <div class="typing-dot w-2 h-2 bg-green-400 rounded-full"></div>
+                                <div class="typing-dot w-2 h-2 bg-green-400 rounded-full"></div>
+                                <div class="typing-dot w-2 h-2 bg-green-400 rounded-full"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Suggestions -->
+            <div id="suggestions-container" class="px-6 py-3 border-t border-slate-800/50">
+                <div class="flex flex-wrap gap-2">
+                    <button
+                        class="suggestion-chip px-4 py-2 rounded-full text-sm font-medium transition-all hover-lift">
+                        "Help me find my dream job"
+                    </button>
+                    <button
+                        class="suggestion-chip px-4 py-2 rounded-full text-sm font-medium transition-all hover-lift">
+                        "Review my resume"
+                    </button>
+                    <button
+                        class="suggestion-chip px-4 py-2 rounded-full text-sm font-medium transition-all hover-lift">
+                        "Salary negotiation tips"
+                    </button>
+                    <button
+                        class="suggestion-chip px-4 py-2 rounded-full text-sm font-medium transition-all hover-lift">
+                        "Career growth strategy"
+                    </button>
+                </div>
+            </div>
+
+            <!-- Chat Input -->
+            <div class="p-6 border-t border-slate-800/50">
+                <div class="flex items-end space-x-4">
+                    <!-- File Upload -->
+                    <button id="file-upload"
+                        class="p-3 rounded-xl bg-slate-800/50 hover:bg-slate-700/50 transition-all group"
+                        title="Upload Document">
+                        <i class="fas fa-paperclip text-slate-400 group-hover:text-blue-400"></i>
+                    </button>
+
+                    <!-- Text Input -->
+                    <div class="flex-1 relative">
+                        <textarea id="chat-input"
+                            placeholder="Ask me anything about your career... (Support: English, हिंदी, Hinglish)"
+                            class="chat-input w-full px-4 py-3 pr-12 rounded-2xl resize-none focus:outline-none focus:ring-2 focus:ring-green-500/50 transition-all"
+                            rows="1"></textarea>
+
+                        <!-- Voice Input Button -->
+                        <button id="voice-input"
+                            class="voice-button absolute right-3 bottom-3 w-8 h-8 rounded-full flex items-center justify-center transition-all"
+                            title="Voice Input">
+                            <i class="fas fa-microphone text-white text-sm"></i>
+                        </button>
+                    </div>
+
+                    <!-- Send Button -->
+                    <button id="send-message"
+                        class="p-3 bg-gradient-to-r from-green-500 to-blue-600 rounded-xl hover:shadow-lg transition-all group"
+                        title="Send Message">
+                        <i class="fas fa-paper-plane text-white group-hover:translate-x-1 transition-transform"></i>
+                    </button>
+                </div>
+
+                <!-- Input Status -->
+                <div class="flex items-center justify-between mt-2 text-xs text-slate-400">
+                    <div class="flex items-center space-x-4">
+                        <span id="input-status">Ready to help you! </span>
+                        <span id="character-count">0/2000</span>
+                    </div>
+                    <div class="flex items-center space-x-2">
+                        <span>Powered by</span>
+                        <span class="text-green-400 font-semibold">LakshyaAI</span>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Hidden file input -->
+    <input type="file" id="hidden-file-input" accept=".pdf,.doc,.docx,.txt" style="display: none;">
+
+    <!-- Scripts -->
+    <script src="{{ url_for('static', filename='js/ai-coach.js') }}"></script>
+
+    <!-- Simplified initialization script -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            console.log('🤖 AI Career Coach Chat initialized!');
+            console.log('👤 Current user: syashu16');
+            console.log('⏰ Session started:', new Date().toISOString());
+
+            // The AICareerCoach class handles all the functionality
+            // Just ensure global functions are available for backward compatibility
+            window.sendMessage = function () {
+                if (window.aiCareerCoach) {
+                    window.aiCareerCoach.sendMessage();
+                }
+            };
+
+            window.addUserMessage = function (message) {
+                if (window.aiCareerCoach) {
+                    window.aiCareerCoach.addUserMessage(message);
+                }
+            };
+
+            window.addAIMessage = function (message) {
+                if (window.aiCareerCoach) {
+                    window.aiCareerCoach.addAIMessage(message);
+                }
+            };
+        });
+    </script>
+</body>
+
+</html>
