@@ -20,7 +20,7 @@ LakshayAI is a comprehensive resume analysis and job recommendation system that 
 ## 🚀 Key Features
 
 ### 📊 ML-Powered Analysis
-- **4 Trained ML Models**: Random Forest, SVM, Gradient Boosting, and Logistic Regression
+- **Four Trained ML Models**: Random Forest, SVM, Gradient Boosting, and Logistic Regression
 - **Multi-format Support**: PDF, DOCX, and TXT file processing
 - **Real-time Inference**: Fast analysis with confidence scoring
 - **Comprehensive Scoring**: Overall resume quality assessment
